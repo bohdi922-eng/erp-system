@@ -1,6 +1,4 @@
-from __future__ import annotations
-
-import hashlib
+﻿from __future__ import annotations
 
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
@@ -10,19 +8,11 @@ from sqlalchemy.orm import Session
 
 from app.core.enums import UserRole
 from app.core.exceptions import BusinessError
+from app.core.security import hash_password
 from app.database import get_session
 from app.models import ShopSettings, User
 
 router = APIRouter()
-
-
-def _hash_password(raw: str) -> str:
-    # NOTE: sha256 is a placeholder so "create a user" is functional end to
-    # end. This is NOT how passwords should be stored for real auth — swap
-    # for bcrypt/argon2 (e.g. passlib) before any real login flow is built
-    # on top of this. Flagging clearly rather than quietly shipping this
-    # as if it were production-grade.
-    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
 
 def _get_or_create_settings(db: Session) -> ShopSettings:
@@ -93,14 +83,14 @@ def create_user(body: CreateUserBody, db: Session = Depends(get_session)) -> dic
 
     user = User(
         username=body.username.strip(), full_name=body.full_name.strip(),
-        role=body.role, password_hash=_hash_password(body.password), is_active=True,
+        role=body.role, password_hash=hash_password(body.password), is_active=True,
     )
     db.add(user)
     try:
         db.commit()
     except IntegrityError:
         db.rollback()
-        raise BusinessError(f"اسم المستخدم '{body.username}' مستخدم بالفعل", 409)
+        raise BusinessError(f"Ø§Ø³Ù… Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù… '{body.username}' Ù…Ø³ØªØ®Ø¯Ù… Ø¨Ø§Ù„ÙØ¹Ù„", 409)
     db.refresh(user)
     return {"id": user.id, "username": user.username, "full_name": user.full_name, "role": user.role, "is_active": user.is_active}
 
@@ -128,7 +118,8 @@ def update_user(user_id: int, body: UpdateUserBody, db: Session = Depends(get_se
     if body.password:
         if len(body.password) < 4:
             raise BusinessError("Password must be at least 4 characters", 400)
-        user.password_hash = _hash_password(body.password)
+        user.password_hash = hash_password(body.password)
     db.commit()
     db.refresh(user)
     return {"id": user.id, "username": user.username, "full_name": user.full_name, "role": user.role, "is_active": user.is_active}
+

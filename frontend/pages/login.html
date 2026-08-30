@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP System - تسجيل الدخول</title>
+<script src="/vendor/tailwind.js"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#81d4dc",
+                    "surface-container-low": "#f1f4f8",
+                    "inverse-primary": "#a8c8ff",
+                    "tertiary-fixed": "#d6e3ff",
+                    "on-primary-container": "#b5cfff",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#135eaf",
+                    "on-tertiary-fixed-variant": "#1a4681",
+                    "background": "#f7fafe",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#181c1f",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#001b3c",
+                    "surface-container-highest": "#e0e3e7",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#001b3d",
+                    "surface-bright": "#f7fafe",
+                    "tertiary-fixed-dim": "#a9c7ff",
+                    "surface-container": "#ebeef2",
+                    "surface-variant": "#e0e3e7",
+                    "inverse-on-surface": "#eef1f5",
+                    "on-background": "#181c1f",
+                    "text-secondary": "#888888",
+                    "inverse-surface": "#2d3134",
+                    "secondary-fixed": "#9df0f8",
+                    "text-primary": "#333333",
+                    "secondary-container": "#9df0f8",
+                    "on-surface-variant": "#424751",
+                    "primary-container": "#0057a8",
+                    "on-secondary-fixed-variant": "#004f55",
+                    "surface": "#ffffff",
+                    "surface-container-high": "#e5e8ec",
+                    "danger": "#dc3545",
+                    "tertiary-container": "#2f5893",
+                    "on-secondary": "#ffffff",
+                    "outline": "#727783",
+                    "warning": "#f59e0b",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#002022",
+                    "tertiary": "#10407a",
+                    "primary": "#00407e",
+                    "success": "#00b894",
+                    "on-tertiary-container": "#b6cfff",
+                    "on-secondary-container": "#026f77",
+                    "surface-dim": "#d7dade",
+                    "primary-fixed": "#d5e3ff",
+                    "secondary": "#006970",
+                    "border": "#e0e0e0",
+                    "on-primary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "info": "#0057a8",
+                    "on-primary-fixed-variant": "#00468a",
+                    "primary-fixed-dim": "#a8c8ff",
+                    "outline-variant": "#c2c6d3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "sidebar-width": "260px",
+                    "md": "16px"
+            }
+          }
+        }
+      }
+</script>
+<style>
+  body { font-family: "Cairo", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif; }
+</style>
+</head>
+<body class="bg-background">
+<div class="min-h-screen flex items-center justify-center p-4">
+
+  <div class="w-full max-w-sm bg-surface rounded-xl shadow-lg border border-border p-6">
+    <div class="text-center mb-6">
+      <div class="w-14 h-14 mx-auto rounded-xl bg-primary flex items-center justify-center text-on-primary text-2xl font-bold mb-3">ERP</div>
+      <h1 class="text-xl font-bold text-on-surface">نظام إدارة المتجر</h1>
+      <p class="text-sm text-text-secondary mt-1">سجل دخولك للمتابعة</p>
+    </div>
+
+    <div id="loginError" class="hidden bg-error-container text-on-error-container text-sm rounded-lg p-3 mb-4"></div>
+
+    <form id="loginForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-on-surface mb-1">اسم المستخدم</label>
+        <input id="username" type="text" autocomplete="username" required
+               class="w-full border border-border rounded-lg px-3 py-2.5 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary bg-surface-container-lowest">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-on-surface mb-1">كلمة المرور</label>
+        <input id="password" type="password" autocomplete="current-password" required
+               class="w-full border border-border rounded-lg px-3 py-2.5 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary bg-surface-container-lowest">
+      </div>
+
+      <button id="loginBtn" type="submit"
+              class="w-full bg-primary text-on-primary font-bold py-2.5 rounded-lg hover:opacity-90 transition disabled:opacity-50">
+        تسجيل الدخول
+      </button>
+    </form>
+
+    <p class="text-xs text-text-secondary text-center mt-4 leading-relaxed">
+      الحسابات التجريبية بعد التثبيت: <code class="bg-surface-container px-1 rounded">ahmed.m / 1234</code>
+    </p>
+  </div>
+
+</div>
+<script src="/js/auth.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("loginForm");
+  const username = document.getElementById("username");
+  const password = document.getElementById("password");
+  const btn = document.getElementById("loginBtn");
+  const errBox = document.getElementById("loginError");
+
+  function showErr(msg) {
+    errBox.textContent = msg;
+    errBox.classList.remove("hidden");
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errBox.classList.add("hidden");
+    btn.disabled = true;
+    btn.textContent = "جارٍ تسجيل الدخول...";
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: username.value.trim(), password: password.value }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showErr(data.detail || "فشل تسجيل الدخول");
+        return;
+      }
+      window.ERPAuth.setToken(data.token);
+      location.href = "/pages/dashboard.html";
+    } catch (err) {
+      showErr("تعذر الاتصال بالخادم");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "تسجيل الدخول";
+    }
+  });
+});
+</script>
+</body>
+</html>

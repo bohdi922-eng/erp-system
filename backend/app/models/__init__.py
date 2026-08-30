@@ -46,6 +46,22 @@ class User(Base):
 
 
 # ---------------------------------------------------------------------------
+# Auth — login sessions
+# ---------------------------------------------------------------------------
+
+class AuthSession(Base):
+    """One row per logged-in session. Tokens are random and stored server-side
+    (no JWT) so logout is instant and revocable."""
+    __tablename__ = "auth_sessions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    token: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
+    expires_at: Mapped[datetime] = mapped_column(DateTime)
+
+
+# ---------------------------------------------------------------------------
 # Locations / Suppliers / Categories / Products
 # ---------------------------------------------------------------------------
 

@@ -1,12 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html dir="rtl" lang="ar"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>إعدادات النظام - نظام ERP</title>
+<title>Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ù†Ø¸Ø§Ù… - Ù†Ø¸Ø§Ù… ERP</title>
 <!-- Material Symbols -->
 <!-- Google Fonts: Cairo (Arabic-first) & IBM Plex Sans (tabular numerals) -->
 <script src="/vendor/tailwind.js"></script>
+<script src="/js/auth.js"></script>
 <script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
@@ -252,8 +253,8 @@
 <div class="flex items-center gap-sm">
 <span class="material-symbols-outlined filled text-primary dark:text-primary-fixed text-[32px]">point_of_sale</span>
 <div class="flex flex-col">
-<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">نظام ERP</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">إدارة الأجهزة</span>
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Ù†Ø¸Ø§Ù… ERP</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø£Ø¬Ù‡Ø²Ø©</span>
 </div>
 </div>
 </div>
@@ -261,7 +262,7 @@
 <div class="p-md">
 <button class="w-full bg-primary-container text-on-primary text-label-lg font-label-lg py-sm px-md rounded-lg flex items-center justify-center gap-sm hover:opacity-90 transition-opacity" onclick="location.href='/pages/sales_new_invoice.html'">
 <span class="material-symbols-outlined">add</span>
-<span>عملية بيع جديدة</span>
+<span>Ø¹Ù…Ù„ÙŠØ© Ø¨ÙŠØ¹ Ø¬Ø¯ÙŠØ¯Ø©</span>
 </button>
 </div>
 <!-- Navigation Tabs -->
@@ -271,46 +272,46 @@
 <li>
 <a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/dashboard.html">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-<span class="font-label-lg text-label-lg">لوحة القيادة</span>
+<span class="font-label-lg text-label-lg">Ù„ÙˆØ­Ø© Ø§Ù„Ù‚ÙŠØ§Ø¯Ø©</span>
 </a>
 </li>
 <!-- Sales (Inactive) -->
 <li>
 <a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/sales_new_invoice.html">
 <span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
-<span class="font-label-lg text-label-lg">المبيعات</span>
+<span class="font-label-lg text-label-lg">Ø§Ù„Ù…Ø¨ÙŠØ¹Ø§Øª</span>
 </a>
 </li>
 <!-- Inventory (Inactive) -->
 <li>
 <a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/inventory.html">
 <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-<span class="font-label-lg text-label-lg">المخزون</span>
+<span class="font-label-lg text-label-lg">Ø§Ù„Ù…Ø®Ø²ÙˆÙ†</span>
 </a>
 </li>
 <!-- Repairs (Inactive) -->
 <li>
 <a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/repairs_board.html">
 <span class="material-symbols-outlined" data-icon="build">build</span>
-<span class="font-label-lg text-label-lg">الإصلاحات</span>
+<span class="font-label-lg text-label-lg">Ø§Ù„Ø¥ØµÙ„Ø§Ø­Ø§Øª</span>
 </a>
 <a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/whatsapp_bot.html">
 <span class="material-symbols-outlined" data-icon="forum">forum</span>
-<span class="font-label-lg text-label-lg">واتساب بوت</span>
+<span class="font-label-lg text-label-lg">ÙˆØ§ØªØ³Ø§Ø¨ Ø¨ÙˆØª</span>
 </a>
 </li>
 <!-- Reports (Inactive) -->
 <li>
 <a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="#">
 <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
-<span class="font-label-lg text-label-lg">التقارير</span>
+<span class="font-label-lg text-label-lg">Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±</span>
 </a>
 </li>
 <!-- Settings (ACTIVE MATCH) -->
 <li>
 <a class="flex items-center gap-md px-lg py-sm text-primary dark:text-primary-fixed font-bold border-r-4 border-primary dark:border-primary-fixed bg-primary/5 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/settings.html">
 <span class="material-symbols-outlined filled" data-icon="settings">settings</span>
-<span class="font-label-lg text-label-lg">الإعدادات</span>
+<span class="font-label-lg text-label-lg">Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª</span>
 </a>
 </li>
 </ul>
@@ -321,13 +322,13 @@
 <li>
 <a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low transition-colors rounded-lg" href="#">
 <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
-<span class="font-label-lg text-label-lg">الملف الشخصي</span>
+<span class="font-label-lg text-label-lg">Ø§Ù„Ù…Ù„Ù Ø§Ù„Ø´Ø®ØµÙŠ</span>
 </a>
 </li>
 <li>
 <a class="flex items-center gap-md px-md py-sm text-danger hover:bg-error-container/30 transition-colors rounded-lg" href="#">
 <span class="material-symbols-outlined" data-icon="logout">logout</span>
-<span class="font-label-lg text-label-lg">تسجيل الخروج</span>
+<span class="font-label-lg text-label-lg">ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø®Ø±ÙˆØ¬</span>
 </a>
 </li>
 </ul>
@@ -339,38 +340,38 @@
 <div id="user-modal-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-md">
 <div class="bg-surface rounded-xl border border-border shadow-lg w-full max-w-md">
 <div class="p-md border-b border-border flex items-center justify-between">
-<h3 id="user-modal-title" class="font-headline-sm text-headline-sm font-semibold text-on-surface">إضافة مستخدم</h3>
+<h3 id="user-modal-title" class="font-headline-sm text-headline-sm font-semibold text-on-surface">Ø¥Ø¶Ø§ÙØ© Ù…Ø³ØªØ®Ø¯Ù…</h3>
 <button id="user-modal-close" class="text-outline hover:text-danger"><span class="material-symbols-outlined">close</span></button>
 </div>
 <div class="p-md flex flex-col gap-sm">
 <div>
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الاسم الكامل</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Ø§Ù„Ø§Ø³Ù… Ø§Ù„ÙƒØ§Ù…Ù„</label>
 <input id="user-form-full-name" type="text" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
 </div>
 <div>
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">اسم المستخدم (username)</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Ø§Ø³Ù… Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù… (username)</label>
 <input id="user-form-username" type="text" dir="ltr" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest text-left"/>
 </div>
 <div>
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الصلاحية</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Ø§Ù„ØµÙ„Ø§Ø­ÙŠØ©</label>
 <select id="user-form-role" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest">
-<option value="admin">مدير نظام</option>
-<option value="cashier">كاشير</option>
-<option value="technician">فني صيانة</option>
+<option value="admin">Ù…Ø¯ÙŠØ± Ù†Ø¸Ø§Ù…</option>
+<option value="cashier">ÙƒØ§Ø´ÙŠØ±</option>
+<option value="technician">ÙÙ†ÙŠ ØµÙŠØ§Ù†Ø©</option>
 </select>
 </div>
 <div>
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">كلمة المرور <span id="user-form-password-hint" class="text-outline">(اتركه فارغًا للإبقاء على الحالي)</span></label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">ÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ± <span id="user-form-password-hint" class="text-outline">(Ø§ØªØ±ÙƒÙ‡ ÙØ§Ø±ØºÙ‹Ø§ Ù„Ù„Ø¥Ø¨Ù‚Ø§Ø¡ Ø¹Ù„Ù‰ Ø§Ù„Ø­Ø§Ù„ÙŠ)</span></label>
 <input id="user-form-password" type="password" dir="ltr" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest text-left"/>
 </div>
 <label class="flex items-center gap-2 mt-1">
 <input id="user-form-active" type="checkbox" checked class="w-4 h-4"/>
-<span class="font-body-sm text-body-sm text-on-surface">نشط</span>
+<span class="font-body-sm text-body-sm text-on-surface">Ù†Ø´Ø·</span>
 </label>
 </div>
 <div class="p-md border-t border-border flex justify-end gap-sm">
-<button id="user-modal-cancel" class="px-md py-sm rounded-lg border border-border text-on-surface font-label-lg text-label-lg hover:bg-surface-container-low">إلغاء</button>
-<button id="user-modal-save" class="px-md py-sm rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container">حفظ</button>
+<button id="user-modal-cancel" class="px-md py-sm rounded-lg border border-border text-on-surface font-label-lg text-label-lg hover:bg-surface-container-low">Ø¥Ù„ØºØ§Ø¡</button>
+<button id="user-modal-save" class="px-md py-sm rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container">Ø­ÙØ¸</button>
 </div>
 </div>
 </div>
@@ -381,13 +382,13 @@
 <button class="md:hidden text-on-surface-variant p-sm hover:bg-surface-variant rounded-full transition-colors">
 <span class="material-symbols-outlined">menu</span>
 </button>
-<h1 class="font-headline-sm text-headline-sm font-semibold text-primary">الإعدادات</h1>
+<h1 class="font-headline-sm text-headline-sm font-semibold text-primary">Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª</h1>
 </div>
 <!-- Global Actions -->
 <div class="flex items-center gap-md">
 <div class="hidden lg:flex items-center bg-surface border border-outline-variant rounded-lg px-sm py-[6px] focus-within:border-primary transition-colors">
 <span class="material-symbols-outlined text-outline text-[20px] ml-xs">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-body-sm font-body-sm w-48 text-on-surface placeholder-outline outline-none" placeholder="بحث في الإعدادات..." type="text"/>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm font-body-sm w-48 text-on-surface placeholder-outline outline-none" placeholder="Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª..." type="text"/>
 </div>
 <div class="flex items-center gap-sm">
 <button class="text-on-surface-variant p-sm hover:bg-surface-variant rounded-full transition-colors relative">
@@ -399,7 +400,7 @@
 </button>
 <div class="h-8 w-px bg-outline-variant mx-xs"></div>
 <button class="flex items-center gap-xs ml-xs bg-surface border border-outline-variant rounded-full p-1 pr-sm hover:bg-surface-variant transition-colors">
-<img alt="صورة المستخدم" class="w-8 h-8 rounded-full object-cover" data-alt="A small circular profile portrait of an Arabic male store manager in a professional retail setting, warm lighting, high quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD23xBC3geJUPXmvhv10HGUBcv5DzFPkHYXjhhlib2nXAD7i6tWFaBN7ocgQ_UtZ08BjUbKsWbpERUBDwUhqSogR1fKKeKNOlWsc6qqNzRTxDYpCefPsAnN7QSagbh9r5IXA8-thPrErfhsasEmhg3kGR01DZ8lV7ncOkn8AZjLA4sGpqjUQdfKsg2sr1Wm4gHmoQc2xsbnjIKekAidRyrm46j32SuedrZlS9ukP5DgxJykkwWWXf1Tg"/>
+<img alt="ØµÙˆØ±Ø© Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…" class="w-8 h-8 rounded-full object-cover" data-alt="A small circular profile portrait of an Arabic male store manager in a professional retail setting, warm lighting, high quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD23xBC3geJUPXmvhv10HGUBcv5DzFPkHYXjhhlib2nXAD7i6tWFaBN7ocgQ_UtZ08BjUbKsWbpERUBDwUhqSogR1fKKeKNOlWsc6qqNzRTxDYpCefPsAnN7QSagbh9r5IXA8-thPrErfhsasEmhg3kGR01DZ8lV7ncOkn8AZjLA4sGpqjUQdfKsg2sr1Wm4gHmoQc2xsbnjIKekAidRyrm46j32SuedrZlS9ukP5DgxJykkwWWXf1Tg"/>
 <span class="material-symbols-outlined text-on-surface-variant text-[20px]">arrow_drop_down</span>
 </button>
 </div>
@@ -411,19 +412,19 @@
 <!-- Settings Header & Tabs -->
 <div class="flex flex-col gap-md">
 <div>
-<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">إعدادات النظام</h2>
-<p class="font-body-md text-body-md text-on-surface-variant mt-xs">إدارة تفاصيل المتجر، المستخدمين، والصلاحيات.</p>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ù†Ø¸Ø§Ù…</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Ø¥Ø¯Ø§Ø±Ø© ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ù…ØªØ¬Ø±ØŒ Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…ÙŠÙ†ØŒ ÙˆØ§Ù„ØµÙ„Ø§Ø­ÙŠØ§Øª.</p>
 </div>
 <!-- Tab Navigation -->
 <div class="flex gap-lg border-b border-outline-variant overflow-x-auto pb-[-1px]">
 <button class="tab-btn active px-sm py-sm font-label-lg text-label-lg text-primary border-b-2 border-primary whitespace-nowrap transition-colors" data-tab="general" onclick="switchTab('general')">
-                            إعدادات عامة
+                            Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø¹Ø§Ù…Ø©
                         </button>
 <button class="tab-btn px-sm py-sm font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap border-b-2 border-transparent" data-tab="users" onclick="switchTab('users')">
-                            المستخدمين والصلاحيات
+                            Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…ÙŠÙ† ÙˆØ§Ù„ØµÙ„Ø§Ø­ÙŠØ§Øª
                         </button>
 <button class="tab-btn px-sm py-sm font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap border-b-2 border-transparent" data-tab="system" onclick="switchTab('system')">
-                            إعدادات النظام
+                            Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ù†Ø¸Ø§Ù…
                         </button>
 </div>
 </div>
@@ -435,45 +436,45 @@
 <div class="lg:col-span-2 bg-surface rounded-xl border border-outline-variant p-lg shadow-sm">
 <h3 class="font-headline-sm text-headline-sm text-on-surface mb-md flex items-center gap-sm">
 <span class="material-symbols-outlined text-primary">storefront</span>
-                                تفاصيل المتجر
+                                ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ù…ØªØ¬Ø±
                             </h3>
 <form class="grid grid-cols-1 md:grid-cols-2 gap-md">
 <div class="flex flex-col gap-xs">
-<label class="font-label-sm text-label-sm text-on-surface-variant">اسم المتجر</label>
-<input id="set-shop-name" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" type="text" value="متجر الإلكترونيات"/>
+<label class="font-label-sm text-label-sm text-on-surface-variant">Ø§Ø³Ù… Ø§Ù„Ù…ØªØ¬Ø±</label>
+<input id="set-shop-name" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" type="text" value="Ù…ØªØ¬Ø± Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ§Øª"/>
 </div>
 <div class="flex flex-col gap-xs">
-<label class="font-label-sm text-label-sm text-on-surface-variant">الرقم الضريبي (VAT)</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant">Ø§Ù„Ø±Ù‚Ù… Ø§Ù„Ø¶Ø±ÙŠØ¨ÙŠ (VAT)</label>
 <input id="set-shop-tax-id" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-numeric-table text-numeric-table text-on-surface text-left focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" dir="ltr" type="text" value="123456789"/>
 </div>
 <div class="flex flex-col gap-xs md:col-span-2">
-<label class="font-label-sm text-label-sm text-on-surface-variant">العنوان</label>
-<input id="set-shop-address" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" type="text" value="القاهرة، مدينة نصر، شارع عباس العقاد"/>
+<label class="font-label-sm text-label-sm text-on-surface-variant">Ø§Ù„Ø¹Ù†ÙˆØ§Ù†</label>
+<input id="set-shop-address" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" type="text" value="Ø§Ù„Ù‚Ø§Ù‡Ø±Ø©ØŒ Ù…Ø¯ÙŠÙ†Ø© Ù†ØµØ±ØŒ Ø´Ø§Ø±Ø¹ Ø¹Ø¨Ø§Ø³ Ø§Ù„Ø¹Ù‚Ø§Ø¯"/>
 </div>
 <div class="flex flex-col gap-xs">
-<label class="font-label-sm text-label-sm text-on-surface-variant">رقم التواصل</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant">Ø±Ù‚Ù… Ø§Ù„ØªÙˆØ§ØµÙ„</label>
 <input id="set-shop-phone" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-numeric-table text-numeric-table text-on-surface text-left focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" dir="ltr" type="tel" value="+20 100 123 4567"/>
 </div>
 <div class="flex flex-col gap-xs">
-<label class="font-label-sm text-label-sm text-on-surface-variant">البريد الإلكتروني</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant">Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ</label>
 <input id="set-shop-email" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface text-left focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" dir="ltr" type="email" value="info@erp-system.example"/>
 </div>
 </form>
 <div class="mt-lg flex justify-end">
 <button id="save-shop-settings-btn" class="bg-primary-container text-on-primary font-label-lg text-label-lg px-lg py-sm rounded-lg hover:opacity-90 transition-opacity">
-                                    <span id="save-shop-settings-label">حفظ التغييرات</span>
+                                    <span id="save-shop-settings-label">Ø­ÙØ¸ Ø§Ù„ØªØºÙŠÙŠØ±Ø§Øª</span>
                                 </button>
 </div>
 </div>
 <!-- Logo & Branding -->
 <div class="lg:col-span-1 bg-surface rounded-xl border border-outline-variant p-lg shadow-sm flex flex-col items-center justify-center text-center">
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-md w-full text-right">شعار المتجر</h3>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-md w-full text-right">Ø´Ø¹Ø§Ø± Ø§Ù„Ù…ØªØ¬Ø±</h3>
 <div class="w-32 h-32 rounded-xl bg-surface-container-low border-2 border-dashed border-outline-variant flex flex-col items-center justify-center gap-sm mb-md relative overflow-hidden group cursor-pointer hover:bg-surface-container transition-colors">
 <span class="material-symbols-outlined text-[32px] text-outline">add_photo_alternate</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary transition-colors">تغيير الشعار</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary transition-colors">ØªØºÙŠÙŠØ± Ø§Ù„Ø´Ø¹Ø§Ø±</span>
 </div>
 <p class="font-body-sm text-body-sm text-on-surface-variant mb-md text-right w-full">
-                                يفضل استخدام صورة بخلفية شفافة (PNG) بحجم لا يتجاوز 2MB.
+                                ÙŠÙØ¶Ù„ Ø§Ø³ØªØ®Ø¯Ø§Ù… ØµÙˆØ±Ø© Ø¨Ø®Ù„ÙÙŠØ© Ø´ÙØ§ÙØ© (PNG) Ø¨Ø­Ø¬Ù… Ù„Ø§ ÙŠØªØ¬Ø§ÙˆØ² 2MB.
                             </p>
 </div>
 </div>
@@ -485,11 +486,11 @@
 <div class="p-md border-b border-surface-variant flex justify-between items-center bg-surface-bright">
 <div class="flex items-center bg-background border border-outline-variant rounded-lg px-sm py-1 focus-within:border-primary transition-colors w-64">
 <span class="material-symbols-outlined text-outline text-[18px] ml-xs">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-body-sm font-body-sm w-full text-on-surface placeholder-outline outline-none" placeholder="البحث عن مستخدم..." type="text"/>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm font-body-sm w-full text-on-surface placeholder-outline outline-none" placeholder="Ø§Ù„Ø¨Ø­Ø« Ø¹Ù† Ù…Ø³ØªØ®Ø¯Ù…..." type="text"/>
 </div>
 <button id="add-user-btn" class="bg-primary-container text-on-primary font-label-lg text-label-lg px-md py-sm rounded-lg hover:opacity-90 transition-opacity flex items-center gap-xs">
 <span class="material-symbols-outlined text-[18px]">person_add</span>
-                                إضافة مستخدم
+                                Ø¥Ø¶Ø§ÙØ© Ù…Ø³ØªØ®Ø¯Ù…
                             </button>
 </div>
 <!-- Table -->
@@ -497,11 +498,11 @@
 <table class="w-full text-right border-collapse">
 <thead class="bg-surface-container-low sticky top-0 z-10 border-b border-outline-variant">
 <tr>
-<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">الاسم</th>
-<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">اسم المستخدم</th>
-<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">الدور (الصلاحية)</th>
-<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">الحالة</th>
-<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap text-center">الإجراءات</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">Ø§Ù„Ø§Ø³Ù…</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">Ø§Ø³Ù… Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">Ø§Ù„Ø¯ÙˆØ± (Ø§Ù„ØµÙ„Ø§Ø­ÙŠØ©)</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">Ø§Ù„Ø­Ø§Ù„Ø©</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap text-center">Ø§Ù„Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª</th>
 </tr>
 </thead>
 <tbody id="users-rows" class="font-body-md text-body-md divide-y divide-surface-variant">
@@ -509,29 +510,29 @@
 <tr class="hover:bg-primary/5 transition-colors group">
 <td class="py-md px-md">
 <div class="flex items-center gap-sm">
-<div class="w-8 h-8 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center font-bold text-label-sm">أ م</div>
-<span class="text-on-surface font-semibold">أحمد محمود</span>
+<div class="w-8 h-8 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center font-bold text-label-sm">Ø£ Ù…</div>
+<span class="text-on-surface font-semibold">Ø£Ø­Ù…Ø¯ Ù…Ø­Ù…ÙˆØ¯</span>
 </div>
 </td>
 <td class="py-md px-md text-on-surface-variant font-numeric-table" dir="ltr">ahmed.m</td>
 <td class="py-md px-md">
 <span class="inline-flex items-center gap-xs bg-tertiary-container/10 text-tertiary px-2 py-1 rounded-full font-label-sm text-label-sm">
 <span class="material-symbols-outlined text-[14px]">shield_person</span>
-                                                مدير نظام
+                                                Ù…Ø¯ÙŠØ± Ù†Ø¸Ø§Ù…
                                             </span>
 </td>
 <td class="py-md px-md">
 <span class="inline-flex items-center gap-xs bg-success/10 text-success px-2 py-1 rounded-full font-label-sm text-label-sm">
 <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
-                                                نشط
+                                                Ù†Ø´Ø·
                                             </span>
 </td>
 <td class="py-md px-md text-center">
 <div class="flex items-center justify-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="text-outline hover:text-primary transition-colors" title="تعديل">
+<button class="text-outline hover:text-primary transition-colors" title="ØªØ¹Ø¯ÙŠÙ„">
 <span class="material-symbols-outlined text-[20px]">edit</span>
 </button>
-<button class="text-outline hover:text-warning transition-colors" title="تغيير كلمة المرور">
+<button class="text-outline hover:text-warning transition-colors" title="ØªØºÙŠÙŠØ± ÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ±">
 <span class="material-symbols-outlined text-[20px]">key</span>
 </button>
 </div>
@@ -541,29 +542,29 @@
 <tr class="hover:bg-primary/5 transition-colors group">
 <td class="py-md px-md">
 <div class="flex items-center gap-sm">
-<div class="w-8 h-8 rounded-full bg-secondary-container/20 text-on-secondary-container flex items-center justify-center font-bold text-label-sm">خ س</div>
-<span class="text-on-surface font-semibold">خالد سعيد</span>
+<div class="w-8 h-8 rounded-full bg-secondary-container/20 text-on-secondary-container flex items-center justify-center font-bold text-label-sm">Ø® Ø³</div>
+<span class="text-on-surface font-semibold">Ø®Ø§Ù„Ø¯ Ø³Ø¹ÙŠØ¯</span>
 </div>
 </td>
 <td class="py-md px-md text-on-surface-variant font-numeric-table" dir="ltr">khaled.s</td>
 <td class="py-md px-md">
 <span class="inline-flex items-center gap-xs bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">
 <span class="material-symbols-outlined text-[14px]">point_of_sale</span>
-                                                كاشير
+                                                ÙƒØ§Ø´ÙŠØ±
                                             </span>
 </td>
 <td class="py-md px-md">
 <span class="inline-flex items-center gap-xs bg-success/10 text-success px-2 py-1 rounded-full font-label-sm text-label-sm">
 <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
-                                                نشط
+                                                Ù†Ø´Ø·
                                             </span>
 </td>
 <td class="py-md px-md text-center">
 <div class="flex items-center justify-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="text-outline hover:text-primary transition-colors" title="تعديل">
+<button class="text-outline hover:text-primary transition-colors" title="ØªØ¹Ø¯ÙŠÙ„">
 <span class="material-symbols-outlined text-[20px]">edit</span>
 </button>
-<button class="text-outline hover:text-warning transition-colors" title="تغيير كلمة المرور">
+<button class="text-outline hover:text-warning transition-colors" title="ØªØºÙŠÙŠØ± ÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ±">
 <span class="material-symbols-outlined text-[20px]">key</span>
 </button>
 </div>
@@ -573,29 +574,29 @@
 <tr class="hover:bg-primary/5 transition-colors group bg-surface-container-low/50">
 <td class="py-md px-md">
 <div class="flex items-center gap-sm">
-<div class="w-8 h-8 rounded-full bg-outline-variant/30 text-outline flex items-center justify-center font-bold text-label-sm">س ع</div>
-<span class="text-on-surface-variant font-semibold">سالم علي</span>
+<div class="w-8 h-8 rounded-full bg-outline-variant/30 text-outline flex items-center justify-center font-bold text-label-sm">Ø³ Ø¹</div>
+<span class="text-on-surface-variant font-semibold">Ø³Ø§Ù„Ù… Ø¹Ù„ÙŠ</span>
 </div>
 </td>
 <td class="py-md px-md text-outline font-numeric-table" dir="ltr">salem.a</td>
 <td class="py-md px-md">
 <span class="inline-flex items-center gap-xs bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">
 <span class="material-symbols-outlined text-[14px]">build</span>
-                                                فني صيانة
+                                                ÙÙ†ÙŠ ØµÙŠØ§Ù†Ø©
                                             </span>
 </td>
 <td class="py-md px-md">
 <span class="inline-flex items-center gap-xs bg-surface-variant text-outline px-2 py-1 rounded-full font-label-sm text-label-sm">
 <span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
-                                                غير نشط
+                                                ØºÙŠØ± Ù†Ø´Ø·
                                             </span>
 </td>
 <td class="py-md px-md text-center">
 <div class="flex items-center justify-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="text-outline hover:text-primary transition-colors" title="تعديل">
+<button class="text-outline hover:text-primary transition-colors" title="ØªØ¹Ø¯ÙŠÙ„">
 <span class="material-symbols-outlined text-[20px]">edit</span>
 </button>
-<button class="text-outline hover:text-warning transition-colors" title="تغيير كلمة المرور">
+<button class="text-outline hover:text-warning transition-colors" title="ØªØºÙŠÙŠØ± ÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ±">
 <span class="material-symbols-outlined text-[20px]">key</span>
 </button>
 </div>
@@ -613,20 +614,20 @@
 <div class="bg-surface rounded-xl border border-outline-variant p-lg shadow-sm">
 <h3 class="font-headline-sm text-headline-sm text-on-surface mb-md flex items-center gap-sm">
 <span class="material-symbols-outlined text-primary">palette</span>
-                                المظهر
+                                Ø§Ù„Ù…Ø¸Ù‡Ø±
                             </h3>
 <div class="flex flex-col gap-md">
 <label class="flex items-center justify-between p-sm rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-colors">
 <div class="flex items-center gap-sm">
 <span class="material-symbols-outlined text-on-surface-variant">light_mode</span>
-<span class="font-body-md text-body-md text-on-surface">الوضع الفاتح</span>
+<span class="font-body-md text-body-md text-on-surface">Ø§Ù„ÙˆØ¶Ø¹ Ø§Ù„ÙØ§ØªØ­</span>
 </div>
 <input checked="" class="text-primary focus:ring-primary h-4 w-4" name="theme" type="radio"/>
 </label>
 <label class="flex items-center justify-between p-sm rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-colors">
 <div class="flex items-center gap-sm">
 <span class="material-symbols-outlined text-on-surface-variant">dark_mode</span>
-<span class="font-body-md text-body-md text-on-surface">الوضع الداكن</span>
+<span class="font-body-md text-body-md text-on-surface">Ø§Ù„ÙˆØ¶Ø¹ Ø§Ù„Ø¯Ø§ÙƒÙ†</span>
 </div>
 <input class="text-primary focus:ring-primary h-4 w-4" name="theme" type="radio"/>
 </label>
@@ -636,14 +637,14 @@
 <div class="bg-surface rounded-xl border border-outline-variant p-lg shadow-sm">
 <h3 class="font-headline-sm text-headline-sm text-on-surface mb-md flex items-center gap-sm">
 <span class="material-symbols-outlined text-primary">backup</span>
-                                النسخ الاحتياطي
+                                Ø§Ù„Ù†Ø³Ø® Ø§Ù„Ø§Ø­ØªÙŠØ§Ø·ÙŠ
                             </h3>
 <div class="flex flex-col gap-md">
 <p class="font-body-sm text-body-sm text-on-surface-variant">
-                                    آخر نسخة احتياطية تمت في: <span class="font-numeric-table" dir="ltr">2023-10-25 14:30</span>
+                                    Ø¢Ø®Ø± Ù†Ø³Ø®Ø© Ø§Ø­ØªÙŠØ§Ø·ÙŠØ© ØªÙ…Øª ÙÙŠ: <span class="font-numeric-table" dir="ltr">2023-10-25 14:30</span>
 </p>
 <div class="flex items-center justify-between mt-sm">
-<span class="font-body-md text-body-md text-on-surface">نسخ احتياطي تلقائي (يومياً)</span>
+<span class="font-body-md text-body-md text-on-surface">Ù†Ø³Ø® Ø§Ø­ØªÙŠØ§Ø·ÙŠ ØªÙ„Ù‚Ø§Ø¦ÙŠ (ÙŠÙˆÙ…ÙŠØ§Ù‹)</span>
 <!-- Toggle Switch -->
 <label class="relative inline-flex items-center cursor-pointer">
 <input checked="" class="sr-only peer" type="checkbox" value=""/>
@@ -652,7 +653,7 @@
 </div>
 <button class="mt-md w-full border border-primary text-primary font-label-lg text-label-lg py-sm rounded-lg hover:bg-primary/5 transition-colors flex items-center justify-center gap-sm">
 <span class="material-symbols-outlined text-[18px]">cloud_download</span>
-                                    إنشاء نسخة احتياطية الآن
+                                    Ø¥Ù†Ø´Ø§Ø¡ Ù†Ø³Ø®Ø© Ø§Ø­ØªÙŠØ§Ø·ÙŠØ© Ø§Ù„Ø¢Ù†
                                 </button>
 </div>
 </div>
@@ -687,12 +688,12 @@
 // app/routes/settings.py), and the users table loads the real seeded
 // users. Falls back to the static mockup values if the backend isn't
 // running.
-const API_BASE = "";  // same-origin now — FastAPI serves this page too
+const API_BASE = "";  // same-origin now â€” FastAPI serves this page too
 
 const ROLE_LABEL = {
-    admin: { text: "مدير نظام", icon: "shield_person", cls: "bg-tertiary-container/10 text-tertiary" },
-    cashier: { text: "كاشير", icon: "point_of_sale", cls: "bg-primary/10 text-primary" },
-    technician: { text: "فني صيانة", icon: "build", cls: "bg-warning/10 text-warning" },
+    admin: { text: "Ù…Ø¯ÙŠØ± Ù†Ø¸Ø§Ù…", icon: "shield_person", cls: "bg-tertiary-container/10 text-tertiary" },
+    cashier: { text: "ÙƒØ§Ø´ÙŠØ±", icon: "point_of_sale", cls: "bg-primary/10 text-primary" },
+    technician: { text: "ÙÙ†ÙŠ ØµÙŠØ§Ù†Ø©", icon: "build", cls: "bg-warning/10 text-warning" },
 };
 
 function escapeHtml(str) {
@@ -726,7 +727,7 @@ async function saveShopSettings() {
     const label = document.getElementById("save-shop-settings-label");
     const original = label.textContent;
     btn.disabled = true;
-    label.textContent = "جارٍ الحفظ...";
+    label.textContent = "Ø¬Ø§Ø±Ù Ø§Ù„Ø­ÙØ¸...";
     try {
         const res = await fetch(`${API_BASE}/api/settings/shop`, {
             method: "PUT",
@@ -740,10 +741,10 @@ async function saveShopSettings() {
             }),
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        label.textContent = "تم الحفظ ✓";
+        label.textContent = "ØªÙ… Ø§Ù„Ø­ÙØ¸ âœ“";
         setTimeout(() => { label.textContent = original; }, 1500);
     } catch (err) {
-        alert(`تعذر حفظ الإعدادات: ${err.message}`);
+        alert(`ØªØ¹Ø°Ø± Ø­ÙØ¸ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª: ${err.message}`);
         label.textContent = original;
     } finally {
         btn.disabled = false;
@@ -754,7 +755,7 @@ function renderUserRow(u) {
     const role = ROLE_LABEL[u.role] || { text: u.role, icon: "person", cls: "bg-surface-container-high text-on-surface-variant" };
     const statusCls = u.is_active ? "bg-success/10 text-success" : "bg-surface-container-high text-on-surface-variant";
     const statusDot = u.is_active ? "bg-success" : "bg-outline";
-    const statusText = u.is_active ? "نشط" : "غير نشط";
+    const statusText = u.is_active ? "Ù†Ø´Ø·" : "ØºÙŠØ± Ù†Ø´Ø·";
     return `
     <tr class="hover:bg-primary/5 transition-colors group">
         <td class="py-md px-md">
@@ -776,7 +777,7 @@ function renderUserRow(u) {
         </td>
         <td class="py-md px-md text-center">
             <div class="flex items-center justify-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                <button data-action="edit-user" data-user-id="${u.id}" class="text-outline hover:text-primary transition-colors" title="تعديل / كلمة مرور جديدة"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+                <button data-action="edit-user" data-user-id="${u.id}" class="text-outline hover:text-primary transition-colors" title="ØªØ¹Ø¯ÙŠÙ„ / ÙƒÙ„Ù…Ø© Ù…Ø±ÙˆØ± Ø¬Ø¯ÙŠØ¯Ø©"><span class="material-symbols-outlined text-[20px]">edit</span></button>
             </div>
         </td>
     </tr>`;
@@ -798,7 +799,7 @@ async function loadUsers() {
 
 function openUserModal(user) {
     editingUserId = user ? user.id : null;
-    document.getElementById("user-modal-title").textContent = user ? "تعديل مستخدم" : "إضافة مستخدم";
+    document.getElementById("user-modal-title").textContent = user ? "ØªØ¹Ø¯ÙŠÙ„ Ù…Ø³ØªØ®Ø¯Ù…" : "Ø¥Ø¶Ø§ÙØ© Ù…Ø³ØªØ®Ø¯Ù…";
     document.getElementById("user-form-full-name").value = user?.full_name || "";
     document.getElementById("user-form-username").value = user?.username || "";
     document.getElementById("user-form-username").disabled = !!user; // username fixed once created
@@ -824,7 +825,7 @@ async function saveUser() {
     const is_active = document.getElementById("user-form-active").checked;
     const password = document.getElementById("user-form-password").value;
 
-    if (!full_name || !username) { alert("محتاج الاسم واسم المستخدم"); return; }
+    if (!full_name || !username) { alert("Ù…Ø­ØªØ§Ø¬ Ø§Ù„Ø§Ø³Ù… ÙˆØ§Ø³Ù… Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…"); return; }
 
     try {
         if (editingUserId) {
@@ -835,7 +836,7 @@ async function saveUser() {
             });
             if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || `HTTP ${res.status}`); }
         } else {
-            if (!password) { alert("محتاج كلمة مرور للمستخدم الجديد"); return; }
+            if (!password) { alert("Ù…Ø­ØªØ§Ø¬ ÙƒÙ„Ù…Ø© Ù…Ø±ÙˆØ± Ù„Ù„Ù…Ø³ØªØ®Ø¯Ù… Ø§Ù„Ø¬Ø¯ÙŠØ¯"); return; }
             const res = await fetch(`${API_BASE}/api/settings/users`, {
                 method: "POST", headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ full_name, username, role, password }),
@@ -845,7 +846,7 @@ async function saveUser() {
         closeUserModal();
         await loadUsers();
     } catch (err) {
-        alert(`تعذر الحفظ: ${err.message}`);
+        alert(`ØªØ¹Ø°Ø± Ø§Ù„Ø­ÙØ¸: ${err.message}`);
     }
 }
 

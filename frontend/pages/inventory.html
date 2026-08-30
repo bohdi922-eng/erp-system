@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html dir="rtl" lang="ar"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ERP System - إدارة المخزون</title>
+<title>ERP System - Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ù…Ø®Ø²ÙˆÙ†</title>
 <script src="/vendor/tailwind.js"></script>
+<script src="/js/auth.js"></script>
 <style>
         body { font-family: 'Cairo', sans-serif; }
         .material-symbols-outlined {
@@ -25,7 +26,7 @@
         
         /* FIX: this rule referenced 'IBM Plex Sans Arabic', which isn't
            actually loaded by the Google Fonts <link> above (it only pulls
-           Cairo + IBM Plex Sans) — every browser would've silently fallen
+           Cairo + IBM Plex Sans) â€” every browser would've silently fallen
            back to a generic system font. Cairo (the font this project
            actually loads and uses everywhere else) for body text. */
         body, input, button, select, textarea {
@@ -33,7 +34,7 @@
         }
 
         /* FIX: was 'Be Vietnam Pro' (no Arabic glyph support at all) for
-           every heading — switched to Cairo for the same reason as above. */
+           every heading â€” switched to Cairo for the same reason as above. */
         h1, h2, h3, h4, h5, h6, .font-display-lg, .font-headline-md, .font-headline-sm, .font-headline-lg {
             font-family: 'Cairo', sans-serif;
         }
@@ -168,58 +169,58 @@
 <div class="p-gutter border-b border-outline-variant flex items-center gap-sm">
 <div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary font-bold font-headline-md">H</div>
 <div>
-<h1 class="text-headline-md font-headline-md font-bold text-primary">نظام ERP</h1>
-<p class="font-body-sm text-body-sm text-on-surface-variant">إدارة الأجهزة</p>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">Ù†Ø¸Ø§Ù… ERP</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø£Ø¬Ù‡Ø²Ø©</p>
 </div>
 </div>
 <!-- CTA -->
 <div class="p-gutter">
 <button class="w-full bg-primary-container text-on-primary hover:opacity-80 transition-opacity rounded py-sm px-md flex items-center justify-center gap-xs font-label-lg text-label-lg h-[48px]" onclick="location.href='/pages/sales_new_invoice.html'">
 <span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
-<span>عملية بيع جديدة</span>
+<span>Ø¹Ù…Ù„ÙŠØ© Ø¨ÙŠØ¹ Ø¬Ø¯ÙŠØ¯Ø©</span>
 </button>
 </div>
 <!-- Navigation Tabs -->
 <nav class="flex-1 px-sm py-sm space-y-unit">
 <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/dashboard.html">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-<span>لوحة القيادة</span>
+<span>Ù„ÙˆØ­Ø© Ø§Ù„Ù‚ÙŠØ§Ø¯Ø©</span>
 </a>
 <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/sales_new_invoice.html">
 <span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
-<span>المبيعات</span>
+<span>Ø§Ù„Ù…Ø¨ÙŠØ¹Ø§Øª</span>
 </a>
-<!-- Active Tab: المخزون (Inventory) -->
+<!-- Active Tab: Ø§Ù„Ù…Ø®Ø²ÙˆÙ† (Inventory) -->
 <a class="flex items-center gap-md px-md py-sm rounded-lg text-primary font-bold border-r-4 border-primary bg-primary/5 font-label-lg text-label-lg opacity-80 duration-150" href="/pages/inventory.html">
 <span class="material-symbols-outlined icon-fill-1" data-icon="inventory_2" data-weight="fill">inventory_2</span>
-<span>المخزون</span>
+<span>Ø§Ù„Ù…Ø®Ø²ÙˆÙ†</span>
 </a>
 <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/repairs_board.html">
 <span class="material-symbols-outlined" data-icon="build">build</span>
-<span>الإصلاحات</span>
+<span>Ø§Ù„Ø¥ØµÙ„Ø§Ø­Ø§Øª</span>
 </a>
 <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/whatsapp_bot.html">
 <span class="material-symbols-outlined" data-icon="forum">forum</span>
-<span>واتساب بوت</span>
+<span>ÙˆØ§ØªØ³Ø§Ø¨ Ø¨ÙˆØª</span>
 </a>
 <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="#">
 <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
-<span>التقارير</span>
+<span>Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±</span>
 </a>
 <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/settings.html">
 <span class="material-symbols-outlined" data-icon="settings">settings</span>
-<span>الإعدادات</span>
+<span>Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª</span>
 </a>
 </nav>
 <!-- Footer Tabs -->
 <div class="mt-auto border-t border-outline-variant p-sm space-y-unit">
 <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="#">
 <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
-<span>الملف الشخصي</span>
+<span>Ø§Ù„Ù…Ù„Ù Ø§Ù„Ø´Ø®ØµÙŠ</span>
 </a>
 <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors font-label-lg text-label-lg" href="#">
 <span class="material-symbols-outlined" data-icon="logout">logout</span>
-<span>تسجيل الخروج</span>
+<span>ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø®Ø±ÙˆØ¬</span>
 </a>
 </div>
 </aside>
@@ -229,53 +230,53 @@
 <div id="product-modal-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-md">
 <div class="bg-surface rounded-xl border border-border shadow-lg w-full max-w-md">
 <div class="p-md border-b border-border flex items-center justify-between">
-<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">إضافة صنف جديد للمخزون</h3>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Ø¥Ø¶Ø§ÙØ© ØµÙ†Ù Ø¬Ø¯ÙŠØ¯ Ù„Ù„Ù…Ø®Ø²ÙˆÙ†</h3>
 <button id="product-modal-close" class="text-outline hover:text-danger"><span class="material-symbols-outlined">close</span></button>
 </div>
 <div class="p-md flex flex-col gap-sm">
 <div>
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">اختر منتج موجود، أو منتج جديد</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Ø§Ø®ØªØ± Ù…Ù†ØªØ¬ Ù…ÙˆØ¬ÙˆØ¯ØŒ Ø£Ùˆ Ù…Ù†ØªØ¬ Ø¬Ø¯ÙŠØ¯</label>
 <select id="product-form-select" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest">
-<option value="">-- منتج جديد --</option>
+<option value="">-- Ù…Ù†ØªØ¬ Ø¬Ø¯ÙŠØ¯ --</option>
 </select>
 </div>
 <div id="product-new-fields" class="flex flex-col gap-sm">
 <div>
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الماركة</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Ø§Ù„Ù…Ø§Ø±ÙƒØ©</label>
 <input id="product-form-brand" type="text" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
 </div>
 <div>
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الموديل / الاسم</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Ø§Ù„Ù…ÙˆØ¯ÙŠÙ„ / Ø§Ù„Ø§Ø³Ù…</label>
 <input id="product-form-model" type="text" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
 </div>
 <div>
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">السعر الافتراضي (ج.م)</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Ø§Ù„Ø³Ø¹Ø± Ø§Ù„Ø§ÙØªØ±Ø§Ø¶ÙŠ (Ø¬.Ù…)</label>
 <input id="product-form-price" type="number" value="0" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
 </div>
 <label class="flex items-center gap-2">
 <input id="product-form-serialized" type="checkbox" checked class="w-4 h-4"/>
-<span class="font-body-sm text-body-sm text-on-surface">متتبع بالرقم التسلسلي (سيريال)</span>
+<span class="font-body-sm text-body-sm text-on-surface">Ù…ØªØªØ¨Ø¹ Ø¨Ø§Ù„Ø±Ù‚Ù… Ø§Ù„ØªØ³Ù„Ø³Ù„ÙŠ (Ø³ÙŠØ±ÙŠØ§Ù„)</span>
 </label>
 </div>
 <div class="border-t border-border pt-sm mt-1">
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">استلام كمية جديدة الآن</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Ø§Ø³ØªÙ„Ø§Ù… ÙƒÙ…ÙŠØ© Ø¬Ø¯ÙŠØ¯Ø© Ø§Ù„Ø¢Ù†</label>
 <div id="stock-serial-field">
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الرقم التسلسلي</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Ø§Ù„Ø±Ù‚Ù… Ø§Ù„ØªØ³Ù„Ø³Ù„ÙŠ</label>
 <input id="stock-form-serial" type="text" dir="ltr" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest text-left"/>
 </div>
 <div id="stock-quantity-field" class="hidden">
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الكمية</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Ø§Ù„ÙƒÙ…ÙŠØ©</label>
 <input id="stock-form-quantity" type="number" value="1" min="1" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
 </div>
 <div class="mt-sm">
-<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">تكلفة الشراء (ج.م)</label>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">ØªÙƒÙ„ÙØ© Ø§Ù„Ø´Ø±Ø§Ø¡ (Ø¬.Ù…)</label>
 <input id="stock-form-cost" type="number" value="0" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
 </div>
 </div>
 </div>
 <div class="p-md border-t border-border flex justify-end gap-sm">
-<button id="product-modal-cancel" class="px-md py-sm rounded-lg border border-border text-on-surface font-label-lg text-label-lg hover:bg-surface-container-low">إلغاء</button>
-<button id="product-modal-save" class="px-md py-sm rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container">حفظ</button>
+<button id="product-modal-cancel" class="px-md py-sm rounded-lg border border-border text-on-surface font-label-lg text-label-lg hover:bg-surface-container-low">Ø¥Ù„ØºØ§Ø¡</button>
+<button id="product-modal-save" class="px-md py-sm rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container">Ø­ÙØ¸</button>
 </div>
 </div>
 </div>
@@ -291,15 +292,15 @@
 <div class="hidden md:flex items-center gap-xl flex-1">
 <!-- Navigation Links -->
 <nav class="flex items-center gap-lg">
-<a class="text-on-surface-variant hover:text-primary transition-all font-label-lg text-label-lg py-sm" href="/pages/dashboard.html">الرئيسية</a>
-<a class="text-on-surface-variant hover:text-primary transition-all font-label-lg text-label-lg py-sm" href="#">الفواتير</a>
-<a class="text-on-surface-variant hover:text-primary transition-all font-label-lg text-label-lg py-sm" href="/pages/customer_statement.html">العملاء</a>
+<a class="text-on-surface-variant hover:text-primary transition-all font-label-lg text-label-lg py-sm" href="/pages/dashboard.html">Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©</a>
+<a class="text-on-surface-variant hover:text-primary transition-all font-label-lg text-label-lg py-sm" href="#">Ø§Ù„ÙÙˆØ§ØªÙŠØ±</a>
+<a class="text-on-surface-variant hover:text-primary transition-all font-label-lg text-label-lg py-sm" href="/pages/customer_statement.html">Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡</a>
 </nav>
 </div>
 <!-- Search Area (Center-ish) -->
 <div class="flex-1 max-w-md mx-gutter hidden md:block">
 <div class="relative">
-<input class="w-full bg-surface border border-outline-variant rounded-full py-2 px-4 pr-10 text-body-sm font-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-[40px]" placeholder="بحث عام..." type="text"/>
+<input class="w-full bg-surface border border-outline-variant rounded-full py-2 px-4 pr-10 text-body-sm font-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-[40px]" placeholder="Ø¨Ø­Ø« Ø¹Ø§Ù…..." type="text"/>
 <span class="material-symbols-outlined absolute right-3 top-2 text-outline text-[20px]">search</span>
 </div>
 </div>
@@ -314,15 +315,15 @@
 <div class="hidden lg:flex gap-sm mr-sm pr-sm border-r border-outline-variant">
 <button class="border border-outline-variant text-on-surface bg-surface hover:bg-surface-container-low px-md py-1.5 rounded font-label-lg text-label-lg flex items-center gap-xs h-[40px]">
 <span class="material-symbols-outlined text-[18px]">barcode_scanner</span>
-                        الباركود
+                        Ø§Ù„Ø¨Ø§Ø±ÙƒÙˆØ¯
                     </button>
 <button id="add-product-btn" class="bg-primary-container text-on-primary hover:opacity-90 px-md py-1.5 rounded font-label-lg text-label-lg flex items-center gap-xs h-[40px] shadow-sm">
 <span class="material-symbols-outlined text-[18px]">add</span>
-                        إضافة صنف
+                        Ø¥Ø¶Ø§ÙØ© ØµÙ†Ù
                     </button>
 </div>
 <div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden mr-sm flex-shrink-0 cursor-pointer">
-<img alt="صورة المستخدم" class="w-full h-full object-cover" data-alt="A close up professional headshot of an Arab man in a modern office environment, wearing business casual attire. Soft, flattering high-key lighting creates a bright, modern corporate aesthetic. The background is slightly blurred with muted blue and white tones to match a clean UI style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxO7jYpHJHnGDBxf7p26ft79_g5f1LZhJRmQbQjwFCBnxgDyzyLviexREfQUkbqxD-Z8DJQ74e4WwO6BOBgYqOiKY6aiLSLIE3iaO9qx488_s0Pu4aqatITHRoXbM2OEixEhXrZyPQALQlkWx08woCyK8WWiTcqqxB41MpQ1ETxFhDhVqaRewdrbV8_v20cHzZHIBd5Nqi06TUKvjtt0RLqIka_w37iWU6fiPo3_IDuKuyBvupDj9GDg"/>
+<img alt="ØµÙˆØ±Ø© Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…" class="w-full h-full object-cover" data-alt="A close up professional headshot of an Arab man in a modern office environment, wearing business casual attire. Soft, flattering high-key lighting creates a bright, modern corporate aesthetic. The background is slightly blurred with muted blue and white tones to match a clean UI style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxO7jYpHJHnGDBxf7p26ft79_g5f1LZhJRmQbQjwFCBnxgDyzyLviexREfQUkbqxD-Z8DJQ74e4WwO6BOBgYqOiKY6aiLSLIE3iaO9qx488_s0Pu4aqatITHRoXbM2OEixEhXrZyPQALQlkWx08woCyK8WWiTcqqxB41MpQ1ETxFhDhVqaRewdrbV8_v20cHzZHIBd5Nqi06TUKvjtt0RLqIka_w37iWU6fiPo3_IDuKuyBvupDj9GDg"/>
 </div>
 </div>
 </header>
@@ -330,8 +331,8 @@
 <div class="flex-1 overflow-y-auto p-margin-desktop bg-surface-container-lowest">
 <div class="flex justify-between items-end mb-lg">
 <div>
-<h2 class="text-headline-lg font-headline-lg text-on-surface mb-unit">إدارة المخزون</h2>
-<p class="text-body-md font-body-md text-on-surface-variant">مراقبة وتحديث مستويات المخزون، والبحث عن الأرقام التسلسلية.</p>
+<h2 class="text-headline-lg font-headline-lg text-on-surface mb-unit">Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ù…Ø®Ø²ÙˆÙ†</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">Ù…Ø±Ø§Ù‚Ø¨Ø© ÙˆØªØ­Ø¯ÙŠØ« Ù…Ø³ØªÙˆÙŠØ§Øª Ø§Ù„Ù…Ø®Ø²ÙˆÙ†ØŒ ÙˆØ§Ù„Ø¨Ø­Ø« Ø¹Ù† Ø§Ù„Ø£Ø±Ù‚Ø§Ù… Ø§Ù„ØªØ³Ù„Ø³Ù„ÙŠØ©.</p>
 </div>
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
@@ -341,18 +342,18 @@
 <div class="bg-surface border border-border rounded-xl p-md flex flex-wrap items-center justify-between gap-md shadow-sm">
 <div class="flex items-center gap-sm flex-1 min-w-[250px]">
 <div class="relative w-full max-w-sm">
-<input class="w-full bg-background border border-outline-variant rounded py-2 px-3 pr-9 text-body-sm font-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-[40px]" placeholder="البحث في المنتجات..." type="text"/>
+<input class="w-full bg-background border border-outline-variant rounded py-2 px-3 pr-9 text-body-sm font-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-[40px]" placeholder="Ø§Ù„Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ù…Ù†ØªØ¬Ø§Øª..." type="text"/>
 <span class="material-symbols-outlined absolute right-2.5 top-2.5 text-outline text-[18px]">search</span>
 </div>
 </div>
 <div class="flex items-center gap-sm">
-<span class="text-label-sm font-label-sm text-on-surface-variant">تصفية حسب:</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">ØªØµÙÙŠØ© Ø­Ø³Ø¨:</span>
 <select class="bg-background border border-outline-variant rounded py-2 px-3 text-body-sm font-body-sm focus:outline-none focus:border-primary h-[40px] min-w-[120px]">
-<option>كل الفئات</option>
-<option>أجهزة ذكية</option>
-<option>شاشات</option>
-<option>قطع غيار</option>
-<option>إكسسوارات</option>
+<option>ÙƒÙ„ Ø§Ù„ÙØ¦Ø§Øª</option>
+<option>Ø£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ©</option>
+<option>Ø´Ø§Ø´Ø§Øª</option>
+<option>Ù‚Ø·Ø¹ ØºÙŠØ§Ø±</option>
+<option>Ø¥ÙƒØ³Ø³ÙˆØ§Ø±Ø§Øª</option>
 </select>
 <button class="p-2 border border-outline-variant rounded bg-surface hover:bg-surface-container-low text-on-surface-variant h-[40px] w-[40px] flex items-center justify-center">
 <span class="material-symbols-outlined text-[20px]">filter_list</span>
@@ -365,10 +366,10 @@
 <table class="w-full text-right border-collapse">
 <thead>
 <tr class="bg-surface-container-low border-b border-border">
-<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold">اسم المنتج</th>
-<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold">الفئة</th>
-<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold text-center">المستوى</th>
-<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold text-left">آخر تحديث</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold">Ø§Ø³Ù… Ø§Ù„Ù…Ù†ØªØ¬</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold">Ø§Ù„ÙØ¦Ø©</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold text-center">Ø§Ù„Ù…Ø³ØªÙˆÙ‰</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold text-left">Ø¢Ø®Ø± ØªØ­Ø¯ÙŠØ«</th>
 <th class="py-3 px-4 w-10"></th>
 </tr>
 </thead>
@@ -381,10 +382,10 @@
 <span class="font-body-sm text-body-sm text-outline">SKU: APP-IP14PM-256-BLK</span>
 </div>
 </td>
-<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">أجهزة ذكية</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">Ø£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ©</td>
 <td class="py-3 px-4 text-center">
 <div class="inline-flex items-center justify-center bg-success/15 text-success px-2 py-1 rounded-full font-label-sm text-label-sm font-bold min-w-[70px]">
-                                                45 حبة
+                                                45 Ø­Ø¨Ø©
                                             </div>
 </td>
 <td class="py-3 px-4 font-numeric-table text-numeric-table text-on-surface-variant text-left" dir="ltr">2023-10-24</td>
@@ -398,14 +399,14 @@
 <tr class="hover:bg-primary/5 transition-colors group cursor-pointer bg-primary/2">
 <td class="py-3 px-4">
 <div class="flex flex-col">
-<span class="font-body-md text-body-md text-on-surface font-medium">شاشة Samsung S22 Ultra أصلية</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Ø´Ø§Ø´Ø© Samsung S22 Ultra Ø£ØµÙ„ÙŠØ©</span>
 <span class="font-body-sm text-body-sm text-outline">SKU: SAM-S22U-SCRN-OEM</span>
 </div>
 </td>
-<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">قطع غيار</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">Ù‚Ø·Ø¹ ØºÙŠØ§Ø±</td>
 <td class="py-3 px-4 text-center">
 <div class="inline-flex items-center justify-center bg-warning/15 text-warning px-2 py-1 rounded-full font-label-sm text-label-sm font-bold min-w-[70px]">
-                                                3 حبات
+                                                3 Ø­Ø¨Ø§Øª
                                             </div>
 </td>
 <td class="py-3 px-4 font-numeric-table text-numeric-table text-on-surface-variant text-left" dir="ltr">2023-10-22</td>
@@ -423,10 +424,10 @@
 <span class="font-body-sm text-body-sm text-outline">SKU: APP-MBA-M2-8-256</span>
 </div>
 </td>
-<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">أجهزة ذكية</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">Ø£Ø¬Ù‡Ø²Ø© Ø°ÙƒÙŠØ©</td>
 <td class="py-3 px-4 text-center">
 <div class="inline-flex items-center justify-center bg-error/15 text-error px-2 py-1 rounded-full font-label-sm text-label-sm font-bold min-w-[70px]">
-                                                نفذت الكمية
+                                                Ù†ÙØ°Øª Ø§Ù„ÙƒÙ…ÙŠØ©
                                             </div>
 </td>
 <td class="py-3 px-4 font-numeric-table text-numeric-table text-on-surface-variant text-left" dir="ltr">2023-10-20</td>
@@ -440,7 +441,7 @@
 </table>
 </div>
 <div class="border-t border-border p-sm flex items-center justify-between bg-surface-container-lowest">
-<span class="font-label-sm text-label-sm text-outline">عرض 1-10 من 245 منتج</span>
+<span class="font-label-sm text-label-sm text-outline">Ø¹Ø±Ø¶ 1-10 Ù…Ù† 245 Ù…Ù†ØªØ¬</span>
 <div class="flex gap-1">
 <button class="p-1 text-outline hover:text-primary hover:bg-surface-container-low rounded"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
 <button class="p-1 text-on-primary bg-primary rounded w-7 h-7 flex items-center justify-center font-label-sm text-label-sm">1</button>
@@ -460,21 +461,21 @@
 <div class="relative z-10">
 <div class="flex items-center gap-sm mb-md">
 <span class="material-symbols-outlined text-primary text-[24px]">qr_code_scanner</span>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">بحث الرقم التسلسلي</h3>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Ø¨Ø­Ø« Ø§Ù„Ø±Ù‚Ù… Ø§Ù„ØªØ³Ù„Ø³Ù„ÙŠ</h3>
 </div>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">امسح الباركود أو أدخل الرقم التسلسلي للتحقق من حالة وحدة معينة.</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">Ø§Ù…Ø³Ø­ Ø§Ù„Ø¨Ø§Ø±ÙƒÙˆØ¯ Ø£Ùˆ Ø£Ø¯Ø®Ù„ Ø§Ù„Ø±Ù‚Ù… Ø§Ù„ØªØ³Ù„Ø³Ù„ÙŠ Ù„Ù„ØªØ­Ù‚Ù‚ Ù…Ù† Ø­Ø§Ù„Ø© ÙˆØ­Ø¯Ø© Ù…Ø¹ÙŠÙ†Ø©.</p>
 <div class="relative mb-md">
-<input class="w-full bg-background border-2 border-primary/30 rounded py-3 px-4 pr-10 font-numeric-table text-numeric-table focus:outline-none focus:border-primary transition-colors text-left bg-primary/5" dir="ltr" placeholder="أدخل السيج.م (SN)..." type="text"/>
+<input class="w-full bg-background border-2 border-primary/30 rounded py-3 px-4 pr-10 font-numeric-table text-numeric-table focus:outline-none focus:border-primary transition-colors text-left bg-primary/5" dir="ltr" placeholder="Ø£Ø¯Ø®Ù„ Ø§Ù„Ø³ÙŠØ¬.Ù… (SN)..." type="text"/>
 <span class="material-symbols-outlined absolute right-3 top-3.5 text-primary">barcode</span>
 </div>
 <button class="w-full bg-primary-container text-on-primary hover:opacity-90 py-2.5 rounded font-label-lg text-label-lg font-bold transition-opacity h-[48px]">
-                                بحث وتحقق
+                                Ø¨Ø­Ø« ÙˆØªØ­Ù‚Ù‚
                             </button>
 </div>
 </div>
 <!-- Scan Result (Mock State - Found) -->
 <div class="bg-surface border border-border rounded-xl p-md shadow-sm">
-<h4 class="font-label-lg text-label-lg text-on-surface font-semibold mb-sm border-b border-border pb-2">نتيجة البحث الأخيرة</h4>
+<h4 class="font-label-lg text-label-lg text-on-surface font-semibold mb-sm border-b border-border pb-2">Ù†ØªÙŠØ¬Ø© Ø§Ù„Ø¨Ø­Ø« Ø§Ù„Ø£Ø®ÙŠØ±Ø©</h4>
 <div class="flex items-start gap-md mt-sm">
 <div class="w-12 h-12 bg-surface-container-low rounded flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-primary">smartphone</span>
@@ -485,9 +486,9 @@
 <div class="flex items-center justify-between">
 <span class="inline-flex items-center gap-1 bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded font-label-sm text-label-sm">
 <span class="w-2 h-2 rounded-full bg-primary"></span>
-                                        بالمخزن
+                                        Ø¨Ø§Ù„Ù…Ø®Ø²Ù†
                                     </span>
-<button class="text-primary text-label-sm font-label-sm hover:underline">التفاصيل</button>
+<button class="text-primary text-label-sm font-label-sm hover:underline">Ø§Ù„ØªÙØ§ØµÙŠÙ„</button>
 </div>
 </div>
 </div>
@@ -497,10 +498,10 @@
 <div class="flex items-start gap-sm">
 <span class="material-symbols-outlined text-warning mt-0.5">warning</span>
 <div>
-<h4 class="font-label-lg text-label-lg text-on-surface font-semibold mb-1">سيج.مات مؤقتة (Placeholders)</h4>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">يوجد <strong class="text-on-surface font-bold">12</strong> وحدة مسجلة بدون أرقام تسلسلية حقيقية.</p>
+<h4 class="font-label-lg text-label-lg text-on-surface font-semibold mb-1">Ø³ÙŠØ¬.Ù…Ø§Øª Ù…Ø¤Ù‚ØªØ© (Placeholders)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">ÙŠÙˆØ¬Ø¯ <strong class="text-on-surface font-bold">12</strong> ÙˆØ­Ø¯Ø© Ù…Ø³Ø¬Ù„Ø© Ø¨Ø¯ÙˆÙ† Ø£Ø±Ù‚Ø§Ù… ØªØ³Ù„Ø³Ù„ÙŠØ© Ø­Ù‚ÙŠÙ‚ÙŠØ©.</p>
 <button class="text-primary font-label-sm text-label-sm font-bold flex items-center gap-1 hover:underline">
-                                    معالجة الآن
+                                    Ù…Ø¹Ø§Ù„Ø¬Ø© Ø§Ù„Ø¢Ù†
                                     <span class="material-symbols-outlined text-[16px]">arrow_back</span>
 </button>
 </div>
@@ -515,7 +516,7 @@
 // FIX (live wiring): pulls real product stock counts from the backend
 // (see app/routes/inventory.py -> GET /api/inventory/products). Falls
 // back to the static mockup rows if the backend isn't running.
-const API_BASE = "";  // same-origin now — FastAPI serves this page too
+const API_BASE = "";  // same-origin now â€” FastAPI serves this page too
 const LOW_STOCK_THRESHOLD = 3;
 
 function escapeHtml(str) {
@@ -529,16 +530,16 @@ function renderRow(p) {
     const badgeClass = p.in_stock_count === 0
         ? "bg-danger/15 text-danger"
         : isLow ? "bg-warning/15 text-warning" : "bg-success/15 text-success";
-    const label = p.in_stock_count === 0 ? "نفدت الكمية" : `${p.in_stock_count} حبة`;
+    const label = p.in_stock_count === 0 ? "Ù†ÙØ¯Øª Ø§Ù„ÙƒÙ…ÙŠØ©" : `${p.in_stock_count} Ø­Ø¨Ø©`;
     return `
     <tr class="hover:bg-primary/5 transition-colors group cursor-pointer">
         <td class="py-3 px-4">
             <div class="flex flex-col">
                 <span class="font-body-md text-body-md text-on-surface font-medium">${escapeHtml(p.brand)} ${escapeHtml(p.model)}</span>
-                <span class="font-body-sm text-body-sm text-outline">السعر: ${Number(p.default_price).toLocaleString("en-US", {minimumFractionDigits: 2})} ج.م</span>
+                <span class="font-body-sm text-body-sm text-outline">Ø§Ù„Ø³Ø¹Ø±: ${Number(p.default_price).toLocaleString("en-US", {minimumFractionDigits: 2})} Ø¬.Ù…</span>
             </div>
         </td>
-        <td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">${p.is_serialized ? "متتبع بالسيريال" : "غير متتبع"}</td>
+        <td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">${p.is_serialized ? "Ù…ØªØªØ¨Ø¹ Ø¨Ø§Ù„Ø³ÙŠØ±ÙŠØ§Ù„" : "ØºÙŠØ± Ù…ØªØªØ¨Ø¹"}</td>
         <td class="py-3 px-4 text-center">
             <div class="inline-flex items-center justify-center ${badgeClass} px-2 py-1 rounded-full font-label-sm text-label-sm font-bold min-w-[70px]">
                 ${label}
@@ -560,7 +561,7 @@ async function loadInventory() {
         const products = await res.json();
         const rowsEl = document.getElementById("inv-rows");
         rowsEl.innerHTML = products.map(renderRow).join("") ||
-            `<tr><td colspan="5" class="p-md text-center text-on-surface-variant">لا توجد منتجات بعد</td></tr>`;
+            `<tr><td colspan="5" class="p-md text-center text-on-surface-variant">Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ù†ØªØ¬Ø§Øª Ø¨Ø¹Ø¯</td></tr>`;
 
         const selectEl = document.getElementById("product-form-select");
         const currentOptions = selectEl.innerHTML;
@@ -617,7 +618,7 @@ async function saveProductAndStock() {
         if (!productId) {
             const brand = document.getElementById("product-form-brand").value.trim();
             const model = document.getElementById("product-form-model").value.trim();
-            if (!brand || !model) { alert("محتاج الماركة والموديل للمنتج الجديد"); return; }
+            if (!brand || !model) { alert("Ù…Ø­ØªØ§Ø¬ Ø§Ù„Ù…Ø§Ø±ÙƒØ© ÙˆØ§Ù„Ù…ÙˆØ¯ÙŠÙ„ Ù„Ù„Ù…Ù†ØªØ¬ Ø§Ù„Ø¬Ø¯ÙŠØ¯"); return; }
             const res = await fetch(`${API_BASE}/api/inventory/products`, {
                 method: "POST", headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -637,7 +638,7 @@ async function saveProductAndStock() {
         };
         if (isSerialized) {
             const serial = document.getElementById("stock-form-serial").value.trim();
-            if (!serial) { alert("محتاج الرقم التسلسلي"); return; }
+            if (!serial) { alert("Ù…Ø­ØªØ§Ø¬ Ø§Ù„Ø±Ù‚Ù… Ø§Ù„ØªØ³Ù„Ø³Ù„ÙŠ"); return; }
             stockBody.serial_number = serial;
         } else {
             stockBody.quantity = Number(document.getElementById("stock-form-quantity").value) || 1;
@@ -651,7 +652,7 @@ async function saveProductAndStock() {
         closeProductModal();
         await loadInventory();
     } catch (err) {
-        alert(`تعذر الحفظ: ${err.message}`);
+        alert(`ØªØ¹Ø°Ø± Ø§Ù„Ø­ÙØ¸: ${err.message}`);
     }
 }
 

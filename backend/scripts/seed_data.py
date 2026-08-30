@@ -13,6 +13,7 @@ from __future__ import annotations
 from decimal import Decimal
 
 from app.database import SessionLocal, init_db
+from app.core.security import hash_password
 from app.models import Product, ShopSettings, User
 from app.services import crm_service, inventory_service, repairs_service, sales_service
 
@@ -22,10 +23,23 @@ def run() -> None:
     db = SessionLocal()
     try:
         # -- Users (matches the Settings screen mockup) ---------------------
+        # All seeded users share the same demo password so the app is easy
+        # to explore after a fresh install. Change them via the Settings
+        # screen (or the /api/settings/users endpoint) before going live.
+        demo_password = "1234"
         users = {
-            "ahmed": User(username="ahmed.m", full_name="أحمد محمود", role="admin"),
-            "khaled": User(username="khaled.s", full_name="خالد سعيد", role="cashier"),
-            "salem": User(username="salem.a", full_name="سالم علي", role="technician"),
+            "ahmed": User(
+                username="ahmed.m", full_name="أحمد محمود", role="admin",
+                password_hash=hash_password(demo_password),
+            ),
+            "khaled": User(
+                username="khaled.s", full_name="خالد سعيد", role="cashier",
+                password_hash=hash_password(demo_password),
+            ),
+            "salem": User(
+                username="salem.a", full_name="سالم علي", role="technician",
+                password_hash=hash_password(demo_password),
+            ),
         }
         for u in users.values():
             db.add(u)
