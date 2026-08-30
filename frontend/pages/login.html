@@ -150,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
         showErr(data.detail || "فشل تسجيل الدخول");
         return;
       }
-      window.ERPAuth.setToken(data.token);
       location.href = "/pages/dashboard.html";
     } catch (err) {
       showErr("تعذر الاتصال بالخادم");

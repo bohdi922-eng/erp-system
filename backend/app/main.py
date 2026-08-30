@@ -46,11 +46,14 @@ def business_error_handler(request: Request, exc: BusinessError):
 
 @app.middleware("http")
 async def protect_api(request: Request, call_next):
-    """Require a valid Bearer session token for every /api route except the
-    auth router and /api/health (which the frontend probes at login)."""
+    """Require a valid session token for every /api route except the auth
+    router and /api/health. The token comes from the Authorization header
+    (API clients) or the automatic erp_session cookie (browser users)."""
     path = request.url.path
     if path.startswith("/api/") and not path.startswith("/api/auth/"):
         token = request.headers.get("authorization", "").removeprefix("Bearer ").strip()
+        if not token:
+            token = request.cookies.get("erp_session", "")
         if token:
             from datetime import datetime
             from app.database import SessionLocal

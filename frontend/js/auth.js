@@ -1,9 +1,12 @@
 // ERP System — auth guard
-// Loaded on every page. Wraps fetch so the session token is attached to all
-// /api calls, and sends the user to /pages/login.html if the API says 401.
+// Loaded on every page. The session is owned by the server: the backend sets
+// an automatic erp_session cookie on login and checks it on every /api call,
+// so the browser never stores credentials and pages just work—the program
+// itself keeps the user logged in. (A stored token from an older version is
+// still sent if present, but it's no longer required.)
 
 (function () {
-  const TOKEN_KEY = "erp_session_token";
+  const TOKEN_KEY = "erp_session_token"; // legacy fallback only
   const LOGIN_URL = "/pages/login.html";
 
   window.ERPAuth = {
@@ -25,8 +28,8 @@
       location.href = LOGIN_URL;
     },
     async ensure() {
-      // Verify the stored token still works (idempotent, cheap).
-      if (!this.token()) { this.redirectToLogin(); return; }
+      // Ask the server whether this browser has a live session (via the
+      // automatic cookie); no local token is needed.
       try {
         const res = await fetch("/api/auth/me");
         if (!res.ok) this.redirectToLogin();
@@ -59,8 +62,9 @@
     return res;
   };
 
-  // Guard pages that must not be reachable logged-in already (login page).
-  if (window.ERPAuth.isLoginPage() && window.ERPAuth.token()) {
+  // Login page: if the server already has a session for this browser (cookie
+  // valid), go straight to the dashboard instead of asking again.
+  if (window.ERPAuth.isLoginPage()) {
     fetch("/api/auth/me").then((r) => { if (r.ok) location.href = "/pages/dashboard.html"; });
   }
 

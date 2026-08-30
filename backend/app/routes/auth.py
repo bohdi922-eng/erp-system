@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime, timedelta
 
 from fastapi import APIRouter, Depends, Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
@@ -14,10 +15,15 @@ from app.models import AuthSession, User
 
 router = APIRouter()
 
+SESSION_COOKIE = "erp_session"
+
 # Long-lived sliding session: stays valid as long as the user keeps using
 # the app (renewed on each authenticated request), so login happens once.
 SESSION_TTL = timedelta(days=30)
 RENEW_THRESHOLD = timedelta(days=1)
+# The cookie lives longer than the session itself so an active user is never
+# kicked out by the browser dropping it; the server decides validity/renewal.
+COOKIE_MAX_AGE = 365 * 24 * 60 * 60
 
 
 def _renew_if_due(db: Session, sess: AuthSession) -> None:
@@ -26,6 +32,15 @@ def _renew_if_due(db: Session, sess: AuthSession) -> None:
     if sess.expires_at - datetime.now() < RENEW_THRESHOLD:
         sess.expires_at = datetime.now() + SESSION_TTL
         db.commit()
+
+
+def _session_token(request: Request) -> str | None:
+    """Accept the token from the Authorization header (API clients / tests)
+    or from the automatic erp_session cookie (browser users)."""
+    auth = request.headers.get("authorization", "")
+    if auth.lower().startswith("bearer "):
+        return auth[7:].strip()
+    return request.cookies.get(SESSION_COOKIE)
 
 
 def _bearer_token(request: Request) -> str | None:
@@ -39,7 +54,7 @@ def get_current_user(
     request: Request, db: Session = Depends(get_session)
 ) -> User:
     """FastAPI dependency: returns the logged-in User or raises 401."""
-    token = _bearer_token(request)
+    token = _session_token(request)
     if not token:
         raise BusinessError("غير مسجل الدخول", 401)
     sess = db.scalar(
@@ -70,7 +85,7 @@ class LoginBody(BaseModel):
 
 
 @router.post("/login")
-def login(body: LoginBody, db: Session = Depends(get_session)) -> dict:
+def login(body: LoginBody, db: Session = Depends(get_session)):
     user = db.scalar(
         select(User).where(User.username == body.username.strip())
     )
@@ -86,16 +101,27 @@ def login(body: LoginBody, db: Session = Depends(get_session)) -> dict:
         expires_at=datetime.now() + SESSION_TTL,
     ))
     db.commit()
-    return {"token": token, "user": _user_dict(user)}
+    response = JSONResponse({"token": token, "user": _user_dict(user)})
+    response.set_cookie(
+        SESSION_COOKIE,
+        value=token,
+        max_age=COOKIE_MAX_AGE,
+        httponly=True,
+        samesite="lax",
+        path="/",
+    )
+    return response
 
 
 @router.post("/logout")
-def logout(request: Request, db: Session = Depends(get_session)) -> dict:
-    token = _bearer_token(request)
+def logout(request: Request, db: Session = Depends(get_session)):
+    token = _session_token(request)
     if token:
         db.execute(delete(AuthSession).where(AuthSession.token == token))
         db.commit()
-    return {"ok": True}
+    response = JSONResponse({"ok": True})
+    response.delete_cookie(SESSION_COOKIE, path="/")
+    return response
 
 
 @router.get("/me")
