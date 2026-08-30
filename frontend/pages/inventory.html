@@ -203,7 +203,7 @@
 <span class="material-symbols-outlined" data-icon="forum">forum</span>
 <span>واتساب بوت</span>
 </a>
-<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="#">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/reports.html">
 <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
 <span>التقارير</span>
 </a>
@@ -214,7 +214,7 @@
 </nav>
 <!-- Footer Tabs -->
 <div class="mt-auto border-t border-outline-variant p-sm space-y-unit">
-<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="#">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/settings.html">
 <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
 <span>الملف الشخصي</span>
 </a>
@@ -313,7 +313,7 @@
 <span class="material-symbols-outlined">help_outline</span>
 </button>
 <div class="hidden lg:flex gap-sm mr-sm pr-sm border-r border-outline-variant">
-<button class="border border-outline-variant text-on-surface bg-surface hover:bg-surface-container-low px-md py-1.5 rounded font-label-lg text-label-lg flex items-center gap-xs h-[40px]">
+<button onclick="document.getElementById('scan-lookup-input')?.focus(); document.getElementById('scan-lookup-input')?.scrollIntoView({ behavior:'smooth', block:'center' })" class="border border-outline-variant text-on-surface bg-surface hover:bg-surface-container-low px-md py-1.5 rounded font-label-lg text-label-lg flex items-center gap-xs h-[40px]">
 <span class="material-symbols-outlined text-[18px]">barcode_scanner</span>
                         الباركود
                     </button>
@@ -465,34 +465,16 @@
 </div>
 <p class="font-body-sm text-body-sm text-on-surface-variant mb-md">امسح الباركود أو أدخل الرقم التسلسلي للتحقق من حالة وحدة معينة.</p>
 <div class="relative mb-md">
-<input class="w-full bg-background border-2 border-primary/30 rounded py-3 px-4 pr-10 font-numeric-table text-numeric-table focus:outline-none focus:border-primary transition-colors text-left bg-primary/5" dir="ltr" placeholder="أدخل السيج.م (SN)..." type="text"/>
+<input id="scan-lookup-input" class="w-full bg-background border-2 border-primary/30 rounded py-3 px-4 pr-10 font-numeric-table text-numeric-table focus:outline-none focus:border-primary transition-colors text-left bg-primary/5" dir="ltr" placeholder="أدخل السيج.م (SN)..." type="text"/>
 <span class="material-symbols-outlined absolute right-3 top-3.5 text-primary">barcode</span>
 </div>
-<button class="w-full bg-primary-container text-on-primary hover:opacity-90 py-2.5 rounded font-label-lg text-label-lg font-bold transition-opacity h-[48px]">
+<button id="scan-lookup-btn" class="w-full bg-primary-container text-on-primary hover:opacity-90 py-2.5 rounded font-label-lg text-label-lg font-bold transition-opacity h-[48px]">
                                 بحث وتحقق
                             </button>
 </div>
 </div>
-<!-- Scan Result (Mock State - Found) -->
-<div class="bg-surface border border-border rounded-xl p-md shadow-sm">
-<h4 class="font-label-lg text-label-lg text-on-surface font-semibold mb-sm border-b border-border pb-2">نتيجة البحث الأخيرة</h4>
-<div class="flex items-start gap-md mt-sm">
-<div class="w-12 h-12 bg-surface-container-low rounded flex items-center justify-center flex-shrink-0">
-<span class="material-symbols-outlined text-primary">smartphone</span>
-</div>
-<div class="flex-1">
-<h5 class="font-body-md text-body-md text-on-surface font-medium leading-tight mb-1">iPhone 14 Pro Max</h5>
-<p class="font-numeric-table text-label-sm text-outline text-left mb-2" dir="ltr">SN: F4G9H8J7K6L5</p>
-<div class="flex items-center justify-between">
-<span class="inline-flex items-center gap-1 bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded font-label-sm text-label-sm">
-<span class="w-2 h-2 rounded-full bg-primary"></span>
-                                        بالمخزن
-                                    </span>
-<button class="text-primary text-label-sm font-label-sm hover:underline">التفاصيل</button>
-</div>
-</div>
-</div>
-</div>
+<!-- Serial Lookup Result -->
+<div id="scan-result-box" class="bg-surface border border-border rounded-xl p-md shadow-sm hidden"></div>
 <!-- Placeholder Serials Alert -->
 <div class="bg-warning/10 border border-warning/30 rounded-xl p-md shadow-sm">
 <div class="flex items-start gap-sm">
@@ -523,6 +505,10 @@ function escapeHtml(str) {
     const div = document.createElement("div");
     div.textContent = str ?? "";
     return div.innerHTML;
+}
+
+function fmt(n) {
+    return Number(n || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function renderRow(p) {
@@ -662,6 +648,62 @@ document.getElementById("product-modal-cancel")?.addEventListener("click", close
 document.getElementById("product-modal-save")?.addEventListener("click", saveProductAndStock);
 document.getElementById("product-form-select")?.addEventListener("change", toggleProductModalFields);
 document.getElementById("product-form-serialized")?.addEventListener("change", toggleProductModalFields);
+
+// -- Serial / barcode lookup -------------------------------------------------
+const STATUS_AR = {
+    in_stock: ["بالمخزن", "bg-success/10 text-success", "bg-success"],
+    sold: ["مباع", "bg-primary/10 text-primary", "bg-primary"],
+    returned: ["مرتجع/بالمخزن", "bg-warning/10 text-warning", "bg-warning"],
+    in_repair: ["قيد الإصلاح", "bg-warning/10 text-warning", "bg-warning"],
+};
+
+function renderScanResult(item) {
+    const box = document.getElementById("scan-result-box");
+    box.classList.remove("hidden");
+    const [label, cls, dotCls] = STATUS_AR[item.status] || [item.status || "غير معروف", "bg-surface-container-high text-on-surface-variant", "bg-outline"];
+    box.innerHTML = `
+        <h4 class="font-label-lg text-label-lg text-on-surface font-semibold mb-sm border-b border-border pb-2">نتيجة البحث</h4>
+        <div class="flex items-start gap-md mt-sm">
+            <div class="w-12 h-12 bg-surface-container-low rounded flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-primary">qr_code_scanner</span>
+            </div>
+            <div class="flex-1">
+                <h5 class="font-body-md text-body-md text-on-surface font-medium leading-tight mb-1">${escapeHtml(item.product_name || "منتج")}</h5>
+                <p class="font-numeric-table text-label-sm text-outline text-left mb-2" dir="ltr">SN: ${escapeHtml(item.serial_number || item.uuid)}</p>
+                <div class="flex items-center justify-between">
+                    <span class="inline-flex items-center gap-1 ${cls} px-2 py-0.5 rounded font-label-sm text-label-sm">
+                        <span class="w-2 h-2 rounded-full ${dotCls}"></span> ${label}
+                    </span>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">${fmt(Number(item.default_price || 0))} ج.م</span>
+                </div>
+            </div>
+        </div>`;
+    box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+async function lookupSerial() {
+    const input = document.getElementById("scan-lookup-input");
+    const box = document.getElementById("scan-result-box");
+    const q = input.value.trim();
+    if (!q) { box.classList.add("hidden"); return; }
+    try {
+        const res = await fetch(`${API_BASE}/api/sales/items/lookup?serial=${encodeURIComponent(q)}`);
+        const item = res.ok ? await res.json() : null;
+        if (item) {
+            renderScanResult(item);
+        } else {
+            box.classList.remove("hidden");
+            box.innerHTML = `<p class="font-body-sm text-body-sm text-on-surface-variant">لا توجد وحدة بهذا الرقم التسلسلي (${escapeHtml(q)}).</p>`;
+        }
+    } catch (err) {
+        console.warn("Serial lookup failed:", err);
+        box.classList.remove("hidden");
+        box.innerHTML = `<p class="font-body-sm text-body-sm text-danger">تعذر البحث — تأكد إن السيرفر شغال.</p>`;
+    }
+}
+
+document.getElementById("scan-lookup-btn")?.addEventListener("click", lookupSerial);
+document.getElementById("scan-lookup-input")?.addEventListener("keydown", (e) => { if (e.key === "Enter") lookupSerial(); });
 
 loadInventory();
 </script>

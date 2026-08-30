@@ -302,7 +302,7 @@
 </li>
 <!-- Reports (Inactive) -->
 <li>
-<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="#">
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/reports.html">
 <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
 <span class="font-label-lg text-label-lg">التقارير</span>
 </a>
@@ -320,7 +320,7 @@
 <div class="mt-auto border-t border-surface-variant p-sm">
 <ul class="flex flex-col gap-xs">
 <li>
-<a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low transition-colors rounded-lg" href="/pages/settings.html">
 <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
 <span class="font-label-lg text-label-lg">الملف الشخصي</span>
 </a>
@@ -641,7 +641,7 @@
                             </h3>
 <div class="flex flex-col gap-md">
 <p class="font-body-sm text-body-sm text-on-surface-variant">
-                                    آخر نسخة احتياطية تمت في: <span class="font-numeric-table" dir="ltr">2023-10-25 14:30</span>
+                                    آخر نسخة احتياطية تمت في: <span class="font-numeric-table" dir="ltr" id="backup-last-at">—</span>
 </p>
 <div class="flex items-center justify-between mt-sm">
 <span class="font-body-md text-body-md text-on-surface">نسخ احتياطي تلقائي (يومياً)</span>
@@ -651,7 +651,7 @@
 <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
 </label>
 </div>
-<button class="mt-md w-full border border-primary text-primary font-label-lg text-label-lg py-sm rounded-lg hover:bg-primary/5 transition-colors flex items-center justify-center gap-sm">
+<button id="backup-now-btn" class="mt-md w-full border border-primary text-primary font-label-lg text-label-lg py-sm rounded-lg hover:bg-primary/5 transition-colors flex items-center justify-center gap-sm">
 <span class="material-symbols-outlined text-[18px]">cloud_download</span>
                                     إنشاء نسخة احتياطية الآن
                                 </button>
@@ -865,6 +865,36 @@ document.getElementById("users-rows")?.addEventListener("click", (e) => {
 document.getElementById("save-shop-settings-btn")?.addEventListener("click", (e) => {
     e.preventDefault();
     saveShopSettings();
+});
+
+// Backup: download a real snapshot from /api/backup/download
+const backupBtn = document.getElementById("backup-now-btn");
+backupBtn?.addEventListener("click", async () => {
+    const original = backupBtn.innerHTML;
+    backupBtn.disabled = true;
+    backupBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">downloading</span> جارٍ إنشاء النسخة...';
+    try {
+        const res = await fetch(`${API_BASE}/api/backup/download`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const blob = await res.blob();
+        const disposition = res.headers.get("Content-Disposition") || "";
+        const match = disposition.match(/filename="?([^";]+)/);
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = match ? match[1] : `erp_backup_${Date.now()}.db`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(a.href);
+        const el = document.getElementById("backup-last-at");
+        if (el) el.textContent = new Date().toLocaleString("en-GB").replace(",", "");
+        alert("تم إنشاء النسخة الاحتياطية وتنزيلها بنجاح");
+    } catch (err) {
+        alert(`تعذر إنشاء النسخة الاحتياطية: ${err.message}`);
+    } finally {
+        backupBtn.disabled = false;
+        backupBtn.innerHTML = original;
+    }
 });
 
 loadShopSettings();

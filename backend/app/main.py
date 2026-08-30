@@ -20,7 +20,8 @@ from app.core.exceptions import BusinessError
 from app.database import init_db
 from app.models import AuthSession
 from app.routes import (
-    auth, customers, dashboard, inventory, repairs, sales, settings, whatsapp,
+    auth, backup, customers, dashboard, inventory, repairs, sales, settings,
+    whatsapp,
 )
 
 FRONTEND_DIR = Path(__file__).resolve().parent.parent.parent / "frontend"
@@ -106,6 +107,7 @@ app.include_router(customers.router, prefix="/api/customers", tags=["customers"]
 app.include_router(inventory.router, prefix="/api/inventory", tags=["inventory"])
 app.include_router(settings.router, prefix="/api/settings", tags=["settings"])
 app.include_router(whatsapp.router, prefix="/api/whatsapp", tags=["whatsapp"])
+app.include_router(backup.router, prefix="/api/backup", tags=["backup"])
 
 
 @app.get("/")

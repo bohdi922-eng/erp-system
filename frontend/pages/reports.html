@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>التقارير - نظام ERP</title>
+<script src="/vendor/tailwind.js"></script>
+<script src="/js/auth.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#81d4dc",
+                      "surface-container-low": "#f1f4f8",
+                      "inverse-primary": "#a8c8ff",
+                      "tertiary-fixed": "#d6e3ff",
+                      "on-primary-container": "#b5cfff",
+                      "on-error-container": "#93000a",
+                      "surface-tint": "#135eaf",
+                      "on-tertiary-fixed-variant": "#1a4681",
+                      "background": "#f7fafe",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface": "#181c1f",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed": "#001b3c",
+                      "surface-container-highest": "#e0e3e7",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed": "#001b3d",
+                      "surface-bright": "#f7fafe",
+                      "tertiary-fixed-dim": "#a9c7ff",
+                      "surface-container": "#ebeef2",
+                      "surface-variant": "#e0e3e7",
+                      "inverse-on-surface": "#eef1f5",
+                      "on-background": "#181c1f",
+                      "text-secondary": "#888888",
+                      "inverse-surface": "#2d3134",
+                      "secondary-fixed": "#9df0f8",
+                      "text-primary": "#333333",
+                      "secondary-container": "#9df0f8",
+                      "on-surface-variant": "#424751",
+                      "primary-container": "#0057a8",
+                      "on-secondary-fixed-variant": "#004f55",
+                      "surface": "#ffffff",
+                      "surface-container-high": "#e5e8ec",
+                      "danger": "#dc3545",
+                      "tertiary-container": "#2f5893",
+                      "on-secondary": "#ffffff",
+                      "outline": "#727783",
+                      "warning": "#f59e0b",
+                      "on-secondary-fixed": "#002022",
+                      "tertiary": "#10407a",
+                      "primary": "#00407e",
+                      "success": "#00b894",
+                      "on-tertiary-container": "#b6cfff",
+                      "on-secondary-container": "#026f77",
+                      "surface-dim": "#d7dade",
+                      "primary-fixed": "#d5e3ff",
+                      "secondary": "#006970",
+                      "border": "#e0e0e0",
+                      "on-primary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "info": "#0057a8",
+                      "on-primary-fixed-variant": "#00468a",
+                      "primary-fixed-dim": "#a8c8ff",
+                      "outline-variant": "#c2c6d3"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "sidebar-width": "260px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "unit": "4px",
+                      "xs": "4px",
+                      "margin-desktop": "32px",
+                      "xl": "32px",
+                      "margin-mobile": "16px",
+                      "sm": "8px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Cairo", "sans-serif"],
+                      "numeric-table": ["Cairo", "sans-serif"],
+                      "body-lg": ["Cairo", "sans-serif"],
+                      "headline-sm": ["Cairo", "sans-serif"],
+                      "label-lg": ["Cairo", "sans-serif"],
+                      "headline-lg": ["Cairo", "sans-serif"],
+                      "body-md": ["Cairo", "sans-serif"],
+                      "headline-md": ["Cairo", "sans-serif"],
+                      "label-sm": ["Cairo", "sans-serif"],
+                      "body-sm": ["Cairo", "sans-serif"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                      "numeric-table": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<link href="/vendor/fonts.css" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen w-full overflow-hidden flex selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- SideNavBar -->
+<aside class="bg-surface fixed right-0 top-0 h-full w-sidebar-width border-l border-outline-variant flex flex-col z-50">
+<div class="h-24 px-lg flex items-center gap-md border-b border-surface-dim">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">نظام ERP</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">التقارير</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-md px-sm flex flex-col gap-unit">
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-lg text-label-lg">لوحة القيادة</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/sales_new_invoice.html">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-lg text-label-lg">المبيعات</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/inventory.html">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-lg text-label-lg">المخزون</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/repairs_board.html">
+<span class="material-symbols-outlined">build</span>
+<span class="font-label-lg text-label-lg">الإصلاحات</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/whatsapp_bot.html">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-label-lg text-label-lg">واتساب بوت</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-primary font-bold border-r-4 border-primary bg-primary/5 transition-colors" href="/pages/reports.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-lg text-label-lg">التقارير</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/settings.html">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-lg text-label-lg">الإعدادات</span>
+</a>
+</nav>
+<div class="p-lg border-t border-surface-dim flex flex-col gap-md">
+<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-lg font-label-lg text-label-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-sm" onclick="location.href='/pages/sales_new_invoice.html'">
+<span class="material-symbols-outlined">add</span>
+                عملية بيع جديدة
+            </button>
+<div class="flex flex-col gap-unit mt-4">
+<a data-logout href="#" class="flex items-center gap-md px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+                    تسجيل الخروج
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 mr-sidebar-width flex flex-col h-screen overflow-hidden bg-background">
+<header class="bg-surface-container-lowest/80 backdrop-blur-md sticky top-0 z-40 border-b border-outline-variant flex justify-between items-center w-full px-margin-desktop h-16 flex-shrink-0">
+<div class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-all" href="/pages/dashboard.html">الرئيسية</a>
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-all" href="/pages/sales_new_invoice.html">الفواتير</a>
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-all" href="/pages/customer_statement.html">العملاء</a>
+</div>
+<button onclick="refreshAll()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm hover:bg-primary-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">refresh</span> تحديث البيانات
+            </button>
+</header>
+<div class="flex-1 overflow-y-auto p-margin-desktop bg-background">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">التقارير</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">نظرة موحّدة على البيانات الحية للنشاط التجاري.</p>
+<!-- Summary Cards -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-md mb-lg">
+<div class="bg-surface rounded-xl border border-outline-variant p-md shadow-sm">
+<span class="font-label-sm text-label-sm text-text-secondary">إجمالي الفواتير</span>
+<p id="rpt-invoice-count" class="font-headline-md text-headline-md font-bold text-on-surface mt-1">—</p>
+</div>
+<div class="bg-surface rounded-xl border border-outline-variant p-md shadow-sm">
+<span class="font-label-sm text-label-sm text-text-secondary">إجمالي الإيرادات</span>
+<p id="rpt-revenue" class="font-headline-md text-headline-md font-bold text-success mt-1">—</p>
+</div>
+<div class="bg-surface rounded-xl border border-outline-variant p-md shadow-sm">
+<span class="font-label-sm text-label-sm text-text-secondary">ديون العملاء</span>
+<p id="rpt-outstanding" class="font-headline-md text-headline-md font-bold text-warning mt-1">—</p>
+</div>
+<div class="bg-surface rounded-xl border border-outline-variant p-md shadow-sm">
+<span class="font-label-sm text-label-sm text-text-secondary">إصلاحات مفتوحة</span>
+<p id="rpt-open-repairs" class="font-headline-md text-headline-md font-bold text-primary mt-1">—</p>
+</div>
+</div>
+<div class="flex flex-col gap-lg">
+<!-- Aging -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-md py-sm border-b border-outline-variant bg-surface-container-lowest flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">كشف أعمار الديون</h3>
+<span class="font-label-sm text-label-sm text-text-secondary">Aging Report</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">العميل</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">الهاتف</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">حالي</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">1-30</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">31-60</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">61-90</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">+90</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">الإجمالي</th>
+</tr>
+</thead>
+<tbody id="rpt-aging-rows" class="font-body-md text-body-md divide-y divide-surface-variant">
+<tr><td colspan="8" class="py-md px-md text-center text-on-surface-variant">جارٍ التحميل...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Invoices -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-md py-sm border-b border-outline-variant bg-surface-container-lowest flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">أحدث الفواتير</h3>
+<a href="/pages/sales_new_invoice.html" class="text-primary font-label-sm text-label-sm hover:underline">إنشاء فاتورة جديدة</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">رقم الفاتورة</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">العميل</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">التاريخ</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">الإجمالي</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">الحالة</th>
+</tr>
+</thead>
+<tbody id="rpt-invoice-rows" class="font-body-md text-body-md divide-y divide-surface-variant">
+<tr><td colspan="5" class="py-md px-md text-center text-on-surface-variant">جارٍ التحميل...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Low stock -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-md py-sm border-b border-outline-variant bg-surface-container-lowest flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">منتجات منخفضة المخزون</h3>
+<a href="/pages/inventory.html" class="text-primary font-label-sm text-label-sm hover:underline">إدارة المخزون</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">المنتج</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">النوع</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">سعر البيع</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">المتوفر</th>
+</tr>
+</thead>
+<tbody id="rpt-lowstock-rows" class="font-body-md text-body-md divide-y divide-surface-variant">
+<tr><td colspan="4" class="py-md px-md text-center text-on-surface-variant">جارٍ التحميل...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Repairs status -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-md py-sm border-b border-outline-variant bg-surface-container-lowest flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">حالة ورشة الإصلاح</h3>
+<a href="/pages/repairs_board.html" class="text-primary font-label-sm text-label-sm hover:underline">فتح اللوحة</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md p-md" id="rpt-repair-status"></div>
+</div>
+</div>
+</div>
+</main>
+<script>
+const API_BASE = "";
+
+function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str ?? "";
+    return div.innerHTML;
+}
+
+function fmt(n) {
+    return Number(n || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+const STATUS_AR = { paid: "مدفوعة", partial: "مدفوعة جزئياً", pending: "معلقة", overdue: "متأخرة" };
+const STATUS_CLS = { paid: "bg-success/10 text-success", partial: "bg-warning/10 text-warning", pending: "bg-surface-container-high text-on-surface-variant", overdue: "bg-danger/10 text-danger" };
+const REPAIR_LABEL = [
+    ["received", "تم الاستلام", "bg-outline", "text-on-surface-variant"],
+    ["with_technician", "عند الفني", "bg-warning", "text-warning"],
+    ["returned", "جاهز للاستلام", "bg-success", "text-success"],
+    ["delivered", "تم التسليم", "bg-primary", "text-primary"],
+];
+
+let cachedProducts = [];
+let cachedInvoices = [];
+let cachedAging = [];
+let cachedBoard = null;
+
+async function fetchJson(url) {
+    const res = await fetch(`${API_BASE}${url}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+}
+
+function renderAging(rows) {
+    const el = document.getElementById("rpt-aging-rows");
+    if (!rows.length) {
+        el.innerHTML = `<tr><td colspan="8" class="py-md px-md text-center text-on-surface-variant">لا توجد ديون حالياً</td></tr>`;
+        return;
+    }
+    el.innerHTML = rows.map(r => `
+        <tr class="hover:bg-primary/5 transition-colors">
+            <td class="py-md px-md font-semibold text-on-surface">${escapeHtml(r.name)}</td>
+            <td class="py-md px-md font-numeric-table" dir="ltr">${escapeHtml(r.phone || "-")}</td>
+            <td class="py-md px-md font-numeric-table ${Number(r.current) ? "text-on-surface" : "text-text-secondary"}">${fmt(r.current)}</td>
+            <td class="py-md px-md font-numeric-table">${fmt(r.d1_30)}</td>
+            <td class="py-md px-md font-numeric-table">${fmt(r.d31_60)}</td>
+            <td class="py-md px-md font-numeric-table">${fmt(r.d61_90)}</td>
+            <td class="py-md px-md font-numeric-table text-danger">${fmt(r.d90)}</td>
+            <td class="py-md px-md font-numeric-table font-bold text-on-surface">${fmt(r.total)}</td>
+        </tr>`).join("");
+}
+
+function renderInvoices(rows) {
+    const el = document.getElementById("rpt-invoice-rows");
+    if (!rows.length) {
+        el.innerHTML = `<tr><td colspan="5" class="py-md px-md text-center text-on-surface-variant">لا توجد فواتير بعد</td></tr>`;
+        return;
+    }
+    el.innerHTML = rows.map(inv => {
+        const cls = STATUS_CLS[inv.status] || STATUS_CLS.pending;
+        const label = STATUS_AR[inv.status] || inv.status;
+        return `
+        <tr class="hover:bg-primary/5 transition-colors">
+            <td class="py-md px-md font-numeric-table text-primary font-semibold" dir="ltr">${escapeHtml(inv.number)}</td>
+            <td class="py-md px-md">${escapeHtml(inv.customer || "—")}</td>
+            <td class="py-md px-md font-numeric-table text-on-surface-variant" dir="ltr">${escapeHtml(inv.invoice_date.slice(0, 10))}</td>
+            <td class="py-md px-md font-numeric-table font-semibold text-on-surface">${fmt(inv.total)}</td>
+            <td class="py-md px-md"><span class="inline-flex items-center gap-xs ${cls} px-2 py-1 rounded-full font-label-sm text-label-sm">${label}</span></td>
+        </tr>`;
+    }).join("");
+}
+
+function renderLowStock(products) {
+    const el = document.getElementById("rpt-lowstock-rows");
+    const low = products.filter(p => Number(p.in_stock_count || 0) <= 3);
+    if (!low.length) {
+        el.innerHTML = `<tr><td colspan="4" class="py-md px-md text-center text-on-surface-variant">لا توجد منتجات منخفضة — المخزون سليم</td></tr>`;
+        return;
+    }
+    el.innerHTML = low.map(p => {
+        const cls = p.in_stock_count === 0 ? "bg-danger/15 text-danger" : "bg-warning/15 text-warning";
+        return `
+        <tr class="hover:bg-primary/5 transition-colors">
+            <td class="py-md px-md font-semibold text-on-surface">${escapeHtml(p.brand)} ${escapeHtml(p.model)}</td>
+            <td class="py-md px-md text-on-surface-variant">${p.is_serialized ? "متتبع بالسيريال" : "غير متتبع"}</td>
+            <td class="py-md px-md font-numeric-table">${fmt(p.default_price)}</td>
+            <td class="py-md px-md"><span class="inline-flex items-center ${cls} px-2 py-1 rounded-full font-label-sm text-label-sm font-bold">${p.in_stock_count === 0 ? "نفدت الكمية" : p.in_stock_count + " حبة"}</span></td>
+        </tr>`;
+    }).join("");
+}
+
+function renderRepairStatus(counts) {
+    const el = document.getElementById("rpt-repair-status");
+    el.innerHTML = REPAIR_LABEL.map(([key, label, color, textCls]) => `
+        <div class="bg-surface-container-low rounded-xl border border-outline-variant p-md text-center">
+            <div class="w-3 h-3 rounded-full ${color} mx-auto mb-sm"></div>
+            <p class="font-headline-lg text-headline-lg font-bold ${textCls}">${counts[key] || 0}</p>
+            <span class="font-label-sm text-label-sm text-on-surface-variant">${label}</span>
+        </div>`).join("");
+}
+
+async function refreshAll() {
+    const invSpinner = document.getElementById("rpt-invoice-count");
+    invSpinner.textContent = "جارٍ التحديث...";
+    try {
+        const [products, invoices, aging, board] = await Promise.all([
+            fetchJson("/api/inventory/products"),
+            fetchJson("/api/sales/invoices"),
+            fetchJson("/api/customers/reports/aging"),
+            fetchJson("/api/repairs/board"),
+        ]);
+        cachedProducts = products; cachedInvoices = invoices; cachedAging = aging; cachedBoard = board;
+
+        renderAging(aging);
+        renderInvoices(invoices);
+        renderLowStock(products);
+        renderRepairStatus((board.counts || {}));
+
+        document.getElementById("rpt-invoice-count").textContent = invoices.length;
+        document.getElementById("rpt-revenue").textContent = fmt(invoices.reduce((s, i) => s + Number(i.total || 0), 0));
+        document.getElementById("rpt-outstanding").textContent = fmt(aging.reduce((s, r) => s + Number(r.total || 0), 0));
+        const open = (board.counts?.received || 0) + (board.counts?.with_technician || 0) + (board.counts?.returned || 0);
+        document.getElementById("rpt-open-repairs").textContent = open;
+    } catch (err) {
+        console.warn("Reports live data unavailable:", err);
+        invSpinner.textContent = "—";
+    }
+}
+
+refreshAll();
+</script>
+</body></html>

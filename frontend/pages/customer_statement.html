@@ -168,8 +168,8 @@
                     </a>
 </li>
 <li>
-<a class="flex items-center gap-md px-md py-sm rounded-lg text-primary dark:text-primary-fixed font-bold border-r-4 border-primary dark:border-primary-fixed bg-primary/5 font-label-lg text-label-lg" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors font-label-lg text-label-lg" href="/pages/reports.html">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
                         التقارير
                     </a>
 </li>
@@ -184,7 +184,7 @@
 <div class="mt-auto border-t border-outline-variant p-sm">
 <ul class="flex flex-col gap-xs">
 <li>
-<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="#">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/settings.html">
 <span class="material-symbols-outlined">account_circle</span>
                         الملف الشخصي
                     </a>
@@ -206,7 +206,7 @@
 <nav class="hidden md:flex gap-lg">
 <a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-all font-label-lg text-label-lg pb-md mt-md" href="/pages/dashboard.html">الرئيسية</a>
 <a class="text-primary dark:text-primary-fixed font-bold border-b-2 border-primary font-label-lg text-label-lg pb-md mt-md" href="/pages/customer_statement.html">العملاء</a>
-<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-all font-label-lg text-label-lg pb-md mt-md" href="#">الفواتير</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-all font-label-lg text-label-lg pb-md mt-md" href="/pages/sales_new_invoice.html">الفواتير</a>
 </nav>
 </div>
 <div class="flex items-center gap-md">
@@ -218,11 +218,11 @@
 <span class="absolute top-1 right-1 w-2 h-2 bg-danger rounded-full"></span>
 </button>
 <div class="h-8 w-px bg-outline-variant mx-sm"></div>
-<button class="flex items-center gap-sm bg-surface-container text-on-surface font-label-lg text-label-lg py-xs px-md rounded border border-outline-variant hover:bg-surface-container-high transition-colors">
+<button onclick="location.href='/pages/sales_new_invoice.html'" class="flex items-center gap-sm bg-surface-container text-on-surface font-label-lg text-label-lg py-xs px-md rounded border border-outline-variant hover:bg-surface-container-high transition-colors">
 <span class="material-symbols-outlined text-[18px]">barcode_scanner</span>
                     الباركود
                 </button>
-<button class="bg-primary text-on-primary font-label-lg text-label-lg py-xs px-md rounded hover:bg-primary-container transition-colors shadow-sm">
+<button onclick="location.href='/pages/inventory.html'" class="bg-primary text-on-primary font-label-lg text-label-lg py-xs px-md rounded hover:bg-primary-container transition-colors shadow-sm">
                     إضافة صنف
                 </button>
 <img alt="صورة المستخدم" class="w-8 h-8 rounded-full ml-md object-cover border border-outline-variant" data-alt="A professional headshot of a Middle Eastern male retail manager in a modern office environment, soft natural lighting, high resolution, corporate style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0loRQRS8P8qSkZ6O4kyvihd3rSU_45MMMh4qr0f9gJaaSxz5DQwu9lnBVYR6NyxrMH7BwGluxqOAhi16g-ku3RKbWkKX2wDqc-s0SMRO91EaE67_jLb1sNqT8sMEy7y49Aaa-_q_djlLyhV8qkESiam0P6snNJkssaP-Wxko7UxdX9RW4K-9n8sUnqGzX7J8nl3WfIznyGfMkVAY1U95i-lUqoDEdnXl9a3gEWYU6sm3i8FBDXqDwlQ"/>
@@ -231,17 +231,21 @@
 <!-- Page Content -->
 <div class="p-margin-desktop w-full max-w-7xl mx-auto flex flex-col gap-lg">
 <!-- Report Actions (No Print) -->
-<div class="flex justify-between items-center no-print">
+<div class="flex justify-between items-center no-print flex-wrap gap-md">
 <div class="flex items-center gap-md">
-<button class="text-text-secondary hover:text-primary transition-colors flex items-center gap-xs font-label-lg text-label-lg">
+<button onclick="location.href='/pages/dashboard.html'" class="text-text-secondary hover:text-primary transition-colors flex items-center gap-xs font-label-lg text-label-lg">
 <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
-                        رجوع للعملاء
+                        رجوع
                     </button>
+<span class="h-6 w-px bg-outline-variant"></span>
+<label class="flex items-center gap-xs font-label-lg text-label-lg text-on-surface-variant">
+<select id="stmt-customer-select" class="bg-surface border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface focus:border-primary outline-none max-w-xs"></select>
+</label>
 </div>
 <div class="flex gap-md">
-<button class="border border-outline bg-surface text-on-surface hover:bg-surface-container-low font-label-lg text-label-lg py-sm px-md rounded flex items-center gap-sm transition-colors">
+<button onclick="window.print()" class="border border-outline bg-surface text-on-surface hover:bg-surface-container-low font-label-lg text-label-lg py-sm px-md rounded flex items-center gap-sm transition-colors">
 <span class="material-symbols-outlined text-[18px]">download</span>
-                        تصدير PDF
+                        تصدير / طباعة
                     </button>
 <button class="bg-primary text-on-primary hover:bg-primary-container font-label-lg text-label-lg py-sm px-md rounded flex items-center gap-sm transition-colors shadow-sm" onclick="window.print()">
 <span class="material-symbols-outlined text-[18px]">print</span>
@@ -285,13 +289,13 @@
 <!-- Print Only Summary (Visible only in print) -->
 <div class="hidden print:flex justify-between items-center bg-gray-100 p-md rounded border border-gray-300">
 <div>
-<span class="font-bold">إجمالي المديونية:</span> 45,250.00 ج.م
+<span class="font-bold">إجمالي المديونية:</span> <span id="stmt-print-debit">0.00</span> ج.م
                     </div>
 <div>
-<span class="font-bold">إجمالي المدفوعات:</span> 32,100.00 ج.م
+<span class="font-bold">إجمالي المدفوعات:</span> <span id="stmt-print-credit">0.00</span> ج.م
                     </div>
 <div class="text-lg font-bold">
-<span class="text-black">الرصيد المستحق:</span> 13,150.00 ج.م
+<span class="text-black">الرصيد المستحق:</span> <span id="stmt-print-balance">0.00</span> ج.م
                     </div>
 </div>
 <!-- Ledger Table -->
@@ -413,9 +417,9 @@
 <tfoot>
 <tr class="bg-surface-container border-t-2 border-primary print-bg-gray">
 <td class="p-md font-headline-sm text-headline-sm text-on-surface text-left" colspan="3">الإجماليات:</td>
-<td class="p-md font-numeric-table text-numeric-table font-bold text-left text-danger">45,250.00</td>
-<td class="p-md font-numeric-table text-numeric-table font-bold text-left text-success">32,100.00</td>
-<td class="p-md font-numeric-table text-numeric-table font-bold text-left text-primary bg-primary/10">13,150.00</td>
+<td id="stmt-tfoot-debit" class="p-md font-numeric-table text-numeric-table font-bold text-left text-danger">0.00</td>
+<td id="stmt-tfoot-credit" class="p-md font-numeric-table text-numeric-table font-bold text-left text-success">0.00</td>
+<td id="stmt-tfoot-balance" class="p-md font-numeric-table text-numeric-table font-bold text-left text-primary bg-primary/10">0.00</td>
 </tr>
 </tfoot>
 </table>
@@ -499,7 +503,6 @@
 // instead of hardcoding an ID, since seed order can change ID numbers.
 // Falls back to the static mockup numbers if the backend isn't running.
 const API_BASE = "";  // same-origin now — FastAPI serves this page too
-const TARGET_CUSTOMER_NAME = "شركة الأفق الذهبي للتجارة";
 
 function fmt(n) {
     return Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -512,7 +515,7 @@ function renderRow(e) {
     const credit = Number(e.credit) > 0 ? fmt(e.credit) : "-";
     return `
     <tr class="border-b border-border hover:bg-primary/5 transition-colors">
-        <td class="p-md text-on-surface-variant">${e.date}</td>
+        <td class="p-md text-on-surface-variant">${e.date.slice(0, 10)}</td>
         <td class="p-md text-on-surface-variant">${e.number}</td>
         <td class="p-md font-body-sm text-body-sm font-semibold text-on-surface">${e.description}</td>
         <td class="p-md text-left text-on-surface-variant">${debit}</td>
@@ -521,18 +524,21 @@ function renderRow(e) {
     </tr>`;
 }
 
+let selectedCustomer = null;
+
+function setCustomerSummary(customer) {
+    document.getElementById("stmt-account-number").textContent = `CUST-${String(customer.id).padStart(4, "0")}`;
+    document.getElementById("stmt-phone").textContent = customer.phone || "-";
+}
+
 async function loadStatement() {
+    if (!selectedCustomer) return;
     try {
-        const custRes = await fetch(`${API_BASE}/api/customers?q=${encodeURIComponent(TARGET_CUSTOMER_NAME)}`);
-        if (!custRes.ok) throw new Error(`HTTP ${custRes.status}`);
-        const customers = await custRes.json();
-        const customer = customers.find(c => c.name === TARGET_CUSTOMER_NAME) || customers[0];
-        if (!customer) throw new Error("Customer not found");
+        document.getElementById("stmt-customer-name").textContent = selectedCustomer.name;
+        setCustomerSummary(selectedCustomer);
 
-        document.getElementById("stmt-customer-name").textContent = customer.name;
-        document.getElementById("stmt-phone").textContent = customer.phone || "-";
-
-        const stmtRes = await fetch(`${API_BASE}/api/customers/${customer.id}/statement`);
+        const stmtRes = await fetch(`${API_BASE}/api/customers/${selectedCustomer.id}/statement`);
+        if (!stmtRes.ok) throw new Error(`HTTP ${stmtRes.status}`);
         const stmt = await stmtRes.json();
 
         const rowsEl = document.getElementById("stmt-rows");
@@ -541,13 +547,21 @@ async function loadStatement() {
 
         const totalDebit = stmt.entries.reduce((s, e) => s + Number(e.debit), 0);
         const totalCredit = stmt.entries.reduce((s, e) => s + Number(e.credit), 0);
+        const balance = Number(stmt.balance.outstanding || 0);
+
         document.getElementById("stmt-debit-total").textContent = fmt(totalDebit);
         document.getElementById("stmt-credit-total").textContent = fmt(totalCredit);
-        document.getElementById("stmt-balance-total").textContent = fmt(stmt.balance.outstanding);
+        document.getElementById("stmt-balance-total").textContent = fmt(balance);
+        document.getElementById("stmt-tfoot-debit").textContent = fmt(totalDebit);
+        document.getElementById("stmt-tfoot-credit").textContent = fmt(totalCredit);
+        document.getElementById("stmt-tfoot-balance").textContent = fmt(balance);
+        document.getElementById("stmt-print-debit").textContent = fmt(totalDebit);
+        document.getElementById("stmt-print-credit").textContent = fmt(totalCredit);
+        document.getElementById("stmt-print-balance").textContent = fmt(balance);
 
         const agingRes = await fetch(`${API_BASE}/api/customers/reports/aging`);
-        const aging = await agingRes.json();
-        const row = aging.find(r => r.customer_id === customer.id);
+        const aging = agingRes.ok ? await agingRes.json() : [];
+        const row = aging.find(r => r.customer_id === selectedCustomer.id);
         if (row) {
             document.getElementById("aging-current").textContent = fmt(row.current);
             document.getElementById("aging-1-30").textContent = fmt(row.d1_30);
@@ -560,6 +574,39 @@ async function loadStatement() {
     }
 }
 
-loadStatement();
+async function populateCustomerSelect() {
+    try {
+        const res = await fetch(`${API_BASE}/api/customers`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const customers = await res.json();
+        const select = document.getElementById("stmt-customer-select");
+        select.innerHTML = customers.map(c =>
+            `<option value="${c.id}">${c.name}${c.phone ? " — " + c.phone : ""}</option>`
+        ).join("");
+
+        const params = new URLSearchParams(location.search);
+        const idParam = Number(params.get("customer_id"));
+        const qParam = params.get("q");
+        let target = customers.find(c => c.id === idParam);
+        if (!target && qParam) {
+            const q = qParam.trim().toLowerCase();
+            target = customers.find(c => (c.name || "").toLowerCase().includes(q) || (c.phone || "").toLowerCase().includes(q));
+        }
+        target = target || customers[0];
+        if (target) {
+            select.value = String(target.id);
+            selectedCustomer = target;
+        }
+        select.addEventListener("change", () => {
+            selectedCustomer = customers.find(c => c.id === Number(select.value)) || null;
+            if (selectedCustomer) loadStatement();
+        });
+        await loadStatement();
+    } catch (err) {
+        console.warn("Customers unavailable:", err);
+    }
+}
+
+populateCustomerSelect();
 </script>
 </body></html>
