@@ -55,12 +55,14 @@ async def protect_api(request: Request, call_next):
             from datetime import datetime
             from app.database import SessionLocal
             from app.models import User
+            from app.routes.auth import _renew_if_due
             db = SessionLocal()
             try:
                 row = db.query(AuthSession).filter(AuthSession.token == token).first()
                 if row is not None and row.expires_at > datetime.now():
                     user = db.get(User, row.user_id)
                     if user is not None and user.is_active:
+                        _renew_if_due(db, row)
                         return await call_next(request)
             finally:
                 db.close()

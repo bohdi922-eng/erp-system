@@ -14,7 +14,18 @@ from app.models import AuthSession, User
 
 router = APIRouter()
 
-SESSION_TTL = timedelta(days=7)
+# Long-lived sliding session: stays valid as long as the user keeps using
+# the app (renewed on each authenticated request), so login happens once.
+SESSION_TTL = timedelta(days=30)
+RENEW_THRESHOLD = timedelta(days=1)
+
+
+def _renew_if_due(db: Session, sess: AuthSession) -> None:
+    """Extend a still-active session so people don't get logged out mid-work.
+    Only writes when the session is actually close to expiring."""
+    if sess.expires_at - datetime.now() < RENEW_THRESHOLD:
+        sess.expires_at = datetime.now() + SESSION_TTL
+        db.commit()
 
 
 def _bearer_token(request: Request) -> str | None:
@@ -39,6 +50,7 @@ def get_current_user(
     user = db.get(User, sess.user_id)
     if user is None or not user.is_active:
         raise BusinessError("الحساب غير متاح", 401)
+    _renew_if_due(db, sess)
     return user
 
 
