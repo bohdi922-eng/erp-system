@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP System - إدارة المخزون</title>
+<script src="/vendor/tailwind.js"></script>
+<style>
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* FIX: this rule referenced 'IBM Plex Sans Arabic', which isn't
+           actually loaded by the Google Fonts <link> above (it only pulls
+           Cairo + IBM Plex Sans) — every browser would've silently fallen
+           back to a generic system font. Cairo (the font this project
+           actually loads and uses everywhere else) for body text. */
+        body, input, button, select, textarea {
+            font-family: 'Cairo', 'IBM Plex Sans', sans-serif;
+        }
+
+        /* FIX: was 'Be Vietnam Pro' (no Arabic glyph support at all) for
+           every heading — switched to Cairo for the same reason as above. */
+        h1, h2, h3, h4, h5, h6, .font-display-lg, .font-headline-md, .font-headline-sm, .font-headline-lg {
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        /* Utility for filled icons */
+        .icon-fill-1 {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Hide scrollbar for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d7dade",
+                        "on-primary-fixed": "#001b3c",
+                        "inverse-primary": "#a8c8ff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#a9c7ff",
+                        "outline": "#727783",
+                        "on-surface-variant": "#424751",
+                        "on-primary-fixed-variant": "#00468a",
+                        "surface-container-highest": "#e0e3e7",
+                        "surface-container-high": "#e5e8ec",
+                        "on-tertiary": "#ffffff",
+                        "danger": "#dc3545",
+                        "surface-tint": "#135eaf",
+                        "tertiary-container": "#2f5893",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c2c6d3",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#a8c8ff",
+                        "success": "#00b894",
+                        "on-tertiary-container": "#b6cfff",
+                        "tertiary-fixed": "#d6e3ff",
+                        "surface": "#ffffff",
+                        "inverse-on-surface": "#eef1f5",
+                        "text-primary": "#333333",
+                        "text-secondary": "#888888",
+                        "secondary": "#006970",
+                        "on-secondary-fixed-variant": "#004f55",
+                        "surface-container": "#ebeef2",
+                        "primary-container": "#0057a8",
+                        "primary": "#00407e",
+                        "inverse-surface": "#2d3134",
+                        "border": "#e0e0e0",
+                        "warning": "#f59e0b",
+                        "on-tertiary-fixed": "#001b3d",
+                        "info": "#0057a8",
+                        "on-secondary-fixed": "#002022",
+                        "surface-bright": "#f7fafe",
+                        "on-tertiary-fixed-variant": "#1a4681",
+                        "primary-fixed": "#d5e3ff",
+                        "on-surface": "#181c1f",
+                        "secondary-fixed-dim": "#81d4dc",
+                        "tertiary": "#10407a",
+                        "surface-variant": "#e0e3e7",
+                        "background": "#f7fafe",
+                        "surface-container-low": "#f1f4f8",
+                        "secondary-fixed": "#9df0f8",
+                        "on-secondary-container": "#026f77",
+                        "secondary-container": "#9df0f8",
+                        "on-primary-container": "#b5cfff",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-background": "#181c1f",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sidebar-width": "260px",
+                        "margin-desktop": "32px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "xs": "4px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Cairo"],
+                        "headline-md": ["Cairo"],
+                        "headline-sm": ["Cairo"],
+                        "body-sm": ["Cairo"],
+                        "label-sm": ["Cairo"],
+                        "headline-lg": ["Cairo"],
+                        "body-lg": ["Cairo"],
+                        "label-lg": ["Cairo"],
+                        "numeric-table": ["IBM Plex Sans"],
+                        "body-md": ["Cairo"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "numeric-table": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="/vendor/fonts.css" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background antialiased flex rtl overflow-hidden h-screen w-screen">
+<!-- SideNavBar Component -->
+<aside class="fixed right-0 top-0 h-full w-sidebar-width bg-surface border-l border-outline-variant flex flex-col rtl overflow-y-auto z-50 hidden md:flex">
+<!-- Header -->
+<div class="p-gutter border-b border-outline-variant flex items-center gap-sm">
+<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary font-bold font-headline-md">H</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">نظام ERP</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">إدارة الأجهزة</p>
+</div>
+</div>
+<!-- CTA -->
+<div class="p-gutter">
+<button class="w-full bg-primary-container text-on-primary hover:opacity-80 transition-opacity rounded py-sm px-md flex items-center justify-center gap-xs font-label-lg text-label-lg h-[48px]" onclick="location.href='/pages/sales_new_invoice.html'">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+<span>عملية بيع جديدة</span>
+</button>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 px-sm py-sm space-y-unit">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/dashboard.html">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>لوحة القيادة</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/sales_new_invoice.html">
+<span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
+<span>المبيعات</span>
+</a>
+<!-- Active Tab: المخزون (Inventory) -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-primary font-bold border-r-4 border-primary bg-primary/5 font-label-lg text-label-lg opacity-80 duration-150" href="/pages/inventory.html">
+<span class="material-symbols-outlined icon-fill-1" data-icon="inventory_2" data-weight="fill">inventory_2</span>
+<span>المخزون</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/repairs_board.html">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span>الإصلاحات</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/whatsapp_bot.html">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span>واتساب بوت</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>التقارير</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="/pages/settings.html">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>الإعدادات</span>
+</a>
+</nav>
+<!-- Footer Tabs -->
+<div class="mt-auto border-t border-outline-variant p-sm space-y-unit">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span>الملف الشخصي</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>تسجيل الخروج</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col md:mr-sidebar-width h-screen overflow-hidden">
+<!-- Add Product / Add Stock Modal -->
+<div id="product-modal-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-md">
+<div class="bg-surface rounded-xl border border-border shadow-lg w-full max-w-md">
+<div class="p-md border-b border-border flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">إضافة صنف جديد للمخزون</h3>
+<button id="product-modal-close" class="text-outline hover:text-danger"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="p-md flex flex-col gap-sm">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">اختر منتج موجود، أو منتج جديد</label>
+<select id="product-form-select" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest">
+<option value="">-- منتج جديد --</option>
+</select>
+</div>
+<div id="product-new-fields" class="flex flex-col gap-sm">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الماركة</label>
+<input id="product-form-brand" type="text" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الموديل / الاسم</label>
+<input id="product-form-model" type="text" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">السعر الافتراضي (ج.م)</label>
+<input id="product-form-price" type="number" value="0" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
+</div>
+<label class="flex items-center gap-2">
+<input id="product-form-serialized" type="checkbox" checked class="w-4 h-4"/>
+<span class="font-body-sm text-body-sm text-on-surface">متتبع بالرقم التسلسلي (سيريال)</span>
+</label>
+</div>
+<div class="border-t border-border pt-sm mt-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">استلام كمية جديدة الآن</label>
+<div id="stock-serial-field">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الرقم التسلسلي</label>
+<input id="stock-form-serial" type="text" dir="ltr" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest text-left"/>
+</div>
+<div id="stock-quantity-field" class="hidden">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الكمية</label>
+<input id="stock-form-quantity" type="number" value="1" min="1" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
+</div>
+<div class="mt-sm">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">تكلفة الشراء (ج.م)</label>
+<input id="stock-form-cost" type="number" value="0" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
+</div>
+</div>
+</div>
+<div class="p-md border-t border-border flex justify-end gap-sm">
+<button id="product-modal-cancel" class="px-md py-sm rounded-lg border border-border text-on-surface font-label-lg text-label-lg hover:bg-surface-container-low">إلغاء</button>
+<button id="product-modal-save" class="px-md py-sm rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container">حفظ</button>
+</div>
+</div>
+</div>
+<!-- TopAppBar Component -->
+<header class="bg-background/80 backdrop-blur-md border-b border-outline-variant docked full-width top-0 sticky z-40 flex justify-between items-center w-full px-margin-desktop h-16 rtl">
+<!-- Mobile Menu Toggle (Visible only on mobile) -->
+<div class="md:hidden flex items-center">
+<button class="text-on-surface p-sm rounded hover:bg-surface-container-low">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<!-- Left/Center: Search Bar & Navigation (Desktop) -->
+<div class="hidden md:flex items-center gap-xl flex-1">
+<!-- Navigation Links -->
+<nav class="flex items-center gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-all font-label-lg text-label-lg py-sm" href="/pages/dashboard.html">الرئيسية</a>
+<a class="text-on-surface-variant hover:text-primary transition-all font-label-lg text-label-lg py-sm" href="#">الفواتير</a>
+<a class="text-on-surface-variant hover:text-primary transition-all font-label-lg text-label-lg py-sm" href="/pages/customer_statement.html">العملاء</a>
+</nav>
+</div>
+<!-- Search Area (Center-ish) -->
+<div class="flex-1 max-w-md mx-gutter hidden md:block">
+<div class="relative">
+<input class="w-full bg-surface border border-outline-variant rounded-full py-2 px-4 pr-10 text-body-sm font-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-[40px]" placeholder="بحث عام..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2 text-outline text-[20px]">search</span>
+</div>
+</div>
+<!-- Right: Actions & Profile -->
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-all p-sm rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all p-sm rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="hidden lg:flex gap-sm mr-sm pr-sm border-r border-outline-variant">
+<button class="border border-outline-variant text-on-surface bg-surface hover:bg-surface-container-low px-md py-1.5 rounded font-label-lg text-label-lg flex items-center gap-xs h-[40px]">
+<span class="material-symbols-outlined text-[18px]">barcode_scanner</span>
+                        الباركود
+                    </button>
+<button id="add-product-btn" class="bg-primary-container text-on-primary hover:opacity-90 px-md py-1.5 rounded font-label-lg text-label-lg flex items-center gap-xs h-[40px] shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        إضافة صنف
+                    </button>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden mr-sm flex-shrink-0 cursor-pointer">
+<img alt="صورة المستخدم" class="w-full h-full object-cover" data-alt="A close up professional headshot of an Arab man in a modern office environment, wearing business casual attire. Soft, flattering high-key lighting creates a bright, modern corporate aesthetic. The background is slightly blurred with muted blue and white tones to match a clean UI style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxO7jYpHJHnGDBxf7p26ft79_g5f1LZhJRmQbQjwFCBnxgDyzyLviexREfQUkbqxD-Z8DJQ74e4WwO6BOBgYqOiKY6aiLSLIE3iaO9qx488_s0Pu4aqatITHRoXbM2OEixEhXrZyPQALQlkWx08woCyK8WWiTcqqxB41MpQ1ETxFhDhVqaRewdrbV8_v20cHzZHIBd5Nqi06TUKvjtt0RLqIka_w37iWU6fiPo3_IDuKuyBvupDj9GDg"/>
+</div>
+</div>
+</header>
+<!-- Canvas Content -->
+<div class="flex-1 overflow-y-auto p-margin-desktop bg-surface-container-lowest">
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface mb-unit">إدارة المخزون</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">مراقبة وتحديث مستويات المخزون، والبحث عن الأرقام التسلسلية.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Main Product List Area (8 cols on desktop) -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<!-- Filters & Local Search -->
+<div class="bg-surface border border-border rounded-xl p-md flex flex-wrap items-center justify-between gap-md shadow-sm">
+<div class="flex items-center gap-sm flex-1 min-w-[250px]">
+<div class="relative w-full max-w-sm">
+<input class="w-full bg-background border border-outline-variant rounded py-2 px-3 pr-9 text-body-sm font-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary h-[40px]" placeholder="البحث في المنتجات..." type="text"/>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-outline text-[18px]">search</span>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<span class="text-label-sm font-label-sm text-on-surface-variant">تصفية حسب:</span>
+<select class="bg-background border border-outline-variant rounded py-2 px-3 text-body-sm font-body-sm focus:outline-none focus:border-primary h-[40px] min-w-[120px]">
+<option>كل الفئات</option>
+<option>أجهزة ذكية</option>
+<option>شاشات</option>
+<option>قطع غيار</option>
+<option>إكسسوارات</option>
+</select>
+<button class="p-2 border border-outline-variant rounded bg-surface hover:bg-surface-container-low text-on-surface-variant h-[40px] w-[40px] flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Products Table -->
+<div class="bg-surface border border-border rounded-xl shadow-sm overflow-hidden flex-1">
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-border">
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold">اسم المنتج</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold">الفئة</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold text-center">المستوى</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold text-left">آخر تحديث</th>
+<th class="py-3 px-4 w-10"></th>
+</tr>
+</thead>
+<tbody id="inv-rows" class="divide-y divide-border">
+<!-- Row 1 -->
+<tr class="hover:bg-primary/5 transition-colors group cursor-pointer">
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">iPhone 14 Pro Max 256GB</span>
+<span class="font-body-sm text-body-sm text-outline">SKU: APP-IP14PM-256-BLK</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">أجهزة ذكية</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center justify-center bg-success/15 text-success px-2 py-1 rounded-full font-label-sm text-label-sm font-bold min-w-[70px]">
+                                                45 حبة
+                                            </div>
+</td>
+<td class="py-3 px-4 font-numeric-table text-numeric-table text-on-surface-variant text-left" dir="ltr">2023-10-24</td>
+<td class="py-3 px-4">
+<button class="text-outline hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-primary/5 transition-colors group cursor-pointer bg-primary/2">
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">شاشة Samsung S22 Ultra أصلية</span>
+<span class="font-body-sm text-body-sm text-outline">SKU: SAM-S22U-SCRN-OEM</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">قطع غيار</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center justify-center bg-warning/15 text-warning px-2 py-1 rounded-full font-label-sm text-label-sm font-bold min-w-[70px]">
+                                                3 حبات
+                                            </div>
+</td>
+<td class="py-3 px-4 font-numeric-table text-numeric-table text-on-surface-variant text-left" dir="ltr">2023-10-22</td>
+<td class="py-3 px-4">
+<button class="text-outline hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-primary/5 transition-colors group cursor-pointer">
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">MacBook Air M2 8GB 256GB</span>
+<span class="font-body-sm text-body-sm text-outline">SKU: APP-MBA-M2-8-256</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">أجهزة ذكية</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center justify-center bg-error/15 text-error px-2 py-1 rounded-full font-label-sm text-label-sm font-bold min-w-[70px]">
+                                                نفذت الكمية
+                                            </div>
+</td>
+<td class="py-3 px-4 font-numeric-table text-numeric-table text-on-surface-variant text-left" dir="ltr">2023-10-20</td>
+<td class="py-3 px-4">
+<button class="text-outline hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="border-t border-border p-sm flex items-center justify-between bg-surface-container-lowest">
+<span class="font-label-sm text-label-sm text-outline">عرض 1-10 من 245 منتج</span>
+<div class="flex gap-1">
+<button class="p-1 text-outline hover:text-primary hover:bg-surface-container-low rounded"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+<button class="p-1 text-on-primary bg-primary rounded w-7 h-7 flex items-center justify-center font-label-sm text-label-sm">1</button>
+<button class="p-1 text-on-surface-variant hover:bg-surface-container-low rounded w-7 h-7 flex items-center justify-center font-label-sm text-label-sm">2</button>
+<button class="p-1 text-on-surface-variant hover:bg-surface-container-low rounded w-7 h-7 flex items-center justify-center font-label-sm text-label-sm">3</button>
+<button class="p-1 text-outline hover:text-primary hover:bg-surface-container-low rounded"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Serial Number Lookup & Utilities (4 cols on desktop) -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Serial Lookup Bento Box -->
+<div class="bg-surface border border-border rounded-xl p-md shadow-sm relative overflow-hidden">
+<!-- Decorative bg element -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -z-0 pointer-events-none"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-primary text-[24px]">qr_code_scanner</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">بحث الرقم التسلسلي</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">امسح الباركود أو أدخل الرقم التسلسلي للتحقق من حالة وحدة معينة.</p>
+<div class="relative mb-md">
+<input class="w-full bg-background border-2 border-primary/30 rounded py-3 px-4 pr-10 font-numeric-table text-numeric-table focus:outline-none focus:border-primary transition-colors text-left bg-primary/5" dir="ltr" placeholder="أدخل السيج.م (SN)..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-3.5 text-primary">barcode</span>
+</div>
+<button class="w-full bg-primary-container text-on-primary hover:opacity-90 py-2.5 rounded font-label-lg text-label-lg font-bold transition-opacity h-[48px]">
+                                بحث وتحقق
+                            </button>
+</div>
+</div>
+<!-- Scan Result (Mock State - Found) -->
+<div class="bg-surface border border-border rounded-xl p-md shadow-sm">
+<h4 class="font-label-lg text-label-lg text-on-surface font-semibold mb-sm border-b border-border pb-2">نتيجة البحث الأخيرة</h4>
+<div class="flex items-start gap-md mt-sm">
+<div class="w-12 h-12 bg-surface-container-low rounded flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary">smartphone</span>
+</div>
+<div class="flex-1">
+<h5 class="font-body-md text-body-md text-on-surface font-medium leading-tight mb-1">iPhone 14 Pro Max</h5>
+<p class="font-numeric-table text-label-sm text-outline text-left mb-2" dir="ltr">SN: F4G9H8J7K6L5</p>
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-1 bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                                        بالمخزن
+                                    </span>
+<button class="text-primary text-label-sm font-label-sm hover:underline">التفاصيل</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Placeholder Serials Alert -->
+<div class="bg-warning/10 border border-warning/30 rounded-xl p-md shadow-sm">
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-warning mt-0.5">warning</span>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface font-semibold mb-1">سيج.مات مؤقتة (Placeholders)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">يوجد <strong class="text-on-surface font-bold">12</strong> وحدة مسجلة بدون أرقام تسلسلية حقيقية.</p>
+<button class="text-primary font-label-sm text-label-sm font-bold flex items-center gap-1 hover:underline">
+                                    معالجة الآن
+                                    <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<script>
+// FIX (live wiring): pulls real product stock counts from the backend
+// (see app/routes/inventory.py -> GET /api/inventory/products). Falls
+// back to the static mockup rows if the backend isn't running.
+const API_BASE = "";  // same-origin now — FastAPI serves this page too
+const LOW_STOCK_THRESHOLD = 3;
+
+function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str ?? "";
+    return div.innerHTML;
+}
+
+function renderRow(p) {
+    const isLow = p.in_stock_count < LOW_STOCK_THRESHOLD;
+    const badgeClass = p.in_stock_count === 0
+        ? "bg-danger/15 text-danger"
+        : isLow ? "bg-warning/15 text-warning" : "bg-success/15 text-success";
+    const label = p.in_stock_count === 0 ? "نفدت الكمية" : `${p.in_stock_count} حبة`;
+    return `
+    <tr class="hover:bg-primary/5 transition-colors group cursor-pointer">
+        <td class="py-3 px-4">
+            <div class="flex flex-col">
+                <span class="font-body-md text-body-md text-on-surface font-medium">${escapeHtml(p.brand)} ${escapeHtml(p.model)}</span>
+                <span class="font-body-sm text-body-sm text-outline">السعر: ${Number(p.default_price).toLocaleString("en-US", {minimumFractionDigits: 2})} ج.م</span>
+            </div>
+        </td>
+        <td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">${p.is_serialized ? "متتبع بالسيريال" : "غير متتبع"}</td>
+        <td class="py-3 px-4 text-center">
+            <div class="inline-flex items-center justify-center ${badgeClass} px-2 py-1 rounded-full font-label-sm text-label-sm font-bold min-w-[70px]">
+                ${label}
+            </div>
+        </td>
+        <td class="py-3 px-4 font-numeric-table text-numeric-table text-on-surface-variant text-left" dir="ltr">-</td>
+        <td class="py-3 px-4">
+            <button class="text-outline hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                <span class="material-symbols-outlined">more_vert</span>
+            </button>
+        </td>
+    </tr>`;
+}
+
+async function loadInventory() {
+    try {
+        const res = await fetch(`${API_BASE}/api/inventory/products`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const products = await res.json();
+        const rowsEl = document.getElementById("inv-rows");
+        rowsEl.innerHTML = products.map(renderRow).join("") ||
+            `<tr><td colspan="5" class="p-md text-center text-on-surface-variant">لا توجد منتجات بعد</td></tr>`;
+
+        const selectEl = document.getElementById("product-form-select");
+        const currentOptions = selectEl.innerHTML;
+        selectEl.innerHTML = currentOptions + products.map(p =>
+            `<option value="${p.id}" data-serialized="${p.is_serialized}">${escapeHtml(p.brand)} ${escapeHtml(p.model)}</option>`
+        ).join("");
+    } catch (err) {
+        console.warn("Inventory live data unavailable, showing mockup rows instead:", err);
+    }
+}
+
+// -- Add product / add stock modal -----------------------------------------
+function toggleProductModalFields() {
+    const selectEl = document.getElementById("product-form-select");
+    const isExisting = !!selectEl.value;
+    document.getElementById("product-new-fields").classList.toggle("hidden", isExisting);
+
+    const isSerialized = isExisting
+        ? selectEl.options[selectEl.selectedIndex].dataset.serialized === "true"
+        : document.getElementById("product-form-serialized").checked;
+    document.getElementById("stock-serial-field").classList.toggle("hidden", !isSerialized);
+    document.getElementById("stock-quantity-field").classList.toggle("hidden", isSerialized);
+}
+
+function openProductModal() {
+    document.getElementById("product-form-select").value = "";
+    document.getElementById("product-form-brand").value = "";
+    document.getElementById("product-form-model").value = "";
+    document.getElementById("product-form-price").value = "0";
+    document.getElementById("product-form-serialized").checked = true;
+    document.getElementById("stock-form-serial").value = "";
+    document.getElementById("stock-form-quantity").value = "1";
+    document.getElementById("stock-form-cost").value = "0";
+    toggleProductModalFields();
+    const overlay = document.getElementById("product-modal-overlay");
+    overlay.classList.remove("hidden");
+    overlay.classList.add("flex");
+}
+
+function closeProductModal() {
+    const overlay = document.getElementById("product-modal-overlay");
+    overlay.classList.add("hidden");
+    overlay.classList.remove("flex");
+}
+
+async function saveProductAndStock() {
+    const selectEl = document.getElementById("product-form-select");
+    let productId = selectEl.value ? Number(selectEl.value) : null;
+    const isSerialized = productId
+        ? selectEl.options[selectEl.selectedIndex].dataset.serialized === "true"
+        : document.getElementById("product-form-serialized").checked;
+
+    try {
+        if (!productId) {
+            const brand = document.getElementById("product-form-brand").value.trim();
+            const model = document.getElementById("product-form-model").value.trim();
+            if (!brand || !model) { alert("محتاج الماركة والموديل للمنتج الجديد"); return; }
+            const res = await fetch(`${API_BASE}/api/inventory/products`, {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    brand, model,
+                    is_serialized: document.getElementById("product-form-serialized").checked,
+                    default_price: document.getElementById("product-form-price").value || "0",
+                }),
+            });
+            if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || `HTTP ${res.status}`); }
+            const product = await res.json();
+            productId = product.id;
+        }
+
+        const stockBody = {
+            product_id: productId,
+            purchase_cost: document.getElementById("stock-form-cost").value || "0",
+        };
+        if (isSerialized) {
+            const serial = document.getElementById("stock-form-serial").value.trim();
+            if (!serial) { alert("محتاج الرقم التسلسلي"); return; }
+            stockBody.serial_number = serial;
+        } else {
+            stockBody.quantity = Number(document.getElementById("stock-form-quantity").value) || 1;
+        }
+
+        const stockRes = await fetch(`${API_BASE}/api/inventory/items`, {
+            method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(stockBody),
+        });
+        if (!stockRes.ok) { const e = await stockRes.json().catch(() => ({})); throw new Error(e.detail || `HTTP ${stockRes.status}`); }
+
+        closeProductModal();
+        await loadInventory();
+    } catch (err) {
+        alert(`تعذر الحفظ: ${err.message}`);
+    }
+}
+
+document.getElementById("add-product-btn")?.addEventListener("click", openProductModal);
+document.getElementById("product-modal-close")?.addEventListener("click", closeProductModal);
+document.getElementById("product-modal-cancel")?.addEventListener("click", closeProductModal);
+document.getElementById("product-modal-save")?.addEventListener("click", saveProductAndStock);
+document.getElementById("product-form-select")?.addEventListener("change", toggleProductModalFields);
+document.getElementById("product-form-serialized")?.addEventListener("change", toggleProductModalFields);
+
+loadInventory();
+</script>
+</body></html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP System - Repairs Kanban</title>
+<!-- Google Fonts: Cairo (Display/Headline/Body) & IBM Plex Sans (tabular numerals) -->
+<!-- Material Symbols -->
+<script src="/vendor/tailwind.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed-dim": "#81d4dc",
+                        "surface-container-low": "#f1f4f8",
+                        "inverse-primary": "#a8c8ff",
+                        "tertiary-fixed": "#d6e3ff",
+                        "on-primary-container": "#b5cfff",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#135eaf",
+                        "on-tertiary-fixed-variant": "#1a4681",
+                        "background": "#f7fafe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#181c1f",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#001b3c",
+                        "surface-container-highest": "#e0e3e7",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#001b3d",
+                        "surface-bright": "#f7fafe",
+                        "tertiary-fixed-dim": "#a9c7ff",
+                        "surface-container": "#ebeef2",
+                        "surface-variant": "#e0e3e7",
+                        "inverse-on-surface": "#eef1f5",
+                        "on-background": "#181c1f",
+                        "text-secondary": "#888888",
+                        "inverse-surface": "#2d3134",
+                        "secondary-fixed": "#9df0f8",
+                        "text-primary": "#333333",
+                        "secondary-container": "#9df0f8",
+                        "on-surface-variant": "#424751",
+                        "primary-container": "#0057a8",
+                        "on-secondary-fixed-variant": "#004f55",
+                        "surface": "#ffffff",
+                        "surface-container-high": "#e5e8ec",
+                        "danger": "#dc3545",
+                        "tertiary-container": "#2f5893",
+                        "on-secondary": "#ffffff",
+                        "outline": "#727783",
+                        "warning": "#f59e0b",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#002022",
+                        "tertiary": "#10407a",
+                        "primary": "#00407e",
+                        "success": "#00b894",
+                        "on-tertiary-container": "#b6cfff",
+                        "on-secondary-container": "#026f77",
+                        "surface-dim": "#d7dade",
+                        "primary-fixed": "#d5e3ff",
+                        "secondary": "#006970",
+                        "border": "#e0e0e0",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "info": "#0057a8",
+                        "on-primary-fixed-variant": "#00468a",
+                        "primary-fixed-dim": "#a8c8ff",
+                        "outline-variant": "#c2c6d3"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem",
+                        "2xl": "1rem"
+                    },
+                    spacing: {
+                        "sidebar-width": "260px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "xs": "4px",
+                        "margin-desktop": "32px",
+                        "xl": "32px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "gutter": "16px"
+                    },
+                    fontFamily: {
+                        "display-lg": ["Cairo", "sans-serif"],
+                        "numeric-table": ["Cairo", "sans-serif"],
+                        "body-lg": ["Cairo", "sans-serif"],
+                        "headline-sm": ["Cairo", "sans-serif"],
+                        "label-lg": ["Cairo", "sans-serif"],
+                        "headline-lg": ["Cairo", "sans-serif"],
+                        "body-md": ["Cairo", "sans-serif"],
+                        "headline-md": ["Cairo", "sans-serif"],
+                        "label-sm": ["Cairo", "sans-serif"],
+                        "body-sm": ["Cairo", "sans-serif"]
+                    },
+                    fontSize: {
+                        "display-lg": ["48px", { "lineHeight": "56px", "fontWeight": "700" }],
+                        "numeric-table": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Cairo', sans-serif; }
+        /* Hide scrollbar for kanban board but allow scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<link href="/vendor/fonts.css" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen w-full overflow-hidden flex selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- SideNavBar (Shared Component) -->
+<aside class="bg-surface fixed right-0 top-0 h-full w-sidebar-width border-l border-outline-variant flex flex-col z-50">
+<!-- Header -->
+<div class="h-24 px-lg flex items-center gap-md border-b border-surface-dim">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handyman</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">نظام ERP</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">إدارة الأجهزة</p>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 overflow-y-auto py-md px-sm flex flex-col gap-unit">
+<!-- Dashboard -->
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-lg text-label-lg">لوحة القيادة</span>
+</a>
+<!-- Sales -->
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/sales_new_invoice.html">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-lg text-label-lg">المبيعات</span>
+</a>
+<!-- Inventory -->
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/inventory.html">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-lg text-label-lg">المخزون</span>
+</a>
+<!-- Repairs (ACTIVE) -->
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-primary font-bold border-r-4 border-primary bg-primary/5 hover:bg-surface-container-low transition-colors opacity-80 duration-150" href="/pages/repairs_board.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">build</span>
+<span class="font-label-lg text-label-lg">الإصلاحات</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary hover:bg-surface-container-low transition-colors" href="/pages/whatsapp_bot.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">forum</span>
+<span class="font-label-lg text-label-lg">واتساب بوت</span>
+</a>
+<!-- Reports -->
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-lg text-label-lg">التقارير</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/settings.html">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-lg text-label-lg">الإعدادات</span>
+</a>
+</nav>
+<!-- CTA & Footer -->
+<div class="p-lg border-t border-surface-dim flex flex-col gap-md">
+<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-lg font-label-lg text-label-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-sm" onclick="location.href='/pages/sales_new_invoice.html'">
+<span class="material-symbols-outlined">add</span>
+                عملية بيع جديدة
+            </button>
+<div class="flex flex-col gap-unit mt-4">
+<a class="flex items-center gap-md px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors text-label-sm font-label-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">account_circle</span>
+                    الملف الشخصي
+                </a>
+<a class="flex items-center gap-md px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors text-label-sm font-label-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+                    تسجيل الخروج
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 mr-sidebar-width flex flex-col h-screen overflow-hidden bg-background">
+<!-- Action Modal (replaces prompt()-based flows) -->
+<div id="action-modal-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-md">
+<div class="bg-surface rounded-xl border border-border shadow-lg w-full max-w-md">
+<div class="p-md border-b border-border flex items-center justify-between">
+<h3 id="action-modal-title" class="font-headline-sm text-headline-sm font-semibold text-on-surface"></h3>
+<button id="action-modal-close" class="text-outline hover:text-danger">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div id="action-modal-body" class="p-md flex flex-col gap-sm"></div>
+<div class="p-md border-t border-border flex justify-end gap-sm">
+<button id="action-modal-cancel" class="px-md py-sm rounded-lg border border-border text-on-surface font-label-lg text-label-lg hover:bg-surface-container-low">إلغاء</button>
+<button id="action-modal-confirm" class="px-md py-sm rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container">تأكيد</button>
+</div>
+</div>
+</div>
+<!-- TopAppBar (Shared Component) -->
+<header class="bg-surface-container-lowest/80 backdrop-blur-md sticky top-0 z-40 border-b border-outline-variant flex justify-between items-center w-full px-margin-desktop h-16 flex-shrink-0">
+<!-- Navigation Links (Desktop) -->
+<div class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-all" href="/pages/dashboard.html">الرئيسية</a>
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-all" href="#">الفواتير</a>
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-all" href="/pages/customer_statement.html">العملاء</a>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-sm mr-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+<button class="px-4 py-2 border border-outline rounded-lg text-on-surface font-label-lg text-label-lg hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+                    الباركود
+                </button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-sm">
+                    إضافة صنف
+                </button>
+<img alt="صورة المستخدم" class="w-10 h-10 rounded-full object-cover border-2 border-surface-container-low ml-2" data-alt="A close up, high quality headshot of a professional young middle-eastern man in a bright modern office, soft lighting, light blue background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxCpV5mQMU9YzlV-LLyIpYvPh-QOxyX-sgE5SEyxzdfRxQ7ByH_70qwFFrAKRi9PyCTy47mGdFYj6NZARBW7LQ9JgDH7jqltjgeyI8p_0H6cUFYYIWX4l3f_QGKt9WTlRXpK0jmX7g13pt4Ho7T88EkNKFVsEzv6wo_TLo1nW6FI4hJBeMPZ_tESYroq9GmWAiBRO0WmxNvEVzL7LrNRxxorsgSm8f19Q88VFI4Dyb5Y23QqYQndT3Hg"/>
+</div>
+</header>
+<!-- Kanban Board Area -->
+<div class="flex-1 overflow-x-auto overflow-y-hidden p-margin-desktop bg-background no-scrollbar">
+<!-- Board Header / Filters (Optional, contextual) -->
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">إدارة الإصلاحات</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">تتبع حالة الأجهزة المعطلة عبر سير العمل.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 hover:bg-surface-container-lowest">
+<span class="material-symbols-outlined text-[16px]">filter_list</span> تصفية
+                    </button>
+</div>
+</div>
+<!-- Columns Container -->
+<div class="flex gap-lg h-[calc(100%-80px)] pb-4 items-start">
+<!-- Column 1: Received (تم الاستلام) -->
+<div class="w-[320px] flex-shrink-0 flex flex-col max-h-full bg-surface-container-low/50 rounded-xl border border-surface-variant">
+<!-- Column Header -->
+<div class="p-4 border-b border-surface-variant flex justify-between items-center bg-surface-container-lowest/80 backdrop-blur-sm rounded-t-xl sticky top-0 z-10">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-outline"></div>
+                            تم الاستلام
+                        </h3>
+<span id="col-received-count" class="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded-full font-numeric-table text-numeric-table text-[12px]">3</span>
+</div>
+<!-- Cards List -->
+<div id="col-received-list" class="flex-1 overflow-y-auto p-3 flex flex-col gap-3 no-scrollbar">
+<!-- Card: Internal Repair -->
+<div class="bg-surface border border-border p-sm rounded-lg shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-grab group">
+<div class="flex justify-between items-start mb-2">
+<span class="font-numeric-table text-numeric-table text-primary text-[14px]">#REP-8092</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 1 يوم
+                                </span>
+</div>
+<h4 class="font-label-lg text-label-lg text-on-surface mb-1">iPhone 14 Pro - شاشة</h4>
+<div class="flex items-center gap-2 mb-3 text-body-sm font-body-sm text-text-secondary">
+<span class="material-symbols-outlined text-[16px]">person</span>
+                                أحمد محمود
+                            </div>
+<div class="flex gap-2 flex-wrap">
+<span class="px-2 py-1 bg-surface-container-high text-on-surface-variant rounded text-[10px] font-label-sm font-bold tracking-wide">عادي</span>
+</div>
+</div>
+<!-- Card: Internal Repair (Warranty) -->
+<div class="bg-surface border border-border p-sm rounded-lg shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-grab group">
+<div class="flex justify-between items-start mb-2">
+<span class="font-numeric-table text-numeric-table text-primary text-[14px]">#REP-8093</span>
+<span class="text-label-sm font-label-sm text-warning flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span> 3 أيام
+                                </span>
+</div>
+<h4 class="font-label-lg text-label-lg text-on-surface mb-1">Samsung Galaxy S22 - بطارية</h4>
+<div class="flex items-center gap-2 mb-3 text-body-sm font-body-sm text-text-secondary">
+<span class="material-symbols-outlined text-[16px]">person</span>
+                                شركة الأفق للتجارة
+                            </div>
+<div class="flex gap-2 flex-wrap">
+<span class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed rounded text-[10px] font-label-sm font-bold tracking-wide">ضمان</span>
+<span class="px-2 py-1 bg-error-container text-on-error-container rounded text-[10px] font-label-sm font-bold tracking-wide">مستعجل</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: With Tech (لدى الفني) -->
+<div class="w-[320px] flex-shrink-0 flex flex-col max-h-full bg-surface-container-low/50 rounded-xl border border-surface-variant shadow-[inset_0_0_20px_rgba(0,87,168,0.02)]">
+<!-- Column Header -->
+<div class="p-4 border-b border-surface-variant flex justify-between items-center bg-surface-container-lowest/80 backdrop-blur-sm rounded-t-xl sticky top-0 z-10 border-t-2 border-t-info">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-info animate-pulse"></div>
+                            لدى الفني
+                        </h3>
+<span id="col-with_technician-count" class="bg-info/10 text-info px-2 py-0.5 rounded-full font-numeric-table text-numeric-table text-[12px]">2</span>
+</div>
+<!-- Cards List -->
+<div id="col-with_technician-list" class="flex-1 overflow-y-auto p-3 flex flex-col gap-3 no-scrollbar">
+<!-- Card: EXTERNAL REPAIR (Dashed Border) -->
+<div class="bg-surface border-2 border-dashed border-outline-variant p-sm rounded-lg shadow-sm hover:shadow-md hover:border-warning/50 hover:-translate-y-0.5 transition-all cursor-grab group relative overflow-hidden">
+<!-- External Indicator Tab -->
+<div class="absolute top-0 right-0 bg-warning/10 text-warning px-2 py-0.5 rounded-bl-lg text-[10px] font-bold flex items-center gap-1 border-b border-l border-warning/20">
+<span class="material-symbols-outlined text-[12px]">local_shipping</span> مركز خارجي
+                            </div>
+<div class="flex justify-between items-start mb-2 mt-4">
+<span class="font-numeric-table text-numeric-table text-primary text-[14px]">#REP-8088</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 5 أيام
+                                </span>
+</div>
+<h4 class="font-label-lg text-label-lg text-on-surface mb-1">MacBook Pro M2 - لوحة أم</h4>
+<div class="flex items-center gap-2 mb-3 text-body-sm font-body-sm text-text-secondary">
+<span class="material-symbols-outlined text-[16px]">person</span>
+                                سارة يوسف
+                            </div>
+<div class="flex gap-2 flex-wrap">
+<span class="px-2 py-1 bg-surface-container-high text-on-surface-variant rounded text-[10px] font-label-sm font-bold tracking-wide">بانتظار قطع غيار</span>
+</div>
+</div>
+<!-- Card: Internal Repair -->
+<div class="bg-surface border border-info/30 p-sm rounded-lg shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-grab group bg-info/5">
+<div class="flex justify-between items-start mb-2">
+<span class="font-numeric-table text-numeric-table text-primary text-[14px]">#REP-8090</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 2 يوم
+                                </span>
+</div>
+<h4 class="font-label-lg text-label-lg text-on-surface mb-1">iPad Air 5 - منفذ شحن</h4>
+<div class="flex items-center gap-2 mb-3 text-body-sm font-body-sm text-text-secondary">
+<span class="material-symbols-outlined text-[16px]">person</span>
+                                خالد عبدالله
+                            </div>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-surface-variant">
+<div class="flex gap-2 flex-wrap">
+<span class="px-2 py-1 bg-surface-container-high text-on-surface-variant rounded text-[10px] font-label-sm font-bold tracking-wide">فحص</span>
+</div>
+<div class="flex -space-x-2 space-x-reverse">
+<img alt="Tech" class="w-6 h-6 rounded-full border border-surface" data-alt="A very small profile picture of a male technician in a blue uniform shirt, bright lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA02MGNluwpw0Lf0wIBaQUqQBryPggIQFCDRijW28XSkkwcfCm6LNJhomUQ7pWykHvfY3SK_nk9H6rsv_3sXBX2n6UOJ0HkeLHmaM1W2CWMahOUaPmyzNtLIsMY_KSL9sWTiI5QqhxtE1ZGFhFM7LBQWB4mhohi5u9PJVK7BPxnY_johV1JDd1TK3NB6ZGkEziuOLDSmXaHi827QD7nGT1zzrRN12Ul7Yq-HDinwXBn_RfIqsntEE6JuQ"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 3: Returned (تم الإصلاح / العودة) -->
+<div class="w-[320px] flex-shrink-0 flex flex-col max-h-full bg-surface-container-low/50 rounded-xl border border-surface-variant">
+<!-- Column Header -->
+<div class="p-4 border-b border-surface-variant flex justify-between items-center bg-surface-container-lowest/80 backdrop-blur-sm rounded-t-xl sticky top-0 z-10 border-t-2 border-t-success">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-success"></div>
+                            تم الإصلاح
+                        </h3>
+<span id="col-returned-count" class="bg-success/10 text-success px-2 py-0.5 rounded-full font-numeric-table text-numeric-table text-[12px]">1</span>
+</div>
+<!-- Cards List -->
+<div id="col-returned-list" class="flex-1 overflow-y-auto p-3 flex flex-col gap-3 no-scrollbar">
+<!-- Card: Ready for pickup -->
+<div class="bg-surface border border-border p-sm rounded-lg shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-grab group">
+<div class="flex justify-between items-start mb-2">
+<span class="font-numeric-table text-numeric-table text-primary text-[14px]">#REP-8075</span>
+<span class="text-label-sm font-label-sm text-success flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> جاهز
+                                </span>
+</div>
+<h4 class="font-label-lg text-label-lg text-on-surface mb-1">PlayStation 5 - صيانة عامة</h4>
+<div class="flex items-center gap-2 mb-3 text-body-sm font-body-sm text-text-secondary">
+<span class="material-symbols-outlined text-[16px]">person</span>
+                                عمر طارق
+                            </div>
+<div class="flex justify-between items-center mt-2 pt-2 border-t border-surface-variant">
+<span class="font-numeric-table text-numeric-table text-on-surface text-[14px]">450 ج.م</span>
+<button class="text-primary hover:bg-primary/10 p-1 rounded transition-colors text-[12px] font-label-sm flex items-center gap-1">
+                                    إرسال إشعار <span class="material-symbols-outlined text-[14px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 4: Delivered (تم التسليم) -->
+<div class="w-[320px] flex-shrink-0 flex flex-col max-h-full bg-surface-container-highest/30 rounded-xl border border-surface-variant opacity-70 hover:opacity-100 transition-opacity">
+<!-- Column Header -->
+<div class="p-4 border-b border-surface-variant flex justify-between items-center bg-surface-container-lowest/80 backdrop-blur-sm rounded-t-xl sticky top-0 z-10">
+<h3 class="font-headline-sm text-headline-sm text-on-surface-variant flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-outline-variant"></div>
+                            تم التسليم
+                        </h3>
+<span id="col-delivered-count" class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded-full font-numeric-table text-numeric-table text-[12px]">2</span>
+</div>
+<!-- Cards List -->
+<div id="col-delivered-list" class="flex-1 overflow-y-auto p-3 flex flex-col gap-3 no-scrollbar">
+<!-- Card: Delivered -->
+<div class="bg-surface border border-surface-variant p-sm rounded-lg shadow-none grayscale-[50%]">
+<div class="flex justify-between items-start mb-2">
+<span class="font-numeric-table text-numeric-table text-on-surface-variant text-[14px] line-through">#REP-8060</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+                                    أمس
+                                </span>
+</div>
+<h4 class="font-label-lg text-label-lg text-on-surface-variant mb-1">iPhone 11 - شاشة</h4>
+<div class="flex items-center gap-2 text-body-sm font-body-sm text-outline">
+<span class="material-symbols-outlined text-[16px]">person</span>
+                                مريم علي
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<script>
+// FIX (live wiring): the 4 columns below were static mockup cards. This
+// pulls the real board from the FastAPI backend (see
+// app/routes/repairs.py -> GET /api/repairs/board) and re-renders each
+// column, now with working action buttons that call the actual
+// repairs_service state machine. Requires the backend running locally:
+//   uvicorn app.main:app --reload --port 8000
+// If the fetch fails (backend not running / file opened directly without
+// the backend up), the original mockup cards stay untouched as a
+// harmless fallback.
+const API_BASE = "";  // same-origin now — FastAPI serves this page too
+let technicians = [];
+let centers = [];
+
+function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str ?? "";
+    return div.innerHTML;
+}
+
+// Real modal (replaces the old prompt()-based picker). `fields` is an
+// array of { key, label, type: "select"|"text"|"number", options?, value? }.
+// Resolves with an object of { key: value } on confirm, or null on cancel.
+function openModal(title, fields) {
+    return new Promise((resolve) => {
+        const overlay = document.getElementById("action-modal-overlay");
+        const body = document.getElementById("action-modal-body");
+        document.getElementById("action-modal-title").textContent = title;
+
+        body.innerHTML = fields.map(f => {
+            const label = `<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">${f.label}</label>`;
+            if (f.type === "select") {
+                const opts = f.options.map(o => `<option value="${o.id}">${o.name}</option>`).join("");
+                return `<div>${label}<select data-key="${f.key}" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest">${opts}</select></div>`;
+            }
+            return `<div>${label}<input data-key="${f.key}" type="${f.type}" value="${f.value ?? ""}" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest" /></div>`;
+        }).join("");
+
+        overlay.classList.remove("hidden");
+        overlay.classList.add("flex");
+
+        function cleanup(result) {
+            overlay.classList.add("hidden");
+            overlay.classList.remove("flex");
+            confirmBtn.removeEventListener("click", onConfirm);
+            cancelBtn.removeEventListener("click", onCancel);
+            closeBtn.removeEventListener("click", onCancel);
+            resolve(result);
+        }
+        function onConfirm() {
+            const result = {};
+            body.querySelectorAll("[data-key]").forEach(el => { result[el.dataset.key] = el.value; });
+            cleanup(result);
+        }
+        function onCancel() { cleanup(null); }
+
+        const confirmBtn = document.getElementById("action-modal-confirm");
+        const cancelBtn = document.getElementById("action-modal-cancel");
+        const closeBtn = document.getElementById("action-modal-close");
+        confirmBtn.addEventListener("click", onConfirm);
+        cancelBtn.addEventListener("click", onCancel);
+        closeBtn.addEventListener("click", onCancel);
+    });
+}
+
+async function callAction(url, body) {
+    const res = await fetch(`${API_BASE}${url}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body || {}),
+    });
+    if (!res.ok) {
+        const errBody = await res.json().catch(() => ({}));
+        throw new Error(errBody.detail || `HTTP ${res.status}`);
+    }
+    return res.json();
+}
+
+async function handleAction(action, repairId, sourceEl) {
+    try {
+        if (action === "hand-to-technician") {
+            if (technicians.length === 0) { alert("لا يوجد فنيين متاحين"); return; }
+            const r = await openModal("تسليم لفني", [
+                { key: "technician_id", label: "الفني", type: "select", options: technicians.map(t => ({ id: t.id, name: t.full_name })) },
+            ]);
+            if (!r) return;
+            await callAction(`/api/repairs/${repairId}/hand-to-technician`, { technician_id: Number(r.technician_id) });
+        } else if (action === "send-to-center") {
+            if (centers.length === 0) { alert("لا يوجد مراكز صيانة متاحة"); return; }
+            const r = await openModal("إرسال لمركز خارجي", [
+                { key: "repair_center_id", label: "المركز", type: "select", options: centers },
+                { key: "expected_cost", label: "التكلفة المتوقعة (ج.م)", type: "number", value: "0" },
+            ]);
+            if (!r) return;
+            await callAction(`/api/repairs/${repairId}/send-to-center`, { repair_center_id: Number(r.repair_center_id), expected_cost: r.expected_cost });
+        } else if (action === "receive-back") {
+            const r = await openModal("استلام راجع", [
+                { key: "actual_cost", label: "التكلفة الفعلية (قطع غيار + أجرة، ج.م)", type: "number", value: "0" },
+                { key: "repair_result", label: "نتيجة الإصلاح", type: "text", value: "تم الإصلاح بنجاح" },
+            ]);
+            if (!r) return;
+            const isCenter = sourceEl?.closest("[data-source]")?.dataset.source === "center";
+            const endpoint = isCenter ? "receive-from-center" : "receive-from-technician";
+            await callAction(`/api/repairs/${repairId}/${endpoint}`, { actual_cost: r.actual_cost, repair_result: r.repair_result });
+        } else if (action === "deliver") {
+            const r = await openModal("تسليم للعميل", [
+                { key: "shop_fee", label: "رسوم الخدمة (ج.م)", type: "number", value: "0" },
+            ]);
+            if (!r) return;
+            const result = await callAction(`/api/repairs/${repairId}/deliver`, { shop_fee: r.shop_fee });
+            alert(result.invoice_number ? `تم التسليم — فاتورة رقم ${result.invoice_number}` : "تم التسليم (بدون فاتورة)");
+        } else if (action === "cancel") {
+            const r = await openModal("إلغاء الصيانة", [
+                { key: "reason", label: "سبب الإلغاء", type: "text", value: "" },
+            ]);
+            if (!r || !r.reason) return;
+            await callAction(`/api/repairs/${repairId}/cancel`, { reason: r.reason });
+        }
+        await loadRepairsBoard();
+    } catch (err) {
+        alert(`تعذر تنفيذ الإجراء: ${err.message}`);
+    }
+}
+
+function actionButtons(rep) {
+    const cancelBtn = `<button data-action="cancel" data-repair-id="${rep.id}" class="text-outline hover:text-danger text-[11px] font-label-sm">إلغاء</button>`;
+    if (rep.status === "received") {
+        return `<div class="flex gap-2 mt-2 pt-2 border-t border-border/50">
+            <button data-action="hand-to-technician" data-repair-id="${rep.id}" class="flex-1 text-[11px] font-label-sm bg-primary/10 text-primary rounded px-2 py-1 hover:bg-primary/20">تسليم لفني</button>
+            <button data-action="send-to-center" data-repair-id="${rep.id}" class="flex-1 text-[11px] font-label-sm bg-surface-container-high text-on-surface-variant rounded px-2 py-1 hover:bg-surface-variant">مركز خارجي</button>
+        </div>
+        <div class="mt-1 text-left">${cancelBtn}</div>`;
+    }
+    if (rep.status === "with_technician" || rep.status === "sent_out") {
+        const source = rep.center_name ? "center" : "technician";
+        return `<div class="flex gap-2 mt-2 pt-2 border-t border-border/50" data-source="${source}">
+            <button data-action="receive-back" data-repair-id="${rep.id}" class="flex-1 text-[11px] font-label-sm bg-info/10 text-info rounded px-2 py-1 hover:bg-info/20">استلام راجع</button>
+        </div>
+        <div class="mt-1 text-left">${cancelBtn}</div>`;
+    }
+    if (rep.status === "returned") {
+        return `<div class="flex gap-2 mt-2 pt-2 border-t border-border/50">
+            <button data-action="deliver" data-repair-id="${rep.id}" class="flex-1 text-[11px] font-label-sm bg-success/10 text-success rounded px-2 py-1 hover:bg-success/20">تسليم للعميل</button>
+        </div>
+        <div class="mt-1 text-left">${cancelBtn}</div>`;
+    }
+    return "";
+}
+
+function renderCard(rep) {
+    const who = rep.technician_name
+        ? `<span class="material-symbols-outlined text-[16px]">engineering</span> ${escapeHtml(rep.technician_name)}`
+        : rep.center_name
+        ? `<span class="material-symbols-outlined text-[16px]">store</span> ${escapeHtml(rep.center_name)}`
+        : `<span class="material-symbols-outlined text-[16px]">person</span> ${escapeHtml(rep.customer_name)}`;
+
+    return `
+    <div class="bg-surface border border-border p-sm rounded-lg shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group" data-repair-id="${rep.id}">
+        <div class="flex justify-between items-start mb-2">
+            <span class="font-numeric-table text-numeric-table text-primary text-[14px]">#${escapeHtml(rep.number)}</span>
+            <span class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">schedule</span> ${rep.days} يوم
+            </span>
+        </div>
+        <h4 class="font-label-lg text-label-lg text-on-surface mb-1">${escapeHtml(rep.device_description)} - ${escapeHtml(rep.reported_issue)}</h4>
+        <div class="flex items-center gap-2 mb-1 text-body-sm font-body-sm text-text-secondary">${who}</div>
+        ${actionButtons(rep)}
+    </div>`;
+}
+
+async function loadRepairsBoard() {
+    try {
+        const [boardRes, techRes, centerRes] = await Promise.all([
+            fetch(`${API_BASE}/api/repairs/board`),
+            fetch(`${API_BASE}/api/settings/users`),
+            fetch(`${API_BASE}/api/repairs/centers`),
+        ]);
+        if (!boardRes.ok) throw new Error(`HTTP ${boardRes.status}`);
+        const data = await boardRes.json();
+        const users = techRes.ok ? await techRes.json() : [];
+        technicians = users.filter(u => u.role === "technician" && u.is_active);
+        centers = centerRes.ok ? await centerRes.json() : [];
+
+        for (const col of ["received", "with_technician", "returned", "delivered"]) {
+            const listEl = document.getElementById(`col-${col}-list`);
+            const countEl = document.getElementById(`col-${col}-count`);
+            if (!listEl || !countEl) continue;
+            const cards = data.columns[col] || [];
+            listEl.innerHTML = cards.map(renderCard).join("") || `<p class="text-center text-on-surface-variant text-body-sm p-4">لا يوجد</p>`;
+            countEl.textContent = data.counts[col] ?? cards.length;
+        }
+    } catch (err) {
+        console.warn("Repairs board live data unavailable, showing mockup cards instead:", err);
+    }
+}
+
+document.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-action]");
+    if (!btn) return;
+    handleAction(btn.dataset.action, Number(btn.dataset.repairId), btn);
+});
+
+loadRepairsBoard();
+</script>
+</body></html>

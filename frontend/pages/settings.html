@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>إعدادات النظام - نظام ERP</title>
+<!-- Material Symbols -->
+<!-- Google Fonts: Cairo (Arabic-first) & IBM Plex Sans (tabular numerals) -->
+<script src="/vendor/tailwind.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-container": "#9df0f8",
+                      "outline-variant": "#c2c6d3",
+                      "border": "#e0e0e0",
+                      "on-surface-variant": "#424751",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed-variant": "#00468a",
+                      "surface-tint": "#135eaf",
+                      "on-error-container": "#93000a",
+                      "surface-container-highest": "#e0e3e7",
+                      "on-primary-container": "#b5cfff",
+                      "surface-bright": "#f7fafe",
+                      "surface-container": "#ebeef2",
+                      "surface-container-low": "#f1f4f8",
+                      "on-tertiary-container": "#b6cfff",
+                      "tertiary-container": "#2f5893",
+                      "primary": "#00407e",
+                      "on-secondary-fixed-variant": "#004f55",
+                      "error": "#ba1a1a",
+                      "warning": "#f59e0b",
+                      "inverse-primary": "#a8c8ff",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-high": "#e5e8ec",
+                      "text-primary": "#333333",
+                      "tertiary": "#10407a",
+                      "secondary": "#006970",
+                      "on-tertiary-fixed-variant": "#1a4681",
+                      "surface-dim": "#d7dade",
+                      "on-error": "#ffffff",
+                      "primary-container": "#0057a8",
+                      "on-secondary-container": "#026f77",
+                      "success": "#00b894",
+                      "on-background": "#181c1f",
+                      "text-secondary": "#888888",
+                      "info": "#0057a8",
+                      "on-primary-fixed": "#001b3c",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed": "#d6e3ff",
+                      "outline": "#727783",
+                      "on-tertiary-fixed": "#001b3d",
+                      "secondary-fixed-dim": "#81d4dc",
+                      "inverse-on-surface": "#eef1f5",
+                      "surface": "#ffffff",
+                      "surface-variant": "#e0e3e7",
+                      "primary-fixed": "#d5e3ff",
+                      "on-surface": "#181c1f",
+                      "background": "#f7fafe",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "secondary-fixed": "#9df0f8",
+                      "inverse-surface": "#2d3134",
+                      "primary-fixed-dim": "#a8c8ff",
+                      "tertiary-fixed-dim": "#a9c7ff",
+                      "danger": "#dc3545",
+                      "on-secondary-fixed": "#002022"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "sidebar-width": "260px",
+                      "margin-desktop": "32px",
+                      "gutter": "16px",
+                      "unit": "4px",
+                      "xl": "32px",
+                      "margin-mobile": "16px",
+                      "xs": "4px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Cairo", "sans-serif"
+                      ],
+                      "display-lg": [
+                              "Cairo", "sans-serif"
+                      ],
+                      "body-sm": [
+                              "Cairo", "sans-serif"
+                      ],
+                      "body-lg": [
+                              "Cairo", "sans-serif"
+                      ],
+                      "label-lg": [
+                              "Cairo", "sans-serif"
+                      ],
+                      "label-sm": [
+                              "Cairo", "sans-serif"
+                      ],
+                      "headline-md": [
+                              "Cairo", "sans-serif"
+                      ],
+                      "numeric-table": [
+                              "IBM Plex Sans", "sans-serif"
+                      ],
+                      "headline-sm": [
+                              "Cairo", "sans-serif"
+                      ],
+                      "body-md": [
+                              "Cairo", "sans-serif"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.1px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.5px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "numeric-table": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+        .material-symbols-outlined.filled {
+          font-variation-settings:
+          'FILL' 1,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+        
+        /* Custom Scrollbar for tables */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f4f8; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c2c6d3; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #727783; 
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+      </style>
+<link href="/vendor/fonts.css" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-hidden flex h-screen rtl">
+<!-- JSON: SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen rtl overflow-y-auto w-sidebar-width border-l border-outline-variant dark:border-outline bg-surface dark:bg-inverse-surface z-50">
+<!-- Header -->
+<div class="flex items-center p-lg border-b border-surface-variant">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined filled text-primary dark:text-primary-fixed text-[32px]">point_of_sale</span>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">نظام ERP</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">إدارة الأجهزة</span>
+</div>
+</div>
+</div>
+<!-- CTA -->
+<div class="p-md">
+<button class="w-full bg-primary-container text-on-primary text-label-lg font-label-lg py-sm px-md rounded-lg flex items-center justify-center gap-sm hover:opacity-90 transition-opacity" onclick="location.href='/pages/sales_new_invoice.html'">
+<span class="material-symbols-outlined">add</span>
+<span>عملية بيع جديدة</span>
+</button>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 overflow-y-auto py-sm">
+<ul class="flex flex-col gap-xs">
+<!-- Dashboard (Inactive) -->
+<li>
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/dashboard.html">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-lg text-label-lg">لوحة القيادة</span>
+</a>
+</li>
+<!-- Sales (Inactive) -->
+<li>
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/sales_new_invoice.html">
+<span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
+<span class="font-label-lg text-label-lg">المبيعات</span>
+</a>
+</li>
+<!-- Inventory (Inactive) -->
+<li>
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/inventory.html">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-lg text-label-lg">المخزون</span>
+</a>
+</li>
+<!-- Repairs (Inactive) -->
+<li>
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/repairs_board.html">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="font-label-lg text-label-lg">الإصلاحات</span>
+</a>
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/whatsapp_bot.html">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-label-lg text-label-lg">واتساب بوت</span>
+</a>
+</li>
+<!-- Reports (Inactive) -->
+<li>
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-lg text-label-lg">التقارير</span>
+</a>
+</li>
+<!-- Settings (ACTIVE MATCH) -->
+<li>
+<a class="flex items-center gap-md px-lg py-sm text-primary dark:text-primary-fixed font-bold border-r-4 border-primary dark:border-primary-fixed bg-primary/5 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors" href="/pages/settings.html">
+<span class="material-symbols-outlined filled" data-icon="settings">settings</span>
+<span class="font-label-lg text-label-lg">الإعدادات</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Footer Tabs -->
+<div class="mt-auto border-t border-surface-variant p-sm">
+<ul class="flex flex-col gap-xs">
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-label-lg text-label-lg">الملف الشخصي</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-sm text-danger hover:bg-error-container/30 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-lg text-label-lg">تسجيل الخروج</span>
+</a>
+</li>
+</ul>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- Add/Edit User Modal -->
+<div id="user-modal-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-md">
+<div class="bg-surface rounded-xl border border-border shadow-lg w-full max-w-md">
+<div class="p-md border-b border-border flex items-center justify-between">
+<h3 id="user-modal-title" class="font-headline-sm text-headline-sm font-semibold text-on-surface">إضافة مستخدم</h3>
+<button id="user-modal-close" class="text-outline hover:text-danger"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="p-md flex flex-col gap-sm">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الاسم الكامل</label>
+<input id="user-form-full-name" type="text" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">اسم المستخدم (username)</label>
+<input id="user-form-username" type="text" dir="ltr" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest text-left"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الصلاحية</label>
+<select id="user-form-role" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest">
+<option value="admin">مدير نظام</option>
+<option value="cashier">كاشير</option>
+<option value="technician">فني صيانة</option>
+</select>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">كلمة المرور <span id="user-form-password-hint" class="text-outline">(اتركه فارغًا للإبقاء على الحالي)</span></label>
+<input id="user-form-password" type="password" dir="ltr" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest text-left"/>
+</div>
+<label class="flex items-center gap-2 mt-1">
+<input id="user-form-active" type="checkbox" checked class="w-4 h-4"/>
+<span class="font-body-sm text-body-sm text-on-surface">نشط</span>
+</label>
+</div>
+<div class="p-md border-t border-border flex justify-end gap-sm">
+<button id="user-modal-cancel" class="px-md py-sm rounded-lg border border-border text-on-surface font-label-lg text-label-lg hover:bg-surface-container-low">إلغاء</button>
+<button id="user-modal-save" class="px-md py-sm rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container">حفظ</button>
+</div>
+</div>
+</div>
+<!-- JSON: TopAppBar (Desktop: hide nav links, Mobile: show everything in bottom nav instead - wait, JSON says TopAppBar handles nav links. Context: We are in Settings. We suppress the internal TopAppBar nav links because SideNav handles global routing. We will keep the search and actions.) -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-16 bg-background/80 dark:bg-background/80 backdrop-blur-md border-b border-outline-variant dark:border-outline docked full-width top-0 sticky z-40">
+<!-- Mobile Menu Trigger & Title -->
+<div class="flex items-center gap-md">
+<button class="md:hidden text-on-surface-variant p-sm hover:bg-surface-variant rounded-full transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-semibold text-primary">الإعدادات</h1>
+</div>
+<!-- Global Actions -->
+<div class="flex items-center gap-md">
+<div class="hidden lg:flex items-center bg-surface border border-outline-variant rounded-lg px-sm py-[6px] focus-within:border-primary transition-colors">
+<span class="material-symbols-outlined text-outline text-[20px] ml-xs">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm font-body-sm w-48 text-on-surface placeholder-outline outline-none" placeholder="بحث في الإعدادات..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="text-on-surface-variant p-sm hover:bg-surface-variant rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-[6px] right-[6px] w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant p-sm hover:bg-surface-variant rounded-full transition-colors hidden sm:block">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-xs"></div>
+<button class="flex items-center gap-xs ml-xs bg-surface border border-outline-variant rounded-full p-1 pr-sm hover:bg-surface-variant transition-colors">
+<img alt="صورة المستخدم" class="w-8 h-8 rounded-full object-cover" data-alt="A small circular profile portrait of an Arabic male store manager in a professional retail setting, warm lighting, high quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD23xBC3geJUPXmvhv10HGUBcv5DzFPkHYXjhhlib2nXAD7i6tWFaBN7ocgQ_UtZ08BjUbKsWbpERUBDwUhqSogR1fKKeKNOlWsc6qqNzRTxDYpCefPsAnN7QSagbh9r5IXA8-thPrErfhsasEmhg3kGR01DZ8lV7ncOkn8AZjLA4sGpqjUQdfKsg2sr1Wm4gHmoQc2xsbnjIKekAidRyrm46j32SuedrZlS9ukP5DgxJykkwWWXf1Tg"/>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">arrow_drop_down</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop bg-background">
+<div class="max-w-6xl mx-auto flex flex-col gap-lg">
+<!-- Settings Header & Tabs -->
+<div class="flex flex-col gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">إعدادات النظام</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">إدارة تفاصيل المتجر، المستخدمين، والصلاحيات.</p>
+</div>
+<!-- Tab Navigation -->
+<div class="flex gap-lg border-b border-outline-variant overflow-x-auto pb-[-1px]">
+<button class="tab-btn active px-sm py-sm font-label-lg text-label-lg text-primary border-b-2 border-primary whitespace-nowrap transition-colors" data-tab="general" onclick="switchTab('general')">
+                            إعدادات عامة
+                        </button>
+<button class="tab-btn px-sm py-sm font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap border-b-2 border-transparent" data-tab="users" onclick="switchTab('users')">
+                            المستخدمين والصلاحيات
+                        </button>
+<button class="tab-btn px-sm py-sm font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap border-b-2 border-transparent" data-tab="system" onclick="switchTab('system')">
+                            إعدادات النظام
+                        </button>
+</div>
+</div>
+<!-- Tab Content: General Settings -->
+<div class="tab-content active flex flex-col gap-lg" id="tab-general">
+<!-- Bento Grid for General Settings -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-md">
+<!-- Main Shop Info (Spans 2 cols on lg) -->
+<div class="lg:col-span-2 bg-surface rounded-xl border border-outline-variant p-lg shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">storefront</span>
+                                تفاصيل المتجر
+                            </h3>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant">اسم المتجر</label>
+<input id="set-shop-name" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" type="text" value="متجر الإلكترونيات"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant">الرقم الضريبي (VAT)</label>
+<input id="set-shop-tax-id" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-numeric-table text-numeric-table text-on-surface text-left focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" dir="ltr" type="text" value="123456789"/>
+</div>
+<div class="flex flex-col gap-xs md:col-span-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant">العنوان</label>
+<input id="set-shop-address" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" type="text" value="القاهرة، مدينة نصر، شارع عباس العقاد"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant">رقم التواصل</label>
+<input id="set-shop-phone" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-numeric-table text-numeric-table text-on-surface text-left focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" dir="ltr" type="tel" value="+20 100 123 4567"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant">البريد الإلكتروني</label>
+<input id="set-shop-email" class="w-full bg-background border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface text-left focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" dir="ltr" type="email" value="info@erp-system.example"/>
+</div>
+</form>
+<div class="mt-lg flex justify-end">
+<button id="save-shop-settings-btn" class="bg-primary-container text-on-primary font-label-lg text-label-lg px-lg py-sm rounded-lg hover:opacity-90 transition-opacity">
+                                    <span id="save-shop-settings-label">حفظ التغييرات</span>
+                                </button>
+</div>
+</div>
+<!-- Logo & Branding -->
+<div class="lg:col-span-1 bg-surface rounded-xl border border-outline-variant p-lg shadow-sm flex flex-col items-center justify-center text-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-md w-full text-right">شعار المتجر</h3>
+<div class="w-32 h-32 rounded-xl bg-surface-container-low border-2 border-dashed border-outline-variant flex flex-col items-center justify-center gap-sm mb-md relative overflow-hidden group cursor-pointer hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[32px] text-outline">add_photo_alternate</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary transition-colors">تغيير الشعار</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md text-right w-full">
+                                يفضل استخدام صورة بخلفية شفافة (PNG) بحجم لا يتجاوز 2MB.
+                            </p>
+</div>
+</div>
+</div>
+<!-- Tab Content: Users & Permissions -->
+<div class="tab-content flex flex-col gap-lg" id="tab-users">
+<div class="bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col h-[500px]">
+<!-- Toolbar -->
+<div class="p-md border-b border-surface-variant flex justify-between items-center bg-surface-bright">
+<div class="flex items-center bg-background border border-outline-variant rounded-lg px-sm py-1 focus-within:border-primary transition-colors w-64">
+<span class="material-symbols-outlined text-outline text-[18px] ml-xs">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm font-body-sm w-full text-on-surface placeholder-outline outline-none" placeholder="البحث عن مستخدم..." type="text"/>
+</div>
+<button id="add-user-btn" class="bg-primary-container text-on-primary font-label-lg text-label-lg px-md py-sm rounded-lg hover:opacity-90 transition-opacity flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                                إضافة مستخدم
+                            </button>
+</div>
+<!-- Table -->
+<div class="flex-1 overflow-auto">
+<table class="w-full text-right border-collapse">
+<thead class="bg-surface-container-low sticky top-0 z-10 border-b border-outline-variant">
+<tr>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">الاسم</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">اسم المستخدم</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">الدور (الصلاحية)</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap">الحالة</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant whitespace-nowrap text-center">الإجراءات</th>
+</tr>
+</thead>
+<tbody id="users-rows" class="font-body-md text-body-md divide-y divide-surface-variant">
+<!-- Row 1: Admin -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="py-md px-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center font-bold text-label-sm">أ م</div>
+<span class="text-on-surface font-semibold">أحمد محمود</span>
+</div>
+</td>
+<td class="py-md px-md text-on-surface-variant font-numeric-table" dir="ltr">ahmed.m</td>
+<td class="py-md px-md">
+<span class="inline-flex items-center gap-xs bg-tertiary-container/10 text-tertiary px-2 py-1 rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">shield_person</span>
+                                                مدير نظام
+                                            </span>
+</td>
+<td class="py-md px-md">
+<span class="inline-flex items-center gap-xs bg-success/10 text-success px-2 py-1 rounded-full font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                                                نشط
+                                            </span>
+</td>
+<td class="py-md px-md text-center">
+<div class="flex items-center justify-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-outline hover:text-primary transition-colors" title="تعديل">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="text-outline hover:text-warning transition-colors" title="تغيير كلمة المرور">
+<span class="material-symbols-outlined text-[20px]">key</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Cashier -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="py-md px-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container/20 text-on-secondary-container flex items-center justify-center font-bold text-label-sm">خ س</div>
+<span class="text-on-surface font-semibold">خالد سعيد</span>
+</div>
+</td>
+<td class="py-md px-md text-on-surface-variant font-numeric-table" dir="ltr">khaled.s</td>
+<td class="py-md px-md">
+<span class="inline-flex items-center gap-xs bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">point_of_sale</span>
+                                                كاشير
+                                            </span>
+</td>
+<td class="py-md px-md">
+<span class="inline-flex items-center gap-xs bg-success/10 text-success px-2 py-1 rounded-full font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                                                نشط
+                                            </span>
+</td>
+<td class="py-md px-md text-center">
+<div class="flex items-center justify-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-outline hover:text-primary transition-colors" title="تعديل">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="text-outline hover:text-warning transition-colors" title="تغيير كلمة المرور">
+<span class="material-symbols-outlined text-[20px]">key</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Technician -->
+<tr class="hover:bg-primary/5 transition-colors group bg-surface-container-low/50">
+<td class="py-md px-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-outline-variant/30 text-outline flex items-center justify-center font-bold text-label-sm">س ع</div>
+<span class="text-on-surface-variant font-semibold">سالم علي</span>
+</div>
+</td>
+<td class="py-md px-md text-outline font-numeric-table" dir="ltr">salem.a</td>
+<td class="py-md px-md">
+<span class="inline-flex items-center gap-xs bg-surface-variant text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">build</span>
+                                                فني صيانة
+                                            </span>
+</td>
+<td class="py-md px-md">
+<span class="inline-flex items-center gap-xs bg-surface-variant text-outline px-2 py-1 rounded-full font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                                                غير نشط
+                                            </span>
+</td>
+<td class="py-md px-md text-center">
+<div class="flex items-center justify-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-outline hover:text-primary transition-colors" title="تعديل">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="text-outline hover:text-warning transition-colors" title="تغيير كلمة المرور">
+<span class="material-symbols-outlined text-[20px]">key</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Tab Content: System Settings -->
+<div class="tab-content flex flex-col gap-lg" id="tab-system">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Appearance -->
+<div class="bg-surface rounded-xl border border-outline-variant p-lg shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">palette</span>
+                                المظهر
+                            </h3>
+<div class="flex flex-col gap-md">
+<label class="flex items-center justify-between p-sm rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-colors">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant">light_mode</span>
+<span class="font-body-md text-body-md text-on-surface">الوضع الفاتح</span>
+</div>
+<input checked="" class="text-primary focus:ring-primary h-4 w-4" name="theme" type="radio"/>
+</label>
+<label class="flex items-center justify-between p-sm rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-colors">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant">dark_mode</span>
+<span class="font-body-md text-body-md text-on-surface">الوضع الداكن</span>
+</div>
+<input class="text-primary focus:ring-primary h-4 w-4" name="theme" type="radio"/>
+</label>
+</div>
+</div>
+<!-- Data Backup -->
+<div class="bg-surface rounded-xl border border-outline-variant p-lg shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">backup</span>
+                                النسخ الاحتياطي
+                            </h3>
+<div class="flex flex-col gap-md">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                                    آخر نسخة احتياطية تمت في: <span class="font-numeric-table" dir="ltr">2023-10-25 14:30</span>
+</p>
+<div class="flex items-center justify-between mt-sm">
+<span class="font-body-md text-body-md text-on-surface">نسخ احتياطي تلقائي (يومياً)</span>
+<!-- Toggle Switch -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<button class="mt-md w-full border border-primary text-primary font-label-lg text-label-lg py-sm rounded-lg hover:bg-primary/5 transition-colors flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">cloud_download</span>
+                                    إنشاء نسخة احتياطية الآن
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        function switchTab(tabId) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-primary', 'border-primary');
+                btn.classList.add('text-on-surface-variant', 'border-transparent');
+                
+                if(btn.dataset.tab === tabId) {
+                    btn.classList.add('active', 'text-primary', 'border-primary');
+                    btn.classList.remove('text-on-surface-variant', 'border-transparent');
+                }
+            });
+
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+    </script>
+
+<script>
+// FIX (live wiring): shop details load from / save to the backend (see
+// app/routes/settings.py), and the users table loads the real seeded
+// users. Falls back to the static mockup values if the backend isn't
+// running.
+const API_BASE = "";  // same-origin now — FastAPI serves this page too
+
+const ROLE_LABEL = {
+    admin: { text: "مدير نظام", icon: "shield_person", cls: "bg-tertiary-container/10 text-tertiary" },
+    cashier: { text: "كاشير", icon: "point_of_sale", cls: "bg-primary/10 text-primary" },
+    technician: { text: "فني صيانة", icon: "build", cls: "bg-warning/10 text-warning" },
+};
+
+function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str ?? "";
+    return div.innerHTML;
+}
+
+function initials(name) {
+    const parts = (name || "").trim().split(/\s+/);
+    return parts.slice(0, 2).map(p => p[0]).join("");
+}
+
+async function loadShopSettings() {
+    try {
+        const res = await fetch(`${API_BASE}/api/settings/shop`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const s = await res.json();
+        document.getElementById("set-shop-name").value = s.name || "";
+        document.getElementById("set-shop-tax-id").value = s.tax_id || "";
+        document.getElementById("set-shop-address").value = s.address || "";
+        document.getElementById("set-shop-phone").value = s.phone || "";
+        document.getElementById("set-shop-email").value = s.email || "";
+    } catch (err) {
+        console.warn("Shop settings live data unavailable, showing mockup values instead:", err);
+    }
+}
+
+async function saveShopSettings() {
+    const btn = document.getElementById("save-shop-settings-btn");
+    const label = document.getElementById("save-shop-settings-label");
+    const original = label.textContent;
+    btn.disabled = true;
+    label.textContent = "جارٍ الحفظ...";
+    try {
+        const res = await fetch(`${API_BASE}/api/settings/shop`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: document.getElementById("set-shop-name").value,
+                tax_id: document.getElementById("set-shop-tax-id").value,
+                address: document.getElementById("set-shop-address").value,
+                phone: document.getElementById("set-shop-phone").value,
+                email: document.getElementById("set-shop-email").value,
+            }),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        label.textContent = "تم الحفظ ✓";
+        setTimeout(() => { label.textContent = original; }, 1500);
+    } catch (err) {
+        alert(`تعذر حفظ الإعدادات: ${err.message}`);
+        label.textContent = original;
+    } finally {
+        btn.disabled = false;
+    }
+}
+
+function renderUserRow(u) {
+    const role = ROLE_LABEL[u.role] || { text: u.role, icon: "person", cls: "bg-surface-container-high text-on-surface-variant" };
+    const statusCls = u.is_active ? "bg-success/10 text-success" : "bg-surface-container-high text-on-surface-variant";
+    const statusDot = u.is_active ? "bg-success" : "bg-outline";
+    const statusText = u.is_active ? "نشط" : "غير نشط";
+    return `
+    <tr class="hover:bg-primary/5 transition-colors group">
+        <td class="py-md px-md">
+            <div class="flex items-center gap-sm">
+                <div class="w-8 h-8 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center font-bold text-label-sm">${escapeHtml(initials(u.full_name))}</div>
+                <span class="text-on-surface font-semibold">${escapeHtml(u.full_name)}</span>
+            </div>
+        </td>
+        <td class="py-md px-md text-on-surface-variant font-numeric-table" dir="ltr">${escapeHtml(u.username)}</td>
+        <td class="py-md px-md">
+            <span class="inline-flex items-center gap-xs ${role.cls} px-2 py-1 rounded-full font-label-sm text-label-sm">
+                <span class="material-symbols-outlined text-[14px]">${role.icon}</span> ${role.text}
+            </span>
+        </td>
+        <td class="py-md px-md">
+            <span class="inline-flex items-center gap-xs ${statusCls} px-2 py-1 rounded-full font-label-sm text-label-sm">
+                <span class="w-1.5 h-1.5 rounded-full ${statusDot}"></span> ${statusText}
+            </span>
+        </td>
+        <td class="py-md px-md text-center">
+            <div class="flex items-center justify-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                <button data-action="edit-user" data-user-id="${u.id}" class="text-outline hover:text-primary transition-colors" title="تعديل / كلمة مرور جديدة"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+            </div>
+        </td>
+    </tr>`;
+}
+
+let currentUsers = [];
+let editingUserId = null;
+
+async function loadUsers() {
+    try {
+        const res = await fetch(`${API_BASE}/api/settings/users`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        currentUsers = await res.json();
+        document.getElementById("users-rows").innerHTML = currentUsers.map(renderUserRow).join("");
+    } catch (err) {
+        console.warn("Users live data unavailable, showing mockup rows instead:", err);
+    }
+}
+
+function openUserModal(user) {
+    editingUserId = user ? user.id : null;
+    document.getElementById("user-modal-title").textContent = user ? "تعديل مستخدم" : "إضافة مستخدم";
+    document.getElementById("user-form-full-name").value = user?.full_name || "";
+    document.getElementById("user-form-username").value = user?.username || "";
+    document.getElementById("user-form-username").disabled = !!user; // username fixed once created
+    document.getElementById("user-form-role").value = user?.role || "cashier";
+    document.getElementById("user-form-active").checked = user ? user.is_active : true;
+    document.getElementById("user-form-password").value = "";
+    document.getElementById("user-form-password-hint").classList.toggle("hidden", !user);
+    const overlay = document.getElementById("user-modal-overlay");
+    overlay.classList.remove("hidden");
+    overlay.classList.add("flex");
+}
+
+function closeUserModal() {
+    const overlay = document.getElementById("user-modal-overlay");
+    overlay.classList.add("hidden");
+    overlay.classList.remove("flex");
+}
+
+async function saveUser() {
+    const full_name = document.getElementById("user-form-full-name").value.trim();
+    const username = document.getElementById("user-form-username").value.trim();
+    const role = document.getElementById("user-form-role").value;
+    const is_active = document.getElementById("user-form-active").checked;
+    const password = document.getElementById("user-form-password").value;
+
+    if (!full_name || !username) { alert("محتاج الاسم واسم المستخدم"); return; }
+
+    try {
+        if (editingUserId) {
+            const body = { full_name, role, is_active };
+            if (password) body.password = password;
+            const res = await fetch(`${API_BASE}/api/settings/users/${editingUserId}`, {
+                method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
+            });
+            if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || `HTTP ${res.status}`); }
+        } else {
+            if (!password) { alert("محتاج كلمة مرور للمستخدم الجديد"); return; }
+            const res = await fetch(`${API_BASE}/api/settings/users`, {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ full_name, username, role, password }),
+            });
+            if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || `HTTP ${res.status}`); }
+        }
+        closeUserModal();
+        await loadUsers();
+    } catch (err) {
+        alert(`تعذر الحفظ: ${err.message}`);
+    }
+}
+
+document.getElementById("add-user-btn")?.addEventListener("click", () => openUserModal(null));
+document.getElementById("user-modal-close")?.addEventListener("click", closeUserModal);
+document.getElementById("user-modal-cancel")?.addEventListener("click", closeUserModal);
+document.getElementById("user-modal-save")?.addEventListener("click", saveUser);
+
+document.getElementById("users-rows")?.addEventListener("click", (e) => {
+    const btn = e.target.closest('button[data-action="edit-user"]');
+    if (!btn) return;
+    const user = currentUsers.find(u => u.id === Number(btn.dataset.userId));
+    if (user) openUserModal(user);
+});
+
+document.getElementById("save-shop-settings-btn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    saveShopSettings();
+});
+
+loadShopSettings();
+loadUsers();
+</script>
+</body></html>

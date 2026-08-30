@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Database (real data — never upload)
+*.db
+*.sqlite
+*.sqlite3
+
+# Secrets & config
+.env
+.env.*
+*.pem
+*.key
+config.local.*
+*.secret
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP System - لوحة القيادة</title>
+<!-- Fonts & Icons -->
+<!-- Tailwind CSS -->
+<script src="/vendor/tailwind.js"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#81d4dc",
+                    "surface-container-low": "#f1f4f8",
+                    "inverse-primary": "#a8c8ff",
+                    "tertiary-fixed": "#d6e3ff",
+                    "on-primary-container": "#b5cfff",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#135eaf",
+                    "on-tertiary-fixed-variant": "#1a4681",
+                    "background": "#f7fafe",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#181c1f",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#001b3c",
+                    "surface-container-highest": "#e0e3e7",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#001b3d",
+                    "surface-bright": "#f7fafe",
+                    "tertiary-fixed-dim": "#a9c7ff",
+                    "surface-container": "#ebeef2",
+                    "surface-variant": "#e0e3e7",
+                    "inverse-on-surface": "#eef1f5",
+                    "on-background": "#181c1f",
+                    "text-secondary": "#888888",
+                    "inverse-surface": "#2d3134",
+                    "secondary-fixed": "#9df0f8",
+                    "text-primary": "#333333",
+                    "secondary-container": "#9df0f8",
+                    "on-surface-variant": "#424751",
+                    "primary-container": "#0057a8",
+                    "on-secondary-fixed-variant": "#004f55",
+                    "surface": "#ffffff",
+                    "surface-container-high": "#e5e8ec",
+                    "danger": "#dc3545",
+                    "tertiary-container": "#2f5893",
+                    "on-secondary": "#ffffff",
+                    "outline": "#727783",
+                    "warning": "#f59e0b",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#002022",
+                    "tertiary": "#10407a",
+                    "primary": "#00407e",
+                    "success": "#00b894",
+                    "on-tertiary-container": "#b6cfff",
+                    "on-secondary-container": "#026f77",
+                    "surface-dim": "#d7dade",
+                    "primary-fixed": "#d5e3ff",
+                    "secondary": "#006970",
+                    "border": "#e0e0e0",
+                    "on-primary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "info": "#0057a8",
+                    "on-primary-fixed-variant": "#00468a",
+                    "primary-fixed-dim": "#a8c8ff",
+                    "outline-variant": "#c2c6d3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "sidebar-width": "260px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "unit": "4px",
+                    "xs": "4px",
+                    "margin-desktop": "32px",
+                    "xl": "32px",
+                    "margin-mobile": "16px",
+                    "sm": "8px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": [
+                            "Cairo"
+                    ],
+                    "numeric-table": ["IBM Plex Sans"],
+                    "body-lg": [
+                            "Cairo"
+                    ],
+                    "headline-sm": [
+                            "Cairo"
+                    ],
+                    "label-lg": [
+                            "Cairo"
+                    ],
+                    "headline-lg": [
+                            "Cairo"
+                    ],
+                    "body-md": [
+                            "Cairo"
+                    ],
+                    "headline-md": [
+                            "Cairo"
+                    ],
+                    "label-sm": [
+                            "Cairo"
+                    ],
+                    "body-sm": [
+                            "Cairo"
+                    ]
+            },
+            "fontSize": {
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "numeric-table": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-sm": [
+                            "20px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-lg": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.1px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.5px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e0e3e7;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c2c6d3;
+        }
+    </style>
+<link href="/vendor/fonts.css" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<!-- SideNavBar (from JSON) -->
+<aside class="hidden md:flex flex-col h-screen overflow-y-auto bg-surface fixed right-0 top-0 w-sidebar-width border-l border-outline-variant z-50">
+<!-- Header -->
+<div class="flex items-center gap-4 p-lg border-b border-outline-variant/30">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-display-lg text-headline-sm font-bold shadow-sm">
+                H
+            </div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">نظام ERP</h1>
+<p class="font-label-sm text-label-sm text-text-secondary">إدارة الأجهزة</p>
+</div>
+</div>
+<!-- CTA -->
+<div class="p-md">
+<button class="w-full bg-primary-container text-on-primary font-label-lg text-label-lg py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary transition-colors shadow-sm" onclick="location.href='/pages/sales_new_invoice.html'">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+                عملية بيع جديدة
+            </button>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 px-sm py-2 space-y-1">
+<!-- Active Tab: Dashboard -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-bold border-r-4 border-primary bg-primary/5 transition-colors" href="/pages/dashboard.html">
+<span class="material-symbols-outlined fill-icon" data-icon="dashboard">dashboard</span>
+<span class="font-label-lg text-label-lg">لوحة القيادة</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="/pages/sales_new_invoice.html">
+<span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
+<span class="font-label-lg text-label-lg">المبيعات</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="/pages/inventory.html">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-lg text-label-lg">المخزون</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="/pages/repairs_board.html">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="font-label-lg text-label-lg">الإصلاحات</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="/pages/whatsapp_bot.html">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-label-lg text-label-lg">واتساب بوت</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-lg text-label-lg">التقارير</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors mt-4" href="/pages/settings.html">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-lg text-label-lg">الإعدادات</span>
+</a>
+</nav>
+<!-- Footer Tabs -->
+<div class="mt-auto p-sm border-t border-outline-variant/30">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-label-lg text-label-lg">الملف الشخصي</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-danger hover:bg-error-container hover:text-on-error-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-lg text-label-lg">تسجيل الخروج</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 mr-0 md:mr-sidebar-width flex flex-col min-h-screen">
+<!-- TopAppBar (from JSON) -->
+<header class="bg-background/80 backdrop-blur-md border-b border-outline-variant sticky top-0 z-40 h-16 w-full flex justify-between items-center px-4 md:px-margin-desktop">
+<!-- Mobile Menu Toggle & Brand (Visible on mobile only) -->
+<div class="flex items-center gap-2 md:hidden">
+<button class="p-2 text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="text-headline-sm font-headline-sm font-black text-primary">نظام ERP</span>
+</div>
+<!-- Web Navigation Links -->
+<div class="hidden md:flex items-center gap-6 h-full">
+<a class="h-full flex items-center text-primary font-bold border-b-2 border-primary px-2" href="/pages/dashboard.html">الرئيسية</a>
+<a class="h-full flex items-center text-on-surface-variant hover:text-primary transition-all px-2" href="#">الفواتير</a>
+<a class="h-full flex items-center text-on-surface-variant hover:text-primary transition-all px-2" href="/pages/customer_statement.html">العملاء</a>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-3">
+<!-- Search (Mobile hidden, Web shown) -->
+<div class="hidden lg:flex relative">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary">search</span>
+<input class="bg-surface-container-low border-none rounded-full py-1.5 pr-10 pl-4 font-body-sm text-body-sm focus:ring-2 focus:ring-primary focus:bg-surface w-48 transition-all" placeholder="بحث..." type="text"/>
+</div>
+<div class="h-6 w-px bg-outline-variant mx-1 hidden sm:block"></div>
+<!-- Action Buttons -->
+<button class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 border border-outline rounded-lg text-on-surface hover:bg-surface-container-low transition-colors font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+                    الباركود
+                </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-primary-container text-on-primary rounded-lg hover:bg-primary transition-colors font-label-sm text-label-sm shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span class="hidden sm:inline">إضافة صنف</span>
+</button>
+<!-- Icon Actions -->
+<div class="flex items-center gap-1 ml-2">
+<button class="p-2 text-on-surface-variant hover:text-primary rounded-full hover:bg-surface-container-low transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-danger rounded-full border-2 border-background"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary rounded-full hover:bg-surface-container-low transition-colors hidden sm:block">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<!-- Profile Avatar -->
+<button class="ml-2 w-8 h-8 rounded-full overflow-hidden border border-outline-variant hover:border-primary transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2">
+<img alt="صورة المستخدم" class="w-full h-full object-cover" data-alt="Professional corporate headshot of a middle-eastern store manager against a clean neutral background. Bright, modern lighting. The person looks approachable and trustworthy, wearing business casual attire." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFy4S7V5zsIDoNAQVGUiCUmahIQSgwN9QrNj5Qnzh2s2RYQ-FlPymTu5jxLklHyxQDi0FLl9VswbLDNrWBAVM-5aEO0zM-rngvk6NOJ04R7WnI7gBWhuYwxGNkfPPqhluotFtlGRJljEMEI-RKCmuRbqgi3X7QoHte24NQe45ir7x4ASEfJtXMOAXy3-EGHAP0M_bmtathTmyyBUzHviopitypREOzksy4rV3I8DbSXh5DTD1slMwY3w"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Page Content Canvas -->
+<div class="flex-1 p-4 md:p-margin-desktop overflow-y-auto">
+<div class="max-w-7xl mx-auto space-y-lg">
+<!-- Page Header & Shortcuts -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background">مرحباً بعودتك، أحمد 👋</h2>
+<p class="font-body-md text-body-md text-text-secondary mt-1">إليك نظرة عامة على نشاط اليوم في المتجر.</p>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-surface border border-outline-variant hover:border-primary hover:bg-primary/5 px-4 py-2 rounded-lg font-label-lg text-label-lg text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">person_search</span>
+                            بحث عميل
+                        </button>
+<button onclick="location.href='/pages/repairs_board.html'" class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-surface border border-outline-variant hover:border-primary hover:bg-primary/5 px-4 py-2 rounded-lg font-label-lg text-label-lg text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">home_repair_service</span>
+                            إصلاح جديد
+                        </button>
+</div>
+</div>
+<!-- KPI Cards (Bento Grid Style) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-gutter">
+<!-- Revenue Card -->
+<div class="bg-surface rounded-xl p-5 border border-outline-variant shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] flex flex-col justify-between hover:border-primary/50 transition-colors relative overflow-hidden group">
+<!-- Decorative gradient blob -->
+<div class="absolute -left-8 -top-8 w-24 h-24 bg-success/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+<div class="flex justify-between items-start z-10">
+<div>
+<p class="font-label-lg text-label-lg text-text-secondary mb-1">إيرادات اليوم</p>
+<p class="font-label-sm text-label-sm text-text-secondary/70 ltr:text-left rtl:text-right font-sans">Today's Revenue</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-success/10 text-success flex items-center justify-center">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+<div class="mt-4 z-10 flex items-end justify-between">
+<div class="flex items-baseline gap-1">
+<span id="kpi-revenue" class="font-display-lg text-headline-lg font-bold text-on-surface">4,250</span>
+<span class="font-body-sm text-body-sm text-text-secondary">ج.م</span>
+</div>
+<div class="flex items-center text-success font-label-sm text-label-sm bg-success/10 px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span class="mr-1">+12%</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-secondary underline decoration-dashed cursor-pointer hover:text-primary">عرض الكل</span></div>
+</div>
+<!-- Open Repairs -->
+<div class="bg-surface rounded-xl p-5 border border-outline-variant shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] flex flex-col justify-between hover:border-primary/50 transition-colors relative overflow-hidden group">
+<div class="absolute -left-8 -top-8 w-24 h-24 bg-warning/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+<div class="flex justify-between items-start z-10">
+<div>
+<p class="font-label-lg text-label-lg text-text-secondary mb-1">إصلاحات مفتوحة</p>
+<p class="font-label-sm text-label-sm text-text-secondary/70 ltr:text-left rtl:text-right font-sans">Open Repairs</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-warning/10 text-warning flex items-center justify-center">
+<span class="material-symbols-outlined">build_circle</span>
+</div>
+</div>
+<div class="mt-4 z-10 flex items-end justify-between">
+<span id="kpi-open-repairs" class="font-display-lg text-headline-lg font-bold text-on-surface">18</span>
+<span onclick="location.href='/pages/repairs_board.html'" class="font-body-sm text-body-sm text-text-secondary underline decoration-dashed cursor-pointer hover:text-primary">عرض الكل</span>
+</div>
+</div>
+<!-- Low Stock Alerts -->
+<div class="bg-surface rounded-xl p-5 border border-outline-variant shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] flex flex-col justify-between hover:border-danger/50 transition-colors relative overflow-hidden group">
+<div class="absolute -left-8 -top-8 w-24 h-24 bg-danger/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+<div class="flex justify-between items-start z-10">
+<div>
+<p class="font-label-lg text-label-lg text-text-secondary mb-1">تنبيهات المخزون</p>
+<p class="font-label-sm text-label-sm text-text-secondary/70 ltr:text-left rtl:text-right font-sans">Low Stock Alerts</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined">warning</span>
+</div>
+</div>
+<div class="mt-4 z-10 flex items-end justify-between">
+<span id="kpi-low-stock" class="font-display-lg text-headline-lg font-bold text-danger">5</span>
+<span class="font-body-sm text-body-sm text-danger bg-danger/10 px-2 py-0.5 rounded-full">أصناف حرجة</span>
+<span onclick="location.href='/pages/inventory.html'" class="font-body-sm text-body-sm text-text-secondary underline decoration-dashed cursor-pointer hover:text-primary">عرض الكل</span></div>
+</div>
+<!-- Outstanding Balances -->
+<div class="bg-surface rounded-xl p-5 border border-outline-variant shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] flex flex-col justify-between hover:border-primary/50 transition-colors relative overflow-hidden group">
+<div class="absolute -left-8 -top-8 w-24 h-24 bg-primary-container/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+<div class="flex justify-between items-start z-10">
+<div>
+<p class="font-label-lg text-label-lg text-text-secondary mb-1">أرصدة مستحقة</p>
+<p class="font-label-sm text-label-sm text-text-secondary/70 ltr:text-left rtl:text-right font-sans">Outstanding Balances</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-primary-container/10 text-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-4 z-10 flex items-end justify-between">
+<div class="flex items-baseline gap-1">
+<span id="kpi-outstanding" class="font-display-lg text-headline-lg font-bold text-on-surface">1,850</span>
+<span class="font-body-sm text-body-sm text-text-secondary">ج.م</span>
+</div>
+<span onclick="location.href='/pages/customer_statement.html'" class="font-body-sm text-body-sm text-text-secondary underline decoration-dashed cursor-pointer hover:text-primary">عرض الكل</span></div>
+</div>
+</div>
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Recent Activity Feed (Takes up 2 columns on desktop) -->
+<div class="lg:col-span-2 bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col h-[500px]">
+<div class="px-5 py-4 border-b border-outline-variant bg-surface-container-lowest flex justify-between items-center">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">أحدث النشاطات</h3>
+<p class="font-label-sm text-label-sm text-text-secondary font-sans ltr:text-left rtl:text-right">Recent Activity Feed</p>
+</div>
+<div class="flex gap-1 bg-surface-container-low p-1 rounded-lg"><button class="px-3 py-1 text-label-sm font-bold bg-surface text-primary rounded shadow-sm">الكل</button><button class="px-3 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">المبيعات</button><button class="px-3 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">الإصلاحات</button></div>
+</div>
+<!-- Feed List -->
+<div class="flex-1 overflow-y-auto p-2">
+<!-- Sale Item -->
+<div class="flex gap-4 p-3 hover:bg-surface-container-low rounded-lg transition-colors group cursor-pointer border-b border-outline-variant/30 last:border-0">
+<div class="mt-1 w-10 h-10 rounded-full bg-success/10 text-success flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<p class="font-label-lg text-label-lg text-on-surface">عملية بيع جديدة #INV-2023-089</p>
+<span class="font-label-sm text-label-sm text-text-secondary">قبل 10 دقائق</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">شاشة ايفون 13 برو ماكس, زجاج حماية</p>
+<div class="mt-2 flex items-center gap-3">
+<span class="inline-flex items-center gap-1 font-numeric-table text-numeric-table bg-surface-container px-2 py-0.5 rounded text-on-surface-variant">
+                                            850 ج.م
+                                        </span>
+<span class="inline-flex items-center gap-1 text-xs text-text-secondary">
+<span class="material-symbols-outlined text-[14px]">person</span>
+                                            عميل نقدي
+                                        </span>
+</div>
+</div>
+</div>
+<!-- Repair Update Item -->
+<div class="flex gap-4 p-3 hover:bg-surface-container-low rounded-lg transition-colors group cursor-pointer border-b border-outline-variant/30 last:border-0">
+<div class="mt-1 w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 relative">
+<span class="material-symbols-outlined">handyman</span>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-surface rounded-full flex items-center justify-center">
+<div class="w-3 h-3 bg-warning rounded-full"></div>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<p class="font-label-lg text-label-lg text-on-surface">تحديث حالة إصلاح #REP-442</p>
+<span class="font-label-sm text-label-sm text-text-secondary">قبل 45 دقيقة</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">سامسونج S22 - تغيير بطارية</p>
+<div class="mt-2 flex items-center gap-2">
+<span class="font-label-sm text-label-sm bg-surface-container text-text-secondary px-2 py-0.5 rounded-full line-through">قيد الانتظار</span>
+<span class="material-symbols-outlined text-text-secondary text-[14px]">arrow_forward</span>
+<span class="font-label-sm text-label-sm bg-warning/20 text-warning px-2 py-0.5 rounded-full font-bold">قيد العمل</span>
+</div>
+</div>
+</div>
+<!-- New Repair Intake -->
+<div class="flex gap-4 p-3 hover:bg-surface-container-low rounded-lg transition-colors group cursor-pointer border-b border-outline-variant/30 last:border-0">
+<div class="mt-1 w-10 h-10 rounded-full bg-tertiary-container/10 text-tertiary flex items-center justify-center shrink-0 border border-tertiary/20 border-dashed">
+<span class="material-symbols-outlined">add_task</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<p class="font-label-lg text-label-lg text-on-surface">استلام جهاز جديد #REP-443</p>
+<span class="font-label-sm text-label-sm text-text-secondary">قبل ساعتين</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">ايباد برو 11 - مشكلة في منفذ الشحن</p>
+<div class="mt-2 flex items-center gap-3">
+<span class="inline-flex items-center gap-1 text-xs text-text-secondary">
+<span class="material-symbols-outlined text-[14px]">person</span>
+                                            محمد عبدالله (050xxxxxxx)
+                                        </span>
+</div>
+</div>
+</div>
+<!-- Stock Alert -->
+<div class="flex gap-4 p-3 bg-error-container/20 hover:bg-error-container/40 rounded-lg transition-colors group cursor-pointer border border-danger/20 mb-1">
+<div class="mt-1 w-10 h-10 rounded-full bg-danger/10 text-danger flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">inventory</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<p class="font-label-lg text-label-lg text-danger">مستوى مخزون منخفض</p>
+<span class="font-label-sm text-label-sm text-text-secondary">قبل 3 ساعات</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">شاشة ايفون 11 برو (درجة أولى)</p>
+<div class="mt-2 flex items-center gap-2">
+<span class="font-label-sm text-label-sm bg-surface text-danger border border-danger/30 px-2 py-0.5 rounded">الكمية المتبقية: 2</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-3 border-t border-outline-variant bg-surface-container-lowest text-center">
+<button class="text-primary font-label-lg text-label-lg hover:underline">عرض كل النشاطات</button>
+</div>
+</div>
+<!-- Sidebar Section (Quick Actions & Mini Stats) -->
+<div class="flex flex-col gap-4">
+<!-- Action Panel -->
+<div class="bg-surface rounded-xl border border-outline-variant p-5 shadow-sm relative overflow-hidden">
+<!-- Subtle tech pattern background -->
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#00407e 1px, transparent 1px); background-size: 16px 16px;"></div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1 relative z-10">إجراءات سريعة</h3>
+<p class="font-label-sm text-label-sm text-text-secondary font-sans ltr:text-left rtl:text-right mb-4 relative z-10">Quick Shortcuts</p>
+<div class="space-y-3 relative z-10"><button class="w-full flex items-center justify-between p-3 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary/10 text-primary transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">home_repair_service</span>
+<span class="font-label-lg text-label-lg font-bold">استلام جهاز صيانة</span>
+</div>
+<span class="material-symbols-outlined opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 rtl:rotate-180">arrow_forward</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary/10 text-primary transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-lg text-label-lg">نقطة البيع (POS)</span>
+</div>
+<span class="material-symbols-outlined opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 rtl:rotate-180">arrow_forward</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg border border-outline-variant bg-surface hover:bg-surface-container-low text-on-surface transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">inventory_2</span>
+<span class="font-label-lg text-label-lg">جرد المخزون</span>
+</div>
+<span class="material-symbols-outlined opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 rtl:rotate-180">arrow_forward</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg border border-outline-variant bg-surface hover:bg-surface-container-low text-on-surface transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-warning">receipt</span>
+<span class="font-label-lg text-label-lg">إنشاء عرض سعر</span>
+</div>
+<span class="material-symbols-outlined opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 rtl:rotate-180">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Repair Status Summary -->
+<div class="bg-surface rounded-xl border border-outline-variant p-5 shadow-sm flex-1 flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">حالة الإصلاحات</h3><div class="flex bg-surface-container-low p-1 rounded-lg mb-4"><button class="flex-1 py-1 text-label-sm font-bold bg-surface text-primary rounded shadow-sm">الكل</button><button class="flex-1 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">قيد الانتظار</button><button class="flex-1 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">جاري العمل</button></div>
+<div class="flex-1 flex flex-col justify-center gap-4">
+<!-- Progress Item -->
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-label-sm text-label-sm text-text-secondary">قيد الانتظار (8)</span>
+<span class="font-numeric-table text-numeric-table text-on-surface">45%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-surface-variant h-full rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<!-- Progress Item -->
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-label-sm text-label-sm text-text-secondary">جاري العمل (6)</span>
+<span class="font-numeric-table text-numeric-table text-warning">33%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-warning h-full rounded-full" style="width: 33%"></div>
+</div>
+</div>
+<!-- Progress Item -->
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-label-sm text-label-sm text-text-secondary">جاهز للتسليم (4)</span>
+<span class="font-numeric-table text-numeric-table text-success">22%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-success h-full rounded-full" style="width: 22%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<script>
+// FIX (live wiring): these 4 KPI cards were static mockup numbers. This
+// pulls the real values from the FastAPI backend (see
+// app/routes/dashboard.py). Requires the backend running locally:
+//   uvicorn app.main:app --reload --port 8000
+// If the fetch fails (backend not running, or this file opened directly
+// as file:// without the backend up), the mockup numbers stay as a
+// harmless fallback and a note is logged to the console instead of
+// breaking the page.
+const API_BASE = "";  // same-origin now — FastAPI serves this page too
+
+async function loadDashboardSummary() {
+    try {
+        const res = await fetch(`${API_BASE}/api/dashboard/summary`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        const fmt = (n) => Number(n).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+        document.getElementById("kpi-revenue").textContent = fmt(data.today_revenue);
+        document.getElementById("kpi-open-repairs").textContent = data.open_repairs;
+        document.getElementById("kpi-low-stock").textContent = data.low_stock_count;
+        document.getElementById("kpi-outstanding").textContent = fmt(data.outstanding_total);
+    } catch (err) {
+        console.warn("Dashboard live data unavailable, showing mockup numbers instead:", err);
+    }
+}
+
+loadDashboardSummary();
+</script>
+</body></html>

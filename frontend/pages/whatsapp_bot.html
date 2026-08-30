@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP System - واتساب بوت</title>
+<!-- Fonts & Icons -->
+<!-- Tailwind CSS -->
+<script src="/vendor/tailwind.js"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#81d4dc",
+                    "surface-container-low": "#f1f4f8",
+                    "inverse-primary": "#a8c8ff",
+                    "tertiary-fixed": "#d6e3ff",
+                    "on-primary-container": "#b5cfff",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#135eaf",
+                    "on-tertiary-fixed-variant": "#1a4681",
+                    "background": "#f7fafe",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#181c1f",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#001b3c",
+                    "surface-container-highest": "#e0e3e7",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#001b3d",
+                    "surface-bright": "#f7fafe",
+                    "tertiary-fixed-dim": "#a9c7ff",
+                    "surface-container": "#ebeef2",
+                    "surface-variant": "#e0e3e7",
+                    "inverse-on-surface": "#eef1f5",
+                    "on-background": "#181c1f",
+                    "text-secondary": "#888888",
+                    "inverse-surface": "#2d3134",
+                    "secondary-fixed": "#9df0f8",
+                    "text-primary": "#333333",
+                    "secondary-container": "#9df0f8",
+                    "on-surface-variant": "#424751",
+                    "primary-container": "#0057a8",
+                    "on-secondary-fixed-variant": "#004f55",
+                    "surface": "#ffffff",
+                    "surface-container-high": "#e5e8ec",
+                    "danger": "#dc3545",
+                    "tertiary-container": "#2f5893",
+                    "on-secondary": "#ffffff",
+                    "outline": "#727783",
+                    "warning": "#f59e0b",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#002022",
+                    "tertiary": "#10407a",
+                    "primary": "#00407e",
+                    "success": "#00b894",
+                    "on-tertiary-container": "#b6cfff",
+                    "on-secondary-container": "#026f77",
+                    "surface-dim": "#d7dade",
+                    "primary-fixed": "#d5e3ff",
+                    "secondary": "#006970",
+                    "border": "#e0e0e0",
+                    "on-primary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "info": "#0057a8",
+                    "on-primary-fixed-variant": "#00468a",
+                    "primary-fixed-dim": "#a8c8ff",
+                    "outline-variant": "#c2c6d3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "sidebar-width": "260px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "unit": "4px",
+                    "xs": "4px",
+                    "margin-desktop": "32px",
+                    "xl": "32px",
+                    "margin-mobile": "16px",
+                    "sm": "8px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": [
+                            "Cairo"
+                    ],
+                    "numeric-table": ["IBM Plex Sans"],
+                    "body-lg": [
+                            "Cairo"
+                    ],
+                    "headline-sm": [
+                            "Cairo"
+                    ],
+                    "label-lg": [
+                            "Cairo"
+                    ],
+                    "headline-lg": [
+                            "Cairo"
+                    ],
+                    "body-md": [
+                            "Cairo"
+                    ],
+                    "headline-md": [
+                            "Cairo"
+                    ],
+                    "label-sm": [
+                            "Cairo"
+                    ],
+                    "body-sm": [
+                            "Cairo"
+                    ]
+            },
+            "fontSize": {
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "numeric-table": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-sm": [
+                            "20px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-lg": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.1px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.5px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e0e3e7;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c2c6d3;
+        }
+    </style>
+<link href="/vendor/fonts.css" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<aside class="hidden md:flex flex-col h-screen overflow-y-auto bg-surface fixed right-0 top-0 w-sidebar-width border-l border-outline-variant z-50">
+<div class="flex items-center gap-4 p-lg border-b border-outline-variant/30">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-display-lg text-headline-sm font-bold shadow-sm">
+                H
+            </div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">نظام ERP</h1>
+<p class="font-label-sm text-label-sm text-text-secondary">إدارة الأجهزة</p>
+</div>
+</div>
+<div class="p-md">
+<button onclick="location.href='/pages/sales_new_invoice.html'" class="w-full bg-primary-container text-on-primary font-label-lg text-label-lg py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary transition-colors shadow-sm">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+                عملية بيع جديدة
+            </button>
+</div>
+<nav class="flex-1 px-sm py-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="/pages/dashboard.html">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-lg text-label-lg">لوحة القيادة</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="/pages/sales_new_invoice.html">
+<span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
+<span class="font-label-lg text-label-lg">المبيعات</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="/pages/inventory.html">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-lg text-label-lg">المخزون</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="/pages/repairs_board.html">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="font-label-lg text-label-lg">الإصلاحات</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-bold border-r-4 border-primary bg-primary/5 transition-colors" href="/pages/whatsapp_bot.html">
+<span class="material-symbols-outlined fill-icon" data-icon="forum">forum</span>
+<span class="font-label-lg text-label-lg">واتساب بوت</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-lg text-label-lg">التقارير</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors mt-4" href="/pages/settings.html">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-lg text-label-lg">الإعدادات</span>
+</a>
+</nav>
+<div class="mt-auto p-sm border-t border-outline-variant/30">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-label-lg text-label-lg">الملف الشخصي</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-danger hover:bg-error-container hover:text-on-error-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-lg text-label-lg">تسجيل الخروج</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 mr-0 md:mr-sidebar-width flex flex-col min-h-screen">
+<header class="bg-background/80 backdrop-blur-md border-b border-outline-variant sticky top-0 z-40 h-16 w-full flex justify-between items-center px-4 md:px-margin-desktop">
+<h2 class="font-headline-sm text-headline-sm font-semibold text-on-surface">واتساب بوت</h2>
+<div></div>
+</header>
+
+<div class="flex-1 p-4 md:p-margin-desktop overflow-y-auto">
+
+<!-- Status banner -->
+<div id="wa-status-banner" class="mb-lg p-md rounded-xl border flex items-center gap-md">
+<span id="wa-status-icon" class="material-symbols-outlined text-[28px]"></span>
+<div>
+<p id="wa-status-title" class="font-label-lg text-label-lg font-bold"></p>
+<p id="wa-status-detail" class="font-body-sm text-body-sm text-on-surface-variant"></p>
+</div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+
+<!-- Simulate inbound message -->
+<div class="bg-surface rounded-xl border border-border p-lg shadow-sm">
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface mb-1">تجربة رسالة واردة</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">
+    اختبر منطق البوت (استعلام حالة الصيانة / قراءة صورة) من غير ما تحتاج حساب واتساب حقيقي.
+</p>
+
+<div class="flex flex-col gap-sm">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">رقم هاتف العميل</label>
+<select id="sim-customer-select" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"></select>
+</div>
+
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">نوع الرسالة</label>
+<div class="flex gap-sm">
+<button data-type="text" class="sim-type-btn flex-1 px-md py-sm rounded-lg border border-border font-label-sm text-label-sm">نص (استعلام)</button>
+<button data-type="image" class="sim-type-btn flex-1 px-md py-sm rounded-lg border border-border font-label-sm text-label-sm">صورة إيصال</button>
+</div>
+</div>
+
+<div id="sim-text-field">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">نص الرسالة</label>
+<input id="sim-text-input" type="text" value="عايز أعرف حالة صيانتي" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
+</div>
+
+<div id="sim-image-field" class="hidden">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">اختر صورة (إيصال/فاتورة)</label>
+<input id="sim-image-input" type="file" accept="image/*" class="w-full border border-border rounded-lg px-2 py-2 font-body-sm text-body-sm bg-surface-container-lowest"/>
+<p class="font-label-sm text-label-sm text-outline mt-1">محتاج pytesseract + Tesseract مثبتين على الجهاز عشان الـ OCR يشتغل فعليًا — راجع ملاحظة في app/services/ocr_service.py.</p>
+</div>
+
+<button id="sim-send-btn" class="mt-2 bg-primary text-on-primary rounded-lg py-sm px-md font-label-lg text-label-lg hover:bg-primary-container transition-colors">
+                    إرسال الرسالة التجريبية
+                </button>
+
+<div id="sim-reply-box" class="hidden mt-2 p-sm rounded-lg bg-success/10 border border-success/30">
+<p class="font-label-sm text-label-sm text-success font-bold mb-1">رد البوت:</p>
+<p id="sim-reply-text" class="font-body-sm text-body-sm text-on-surface whitespace-pre-line"></p>
+</div>
+</div>
+</div>
+
+<!-- Message log -->
+<div class="bg-surface rounded-xl border border-border shadow-sm flex flex-col overflow-hidden">
+<div class="p-lg border-b border-border flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">سجل الرسائل</h3>
+<button id="refresh-messages-btn" class="text-primary hover:underline font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">refresh</span> تحديث
+</button>
+</div>
+<div id="wa-messages-list" class="flex-1 overflow-y-auto max-h-[500px] divide-y divide-border"></div>
+</div>
+
+</div>
+</div>
+</main>
+
+<script>
+const API_BASE = "";
+let selectedType = "text";
+let customers = [];
+
+function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str ?? "";
+    return div.innerHTML;
+}
+
+async function loadStatus() {
+    try {
+        const res = await fetch(`${API_BASE}/api/whatsapp/status`);
+        const data = await res.json();
+        const banner = document.getElementById("wa-status-banner");
+        const icon = document.getElementById("wa-status-icon");
+        const title = document.getElementById("wa-status-title");
+        const detail = document.getElementById("wa-status-detail");
+        if (data.configured) {
+            banner.className = "mb-lg p-md rounded-xl border border-success/30 bg-success/10 flex items-center gap-md";
+            icon.textContent = "check_circle";
+            icon.className = "material-symbols-outlined text-[28px] text-success";
+            title.textContent = "متصل بحساب واتساب حقيقي";
+            title.className = "font-label-lg text-label-lg font-bold text-success";
+            detail.textContent = "الرسائل بتتبعت فعليًا عن طريق Meta Cloud API.";
+        } else {
+            banner.className = "mb-lg p-md rounded-xl border border-warning/30 bg-warning/10 flex items-center gap-md";
+            icon.textContent = "info";
+            icon.className = "material-symbols-outlined text-[28px] text-warning";
+            title.textContent = "وضع المحاكاة (Simulated)";
+            title.className = "font-label-lg text-label-lg font-bold text-warning";
+            detail.textContent = "مفيش حساب WhatsApp Business API متصل بعد — الرسائل بتتسجل في السجل بس، مش بتتبعت فعليًا. اضبط WHATSAPP_TOKEN و WHATSAPP_PHONE_ID لما يبقى عندك حساب حقيقي.";
+        }
+    } catch (err) {
+        console.warn("WhatsApp status unavailable:", err);
+    }
+}
+
+async function loadCustomers() {
+    try {
+        const res = await fetch(`${API_BASE}/api/customers`);
+        customers = await res.json();
+        const select = document.getElementById("sim-customer-select");
+        select.innerHTML = customers
+            .filter(c => c.phone)
+            .map(c => `<option value="${c.phone}">${escapeHtml(c.name)} — ${c.phone}</option>`)
+            .join("");
+    } catch (err) {
+        console.warn("Customers unavailable:", err);
+    }
+}
+
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(",")[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+async function sendSimulated() {
+    const phone = document.getElementById("sim-customer-select").value;
+    if (!phone) { alert("محتاج تختار عميل عنده رقم هاتف"); return; }
+
+    const body = { phone, message_type: selectedType };
+    if (selectedType === "text") {
+        body.text = document.getElementById("sim-text-input").value;
+    } else {
+        const fileInput = document.getElementById("sim-image-input");
+        if (!fileInput.files[0]) { alert("اختار صورة الأول"); return; }
+        body.image_base64 = await fileToBase64(fileInput.files[0]);
+    }
+
+    try {
+        const res = await fetch(`${API_BASE}/api/whatsapp/simulate-inbound`, {
+            method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
+        });
+        if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || `HTTP ${res.status}`); }
+        const data = await res.json();
+        document.getElementById("sim-reply-text").textContent = data.reply;
+        document.getElementById("sim-reply-box").classList.remove("hidden");
+        await loadMessages();
+    } catch (err) {
+        alert(`تعذر إرسال الرسالة: ${err.message}`);
+    }
+}
+
+const TYPE_ICON = { text: "chat", image: "image", ocr_result: "document_scanner" };
+
+function renderMessage(m) {
+    const isOut = m.direction === "out";
+    const bubbleAlign = isOut ? "items-end" : "items-start";
+    const bubbleColor = isOut ? "bg-primary/10 text-on-surface" : "bg-surface-container-low text-on-surface";
+    const statusBadge = m.status === "simulated"
+        ? `<span class="text-warning">محاكاة</span>`
+        : m.status === "sent" ? `<span class="text-success">اترسلت</span>`
+        : m.status === "received" ? `<span class="text-primary">استلام</span>` : m.status;
+    return `
+    <div class="p-md flex flex-col ${bubbleAlign} gap-1">
+        <div class="flex items-center gap-2 text-label-sm font-label-sm text-on-surface-variant">
+            <span class="material-symbols-outlined text-[14px]">${TYPE_ICON[m.message_type] || "chat"}</span>
+            <span dir="ltr">${escapeHtml(m.phone)}</span>
+            <span>·</span>
+            ${statusBadge}
+        </div>
+        <div class="max-w-md p-sm rounded-lg ${bubbleColor} font-body-sm text-body-sm whitespace-pre-line">${escapeHtml(m.body)}</div>
+    </div>`;
+}
+
+async function loadMessages() {
+    try {
+        const res = await fetch(`${API_BASE}/api/whatsapp/messages`);
+        const messages = await res.json();
+        const listEl = document.getElementById("wa-messages-list");
+        listEl.innerHTML = messages.map(renderMessage).join("") ||
+            `<p class="p-md text-center text-on-surface-variant text-body-sm">لا توجد رسائل بعد — جرّب "إرسال الرسالة التجريبية"</p>`;
+    } catch (err) {
+        console.warn("Messages unavailable:", err);
+    }
+}
+
+document.querySelectorAll(".sim-type-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        selectedType = btn.dataset.type;
+        document.querySelectorAll(".sim-type-btn").forEach(b => b.classList.toggle("bg-primary/10", b === btn));
+        document.querySelectorAll(".sim-type-btn").forEach(b => b.classList.toggle("text-primary", b === btn));
+        document.getElementById("sim-text-field").classList.toggle("hidden", selectedType !== "text");
+        document.getElementById("sim-image-field").classList.toggle("hidden", selectedType !== "image");
+    });
+});
+document.querySelector('.sim-type-btn[data-type="text"]').classList.add("bg-primary/10", "text-primary");
+
+document.getElementById("sim-send-btn").addEventListener("click", sendSimulated);
+document.getElementById("refresh-messages-btn").addEventListener("click", loadMessages);
+
+loadStatus();
+loadCustomers();
+loadMessages();
+</script>
+</body></html>
