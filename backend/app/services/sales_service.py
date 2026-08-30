@@ -68,9 +68,12 @@ def _validate_line(db: Session, line: dict) -> tuple[Item | None, Decimal, Decim
         if item is None:
             raise BusinessError(f"Unit with barcode '{item_uuid}' not found", 404)
         if item.status != ItemStatus.IN_STOCK:
+            # FIX: item.status is a str column value, not the enum — calling
+            # .value on it was an AttributeError, turning a normal "not in
+            # stock" rejection (409) into a 500.
             raise BusinessError(
                 f"Unit {item.serial_number or item.uuid} is not in stock "
-                f"(current: {item.status.value})",
+                f"(current: {item.status})",
                 409,
             )
         unit_cost = _snap_unit_cost(db, item)
