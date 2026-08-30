@@ -309,7 +309,7 @@
 </div>
 <div class="mb-lg">
 <label class="block font-label-lg text-label-lg text-on-surface-variant font-semibold mb-sm">طريقة الدفع</label>
-<div class="grid grid-cols-3 gap-sm">
+<div class="grid grid-cols-2 gap-sm">
 <label class="cursor-pointer">
 <input checked="" class="peer sr-only" name="payment_method" type="radio" value="cash"/>
 <div class="border border-border rounded-lg p-sm text-center peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all hover:bg-surface-container-low flex flex-col items-center justify-center gap-xs h-20">
@@ -331,12 +331,31 @@
 <span class="font-label-sm text-label-sm font-medium">محفظة</span>
 </div>
 </label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="payment_method" type="radio" value="instapay"/>
+<div class="border border-border rounded-lg p-sm text-center peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all hover:bg-surface-container-low flex flex-col items-center justify-center gap-xs h-20">
+<span class="material-symbols-outlined" style="font-size: 28px;">currency_exchange</span>
+<span class="font-label-sm text-label-sm font-medium">InstaPay</span>
+</div>
+</label>
 </div>
 <div class="mt-sm text-left">
-<button class="text-primary font-label-sm text-label-sm hover:underline">تقسيم الدفع؟</button>
+<button id="toggle-split-btn" type="button" class="text-primary font-label-sm text-label-sm hover:underline">تقسيم الدفع؟</button>
+</div>
+<div id="split-payments-box" class="hidden mt-sm rounded-lg border border-primary/30 bg-primary/5 p-sm space-y-xs">
+<div class="flex items-center justify-between mb-xs">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">تقسيم الدفع</span>
+<span class="font-numeric-table text-numeric-table text-on-surface-variant">الموزّع: <span id="split-allocated">0.00</span> ج.م</span>
+</div>
+<div id="split-rows" class="space-y-xs"></div>
+<div class="flex items-center justify-between mt-sm pt-sm border-t border-primary/20">
+<span class="font-label-sm text-on-surface-variant">المتبقي:</span>
+<span id="split-remain" class="font-numeric-table text-numeric-table text-danger font-medium">0.00 ج.م</span>
+</div>
+<button id="split-refill-btn" type="button" class="mt-xs w-full text-primary font-label-sm text-label-sm hover:underline">توزيع الباقي على طريقة الدفع المختارة</button>
 </div>
 </div>
-<div class="mb-md">
+<div id="tender-box" class="mb-md">
 <label class="block font-label-sm text-label-sm text-on-surface-variant mb-xs">المبلغ المستلم</label>
 <div class="relative">
 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-label-sm">ج.م</span>
@@ -380,6 +399,18 @@ const TAX_RATE = 0.14;
 
 let cart = [];          // [{ uuid, description, sku, quantity, unit_price }]
 let selectedCustomer = null;
+
+// Split payment: the single-method radios stay the main flow; clicking
+// "تقسيم الدفع؟" opens the split panel so a payment can be spread over
+// several methods (e.g. part cash + part InstaPay).
+const SPLIT_METHODS = [
+    { value: "cash", label: "نقدي" },
+    { value: "instapay", label: "InstaPay" },
+    { value: "card", label: "بطاقة ائتمان" },
+    { value: "wallet", label: "محفظة" },
+];
+let splitActive = false;
+let splitAmounts = Object.fromEntries(SPLIT_METHODS.map(m => [m.value, 0]));
 
 function fmt(n) {
     return Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -456,6 +487,70 @@ document.getElementById("cart-rows").addEventListener("click", (e) => {
 });
 
 document.getElementById("amount-tendered").addEventListener("input", updateChange);
+
+// ---- Split payment ----
+function currentSplitTotal() {
+    return SPLIT_METHODS.reduce((s, m) => s + (parseFloat(splitAmounts[m.value]) || 0), 0);
+}
+
+function renderSplitRows() {
+    const rowsEl = document.getElementById("split-rows");
+    rowsEl.innerHTML = SPLIT_METHODS.map(m => `
+        <div class="flex items-center justify-between gap-sm">
+            <span class="font-label-sm text-label-sm text-on-surface font-medium flex-1">${m.label}</span>
+            <div class="relative w-32">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-label-sm">ج.م</span>
+                <input data-method="${m.value}" type="text" dir="ltr"
+                       class="w-full bg-surface-container-lowest border border-border rounded-lg h-10 pl-10 pr-3 focus:ring-2 focus:ring-primary focus:border-primary font-numeric-table text-numeric-table text-on-surface transition-all text-left"
+                       value="${fmt(splitAmounts[m.value])}"/>
+            </div>
+        </div>`).join("");
+    rowsEl.querySelectorAll("input[data-method]").forEach(inp => {
+        inp.addEventListener("input", () => {
+            splitAmounts[inp.dataset.method] = parseFloat(inp.value.replace(/,/g, "")) || 0;
+            updateSplitTotals();
+        });
+    });
+    updateSplitTotals();
+}
+
+function updateSplitTotals() {
+    const { total } = computeTotals();
+    const allocated = currentSplitTotal();
+    document.getElementById("split-allocated").textContent = fmt(allocated);
+    const remainEl = document.getElementById("split-remain");
+    const remain = total - allocated;
+    remainEl.textContent = `${fmt(Math.abs(remain))} ج.م`;
+    remainEl.className = "font-numeric-table text-numeric-table font-medium " + (remain < 0.005 ? "text-success" : "text-danger");
+}
+
+function openSplit() {
+    splitActive = true;
+    const main = document.querySelector('input[name="payment_method"]:checked')?.value || "cash";
+    splitAmounts = Object.fromEntries(SPLIT_METHODS.map(m => [m.value, 0]));
+    splitAmounts[main] = computeTotals().total;
+    document.getElementById("split-payments-box").classList.remove("hidden");
+    document.getElementById("tender-box").classList.add("hidden");
+    renderSplitRows();
+}
+
+function closeSplit() {
+    splitActive = false;
+    document.getElementById("split-payments-box").classList.add("hidden");
+    document.getElementById("tender-box").classList.remove("hidden");
+    updateChange();
+}
+
+document.getElementById("toggle-split-btn").addEventListener("click", () => {
+    if (splitActive) closeSplit();
+    else openSplit();
+});
+
+document.getElementById("split-refill-btn").addEventListener("click", () => {
+    splitAmounts[document.querySelector('input[name="payment_method"]:checked')?.value || "cash"]
+        = Math.max(0, computeTotals().total - currentSplitTotal());
+    renderSplitRows();
+});
 
 document.getElementById("clear-cart-btn").addEventListener("click", () => {
     cart = [];
@@ -589,6 +684,26 @@ async function saveInvoice() {
     const method = document.querySelector('input[name="payment_method"]:checked')?.value || "cash";
     const { total } = computeTotals();
     const originalLabel = label.textContent;
+
+    let payments;
+    if (splitActive) {
+        const parts = SPLIT_METHODS
+            .map(m => ({ amount: parseFloat(splitAmounts[m.value]) || 0, method: m.value }))
+            .filter(p => p.amount > 0.004);
+        const sum = parts.reduce((s, p) => s + p.amount, 0);
+        if (parts.length === 0) {
+            alert("حدد مبالغ الدفع");
+            return;
+        }
+        if (Math.abs(sum - total) > 0.01) {
+            alert(`مجموع الدفعات (${fmt(sum)}) لا يساوي إجمالي الفاتورة (${fmt(total)})`);
+            return;
+        }
+        payments = parts.map(p => ({ amount: p.amount.toFixed(2), method: p.method }));
+    } else {
+        payments = [{ amount: total.toFixed(2), method }];
+    }
+
     btn.disabled = true;
     label.textContent = "جارٍ الحفظ...";
 
@@ -599,7 +714,7 @@ async function saveInvoice() {
             body: JSON.stringify({
                 customer_id: selectedCustomer.id,
                 lines: cart.map(l => ({ item_uuid: l.uuid, quantity: l.quantity, unit_price: String(l.unit_price) })),
-                payments: [{ amount: total.toFixed(2), method }],
+                payments,
             }),
         });
         if (!invRes.ok) {

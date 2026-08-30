@@ -57,7 +57,8 @@ class UserRole(str, enum.Enum):
 class PaymentMethod(str, enum.Enum):
     CASH = "cash"
     CARD = "card"
-    WALLET = "wallet"          # Vodafone Cash / InstaPay / e-wallets
+    WALLET = "wallet"          # Vodafone Cash / e-wallets
+    INSTAPAY = "instapay"
     TRANSFER = "transfer"
 
 
