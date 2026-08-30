@@ -90,7 +90,7 @@ def create_user(body: CreateUserBody, db: Session = Depends(get_session)) -> dic
         db.commit()
     except IntegrityError:
         db.rollback()
-        raise BusinessError(f"Ø§Ø³Ù… Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù… '{body.username}' Ù…Ø³ØªØ®Ø¯Ù… Ø¨Ø§Ù„ÙØ¹Ù„", 409)
+        raise BusinessError(f"اسم المستخدم '{body.username}' مستخدم بالفعل", 409)
     db.refresh(user)
     return {"id": user.id, "username": user.username, "full_name": user.full_name, "role": user.role, "is_active": user.is_active}
 

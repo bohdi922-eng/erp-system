@@ -63,4 +63,15 @@
   if (window.ERPAuth.isLoginPage() && window.ERPAuth.token()) {
     fetch("/api/auth/me").then((r) => { if (r.ok) location.href = "/pages/dashboard.html"; });
   }
+
+  // Global logout: any element with [data-logout] (the sidebar "تسجيل الخروج"
+  // links on every page) ends the session and returns to the login page.
+  document.addEventListener("click", async (e) => {
+    const el = e.target.closest("[data-logout]");
+    if (!el) return;
+    e.preventDefault();
+    try { await fetch("/api/auth/logout", { method: "POST" }); } catch (err) {}
+    window.ERPAuth.clear();
+    location.href = "/pages/login.html";
+  });
 })();

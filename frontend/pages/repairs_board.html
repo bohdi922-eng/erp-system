@@ -190,7 +190,7 @@
 <span class="material-symbols-outlined text-[18px]">account_circle</span>
                     الملف الشخصي
                 </a>
-<a class="flex items-center gap-md px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors text-label-sm font-label-sm" href="#">
+<a data-logout href="#" class="flex items-center gap-md px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors text-label-sm font-label-sm">
 <span class="material-symbols-outlined text-[18px]">logout</span>
                     تسجيل الخروج
                 </a>
@@ -220,7 +220,7 @@
 <!-- Navigation Links (Desktop) -->
 <div class="hidden md:flex items-center gap-lg">
 <a class="text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-all" href="/pages/dashboard.html">الرئيسية</a>
-<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-all" href="#">الفواتير</a>
+<a class="text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-all" href="/pages/sales_new_invoice.html">الفواتير</a>
 <a class="text-on-surface-variant font-label-lg text-label-lg hover:text-primary transition-all" href="/pages/customer_statement.html">العملاء</a>
 </div>
 <!-- Trailing Actions -->
@@ -252,6 +252,9 @@
 <p class="font-body-md text-body-md text-on-surface-variant">تتبع حالة الأجهزة المعطلة عبر سير العمل.</p>
 </div>
 <div class="flex gap-sm">
+<button data-action="receive" class="px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm flex items-center gap-1 hover:bg-primary-container shadow-sm">
+<span class="material-symbols-outlined text-[16px]">add_task</span> استلام جهاز
+                    </button>
 <button class="px-3 py-1.5 rounded-lg border border-outline-variant text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 hover:bg-surface-container-lowest">
 <span class="material-symbols-outlined text-[16px]">filter_list</span> تصفية
                     </button>
@@ -511,7 +514,32 @@ async function callAction(url, body) {
 
 async function handleAction(action, repairId, sourceEl) {
     try {
-        if (action === "hand-to-technician") {
+        if (action === "receive") {
+            const r = await openModal("استلام جهاز صيانة", [
+                { key: "customer_query", label: "العميل (رقم الهاتف أو الاسم)", type: "text", value: "" },
+                { key: "device_description", label: "وصف الجهاز", type: "text", value: "" },
+                { key: "reported_issue", label: "العطل المُبلغ عنه", type: "text", value: "" },
+                { key: "condition_received", label: "الحالة عند الاستلام (اختياري)", type: "text", value: "" },
+                { key: "item_uuid", label: "باركود الوحدة المباعة (اختياري)", type: "text", value: "" },
+            ]);
+            if (!r) return;
+            if (!r.customer_query.trim() || !r.device_description.trim() || !r.reported_issue.trim()) {
+                alert("أدخل بيانات العميل ووصف الجهاز والعطل أولاً");
+                return;
+            }
+            const custRes = await fetch(`${API_BASE}/api/customers?q=${encodeURIComponent(r.customer_query.trim())}`);
+            const custList = custRes.ok ? await custRes.json() : [];
+            const cust = custList[0];
+            if (!cust) { alert("العميل مش موجود — دوّر باسم أو رقم تاني، أو أنشئه من صفحة المبيعات"); return; }
+            await callAction("/api/repairs/receive", {
+                customer_id: cust.id,
+                device_description: r.device_description,
+                reported_issue: r.reported_issue,
+                condition_received: r.condition_received || null,
+                item_uuid: r.item_uuid || null,
+            });
+            alert(`تم استلام الجهاز بنجاح من: ${cust.name}`);
+        } else if (action === "hand-to-technician") {
             if (technicians.length === 0) { alert("لا يوجد فنيين متاحين"); return; }
             const r = await openModal("تسليم لفني", [
                 { key: "technician_id", label: "الفني", type: "select", options: technicians.map(t => ({ id: t.id, name: t.full_name })) },

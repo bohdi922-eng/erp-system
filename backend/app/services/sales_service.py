@@ -154,12 +154,21 @@ def create_invoice(
         total_discount += discount
         net_subtotal += line.line_total
 
-    invoice.subtotal = gross_subtotal
+    invoice.subtotal = net_subtotal
     invoice.discount = total_discount
     invoice.shipping_cost = Decimal("0.00")
-    invoice.tax_rate = Decimal("0.00")
-    invoice.tax_amount = Decimal("0.00")
-    invoice.total = net_subtotal  # == gross_subtotal - total_discount, applied once
+    # FIX (VAT): tax was hardcoded to 0.00 while the POS frontend displays a
+    # 14% VAT on the invoice total and records the payment amount INCLUSIVE
+    # of that tax. The backend was therefore storing the pre-tax subtotal as
+    # the invoice total while the customer actually paid the tax-inclusive
+    # amount — the recorded total no longer matched the money received, so a
+    # fully-paid POS sale left a phantom credit on the customer's balance
+    # (outstanding drift). Apply the configured VAT rate so the stored total
+    # equals the subtotal + VAT, i.e. exactly what the POS shows and collects.
+    tax_rate = Decimal(str(settings.default_tax_rate)).quantize(Decimal("0.0001"))
+    invoice.tax_rate = tax_rate
+    invoice.tax_amount = (net_subtotal * tax_rate).quantize(Decimal("0.01"))
+    invoice.total = net_subtotal + invoice.tax_amount
     invoice.paid_amount = Decimal("0.00")
     invoice.status = InvoiceStatus.ISSUED
 
