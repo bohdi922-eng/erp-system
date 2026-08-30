@@ -297,8 +297,16 @@
 <span id="sum-discount" class="font-numeric-table text-numeric-table">0.00 ج.م</span>
 </div>
 <div class="flex justify-between items-center">
-<span class="font-body-md text-on-surface-variant">ضريبة القيمة المضافة (14%)</span>
-<span id="sum-tax" class="font-numeric-table text-numeric-table text-on-surface">0.00 ج.م</span>
+<label class="flex items-center gap-xs cursor-pointer select-none">
+<input id="tax-enabled" type="checkbox" checked="" class="accent-primary w-4 h-4"/>
+<span id="tax-label" class="font-body-md text-on-surface-variant">ضريبة القيمة المضافة</span>
+</label>
+<div class="flex items-center gap-xs" id="tax-controls">
+<input id="tax-rate" type="text" dir="ltr" value="14" inputmode="decimal"
+class="w-16 bg-surface-container-lowest border border-border rounded-lg h-8 px-2 text-center font-numeric-table text-numeric-table text-on-surface focus:ring-2 focus:ring-primary focus:border-primary"/>
+<span class="font-label-sm text-on-surface-variant">%</span>
+<span id="sum-tax" class="font-numeric-table text-numeric-table text-on-surface whitespace-nowrap">0.00 ج.م</span>
+</div>
 </div>
 </div>
 <div class="border-t border-border pt-sm mb-lg">
@@ -395,7 +403,16 @@
 // Requires the backend running locally:
 //   uvicorn app.main:app --reload --port 8000
 const API_BASE = "";  // same-origin now — FastAPI serves this page too
-const TAX_RATE = 0.14;
+
+// VAT is optional and its ratio is set per invoice: a checkbox turns it on
+// and a % box sets the rate (used as frac = pct/100 for the backend).
+let taxEnabled = true;
+let taxRatePct = 14;
+function currentTaxRate() {
+    if (!taxEnabled) return 0;
+    const pct = parseFloat(String(taxRatePct).replace(/,/g, ".")) || 0;
+    return Math.max(0, pct) / 100;
+}
 
 let cart = [];          // [{ uuid, description, sku, quantity, unit_price }]
 let selectedCustomer = null;
@@ -424,7 +441,7 @@ function escapeHtml(str) {
 
 function computeTotals() {
     const subtotal = cart.reduce((s, l) => s + l.unit_price * l.quantity, 0);
-    const tax = subtotal * TAX_RATE;
+    const tax = subtotal * currentTaxRate();
     const total = subtotal + tax;
     return { subtotal, tax, total };
 }
@@ -487,6 +504,26 @@ document.getElementById("cart-rows").addEventListener("click", (e) => {
 });
 
 document.getElementById("amount-tendered").addEventListener("input", updateChange);
+
+// ---- VAT toggle + ratio ----
+function syncTaxUI() {
+    const rateInput = document.getElementById("tax-rate");
+    rateInput.disabled = !taxEnabled;
+    rateInput.classList.toggle("opacity-50", !taxEnabled);
+    rateInput.classList.toggle("pointer-events-none", !taxEnabled);
+    rateInput.classList.toggle("bg-surface-container", !taxEnabled);
+    document.getElementById("tax-label").textContent = taxEnabled ? "ضريبة القيمة المضافة" : "بدون ضريبة";
+    renderCart();
+}
+
+document.getElementById("tax-enabled").addEventListener("change", (e) => {
+    taxEnabled = e.target.checked;
+    syncTaxUI();
+});
+document.getElementById("tax-rate").addEventListener("input", () => {
+    taxRatePct = document.getElementById("tax-rate").value;
+    renderCart();
+});
 
 // ---- Split payment ----
 function currentSplitTotal() {
@@ -715,6 +752,7 @@ async function saveInvoice() {
                 customer_id: selectedCustomer.id,
                 lines: cart.map(l => ({ item_uuid: l.uuid, quantity: l.quantity, unit_price: String(l.unit_price) })),
                 payments,
+                tax_rate: currentTaxRate().toFixed(4),
             }),
         });
         if (!invRes.ok) {
@@ -737,6 +775,7 @@ async function saveInvoice() {
 document.getElementById("save-invoice-btn").addEventListener("click", saveInvoice);
 
 renderCart();
+syncTaxUI();
 </script>
 </body></html>
 

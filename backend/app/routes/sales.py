@@ -53,6 +53,7 @@ class CreateInvoiceBody(BaseModel):
     notes: str | None = None
     payments: list[PaymentBody] | None = None
     user_id: int | None = None
+    tax_rate: float | None = None
 
 
 @router.post("/invoices")
@@ -70,7 +71,7 @@ def create_invoice(body: CreateInvoiceBody, db: Session = Depends(get_session)) 
 
     invoice = sales_service.create_invoice(
         db, customer_id=body.customer_id, lines=lines, notes=body.notes,
-        payments=payments, user_id=body.user_id,
+        payments=payments, user_id=body.user_id, tax_rate=body.tax_rate,
     )
     return {
         "id": invoice.id, "number": invoice.number, "status": invoice.status,

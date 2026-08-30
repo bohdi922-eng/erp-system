@@ -102,6 +102,10 @@ def create_invoice(
     notes: str | None = None,
     payments: list[dict] | None = None,
     user_id: int | None = None,
+    # Per-invoice VAT lets the POS decide: tax can be switched off entirely
+    # (rate 0) or set to any ratio for this invoice.  When omitted, the
+    # configured default (0.14) is used so existing callers are unchanged.
+    tax_rate: float | None = None,
     # FIX: added so callers that need this invoice to be part of a larger
     # atomic transaction (e.g. repairs_service.deliver_repair, which also
     # updates the RepairOrder in the same logical operation) can pass
@@ -168,7 +172,13 @@ def create_invoice(
     # fully-paid POS sale left a phantom credit on the customer's balance
     # (outstanding drift). Apply the configured VAT rate so the stored total
     # equals the subtotal + VAT, i.e. exactly what the POS shows and collects.
-    tax_rate = Decimal(str(settings.default_tax_rate)).quantize(Decimal("0.0001"))
+    # Now the POS can also send its own per-invoice rate (0 = no tax).
+    if tax_rate is None:
+        tax_rate = settings.default_tax_rate
+    tax_rate = Decimal(str(tax_rate))
+    if tax_rate < 0 or tax_rate > 1:
+        raise BusinessError("Tax rate must be between 0 and 1", 400)
+    tax_rate = tax_rate.quantize(Decimal("0.0001"))
     invoice.tax_rate = tax_rate
     invoice.tax_amount = (net_subtotal * tax_rate).quantize(Decimal("0.01"))
     invoice.total = net_subtotal + invoice.tax_amount
