@@ -38,8 +38,48 @@ def _card(rep: RepairOrder) -> dict:
 
 @router.get("/centers")
 def list_centers(db: Session = Depends(get_session)) -> list[dict]:
-    centers = db.scalars(select(RepairCenter).where(RepairCenter.is_active.is_(True))).all()
-    return [{"id": c.id, "name": c.name} for c in centers]
+    centers = db.scalars(
+        select(RepairCenter).order_by(RepairCenter.name)
+    ).all()
+    return [
+        {
+            "id": c.id, "name": c.name, "phone": c.phone,
+            "email": c.email, "address": c.address,
+            "notes": c.notes, "is_active": c.is_active,
+        }
+        for c in centers
+    ]
+
+
+class CreateCenterBody(BaseModel):
+    name: str
+    phone: str | None = None
+    email: str | None = None
+    address: str | None = None
+    notes: str | None = None
+
+
+@router.post("/centers")
+def create_center(body: CreateCenterBody, db: Session = Depends(get_session)) -> dict:
+    c = repairs_service.create_repair_center(db, **body.model_dump())
+    return {"id": c.id, "name": c.name, "phone": c.phone, "email": c.email,
+            "address": c.address, "notes": c.notes, "is_active": c.is_active}
+
+
+class UpdateCenterBody(BaseModel):
+    name: str | None = None
+    phone: str | None = None
+    email: str | None = None
+    address: str | None = None
+    notes: str | None = None
+    is_active: bool | None = None
+
+
+@router.put("/centers/{center_id}")
+def update_center(center_id: int, body: UpdateCenterBody, db: Session = Depends(get_session)) -> dict:
+    c = repairs_service.update_repair_center(db, center_id, **body.model_dump(exclude_unset=True))
+    return {"id": c.id, "name": c.name, "phone": c.phone, "email": c.email,
+            "address": c.address, "notes": c.notes, "is_active": c.is_active}
 
 
 @router.get("/board")

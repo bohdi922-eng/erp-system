@@ -73,6 +73,47 @@ def find_repair_centers(db: Session, *, active_only: bool = False) -> list[Repai
     return list(db.scalars(stmt))
 
 
+def update_repair_center(
+    db: Session,
+    center_id: int,
+    *,
+    name: str | None = None,
+    phone: str | None = None,
+    email: str | None = None,
+    address: str | None = None,
+    notes: str | None = None,
+    is_active: bool | None = None,
+) -> RepairCenter:
+    center = db.get(RepairCenter, center_id)
+    if center is None:
+        raise BusinessError("مركز الصيانة غير موجود", 404)
+
+    if name is not None:
+        center.name = name.strip()
+    if phone is not None:
+        phone = phone.strip() if phone else None
+        if phone != center.phone:
+            existing = db.scalar(select(RepairCenter).where(RepairCenter.phone == phone, RepairCenter.id != center_id))
+            if existing is not None:
+                raise BusinessError(
+                    f"مركز صيانة تاني بنفس رقم الموبايل '{phone}' موجود ({existing.name})",
+                    409,
+                )
+        center.phone = phone
+    if email is not None:
+        center.email = email.strip() if email else None
+    if address is not None:
+        center.address = address.strip() if address else None
+    if notes is not None:
+        center.notes = notes.strip() if notes else None
+    if is_active is not None:
+        center.is_active = is_active
+
+    db.commit()
+    db.refresh(center)
+    return center
+
+
 # ---------------------------------------------------------------------------
 # Step 1 — receive the device from the customer
 # ---------------------------------------------------------------------------

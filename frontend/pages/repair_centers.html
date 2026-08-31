@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<script src="/vendor/auth-guard.js"></script>
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP System - مراكز الصيانة</title>
+<script src="/vendor/tailwind.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed-dim": "#81d4dc",
+                        "surface-container-low": "#f1f4f8",
+                        "inverse-primary": "#a8c8ff",
+                        "tertiary-fixed": "#d6e3ff",
+                        "on-primary-container": "#b5cfff",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#135eaf",
+                        "on-tertiary-fixed-variant": "#1a4681",
+                        "background": "#f7fafe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#181c1f",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#001b3c",
+                        "surface-container-highest": "#e0e3e7",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#001b3d",
+                        "surface-bright": "#f7fafe",
+                        "tertiary-fixed-dim": "#a9c7ff",
+                        "surface-container": "#ebeef2",
+                        "surface-variant": "#e0e3e7",
+                        "inverse-on-surface": "#eef1f5",
+                        "on-background": "#181c1f",
+                        "text-secondary": "#888888",
+                        "inverse-surface": "#2d3134",
+                        "secondary-fixed": "#9df0f8",
+                        "text-primary": "#333333",
+                        "secondary-container": "#9df0f8",
+                        "on-surface-variant": "#424751",
+                        "primary-container": "#0057a8",
+                        "on-secondary-fixed-variant": "#004f55",
+                        "surface": "#ffffff",
+                        "surface-container-high": "#e5e8ec",
+                        "danger": "#dc3545",
+                        "tertiary-container": "#2f5893",
+                        "on-secondary": "#ffffff",
+                        "outline": "#727783",
+                        "warning": "#f59e0b",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#002022",
+                        "tertiary": "#10407a",
+                        "primary": "#00407e",
+                        "success": "#00b894",
+                        "on-tertiary-container": "#b6cfff",
+                        "on-secondary-container": "#026f77",
+                        "surface-dim": "#d7dade",
+                        "primary-fixed": "#d5e3ff",
+                        "secondary": "#006970",
+                        "border": "#e0e0e0",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "info": "#0057a8",
+                        "on-primary-fixed-variant": "#00468a",
+                        "primary-fixed-dim": "#a8c8ff",
+                        "outline-variant": "#c2c6d3"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem",
+                        "2xl": "1rem"
+                    },
+                    spacing: {
+                        "sidebar-width": "260px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "gutter": "16px"
+                    },
+                    fontFamily: {
+                        "display-lg": ["Cairo", "sans-serif"],
+                        "numeric-table": ["Cairo", "sans-serif"],
+                        "body-lg": ["Cairo", "sans-serif"],
+                        "headline-sm": ["Cairo", "sans-serif"],
+                        "label-lg": ["Cairo", "sans-serif"],
+                        "headline-lg": ["Cairo", "sans-serif"],
+                        "body-md": ["Cairo", "sans-serif"],
+                        "headline-md": ["Cairo", "sans-serif"],
+                        "label-sm": ["Cairo", "sans-serif"],
+                        "body-sm": ["Cairo", "sans-serif"]
+                    },
+                    fontSize: {
+                        "display-lg": ["48px", { "lineHeight": "56px", "fontWeight": "700" }],
+                        "numeric-table": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+<link href="/vendor/fonts.css" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen w-full overflow-hidden flex selection:bg-primary-fixed selection:text-on-primary-fixed">
+
+<!-- SideNavBar -->
+<aside class="bg-surface fixed right-0 top-0 h-full w-sidebar-width border-l border-outline-variant flex flex-col z-50">
+<div class="h-24 px-lg flex items-center gap-md border-b border-surface-dim">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handyman</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">نظام ERP</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">مراكز الصيانة</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-md px-sm flex flex-col gap-unit">
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-lg text-label-lg">لوحة القيادة</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/sales_new_invoice.html">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-lg text-label-lg">المبيعات</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/inventory.html">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-lg text-label-lg">المخزون</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/repairs_board.html">
+<span class="material-symbols-outlined">build</span>
+<span class="font-label-lg text-label-lg">الإصلاحات</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-primary font-bold border-r-4 border-primary bg-primary/5 hover:bg-surface-container-low transition-colors opacity-80 duration-150" href="/pages/repair_centers.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">storefront</span>
+<span class="font-label-lg text-label-lg">مراكز الصيانة</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/whatsapp_bot.html">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-label-lg text-label-lg">واتساب بوت</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/reports.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-lg text-label-lg">التقارير</span>
+</a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/settings.html">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-lg text-label-lg">الإعدادات</span>
+</a>
+</nav>
+<div class="p-lg border-t border-surface-dim flex flex-col gap-md">
+<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-lg font-label-lg text-label-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-sm" onclick="location.href='/pages/sales_new_invoice.html'">
+<span class="material-symbols-outlined">add</span>
+عملية بيع جديدة
+</button>
+<div class="flex flex-col gap-unit mt-4">
+<a class="flex items-center gap-md px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors text-label-sm font-label-sm" href="/pages/settings.html">
+<span class="material-symbols-outlined text-[18px]">account_circle</span>
+الملف الشخصي
+</a>
+<a data-logout href="#" class="flex items-center gap-md px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+تسجيل الخروج
+</a>
+</div>
+</div>
+</aside>
+
+<!-- Main Content Area -->
+<main class="flex-1 mr-sidebar-width flex flex-col h-screen overflow-hidden bg-background">
+
+<!-- TopAppBar -->
+<header class="bg-surface border-b border-border h-16 flex items-center justify-between px-lg shrink-0">
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">مراكز الصيانة</h2>
+<div class="flex items-center gap-sm">
+<input id="search-input" class="bg-surface-container-lowest border border-border rounded-lg h-10 px-3 w-64 font-body-md text-body-md text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-primary" placeholder="بحث بالاسم أو الموبايل..." type="text"/>
+<button id="add-center-btn" class="bg-primary text-on-primary rounded-lg h-10 px-md flex items-center justify-center gap-xs font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+إضافة مركز
+</button>
+</div>
+</header>
+
+<!-- Content -->
+<div class="flex-1 overflow-y-auto p-lg">
+
+<!-- Stats -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-md mb-lg">
+<div class="bg-surface border border-border rounded-xl p-md shadow-sm">
+<p class="font-label-sm text-label-sm text-on-surface-variant">إجمالي المراكز</p>
+<p id="stat-total" class="font-headline-lg text-headline-lg font-bold text-on-surface mt-xs">0</p>
+</div>
+<div class="bg-surface border border-border rounded-xl p-md shadow-sm">
+<p class="font-label-sm text-label-sm text-on-surface-variant">نشطة</p>
+<p id="stat-active" class="font-headline-lg text-headline-lg font-bold text-success mt-xs">0</p>
+</div>
+<div class="bg-surface border border-border rounded-xl p-md shadow-sm">
+<p class="font-label-sm text-label-sm text-on-surface-variant">معطّلة</p>
+<p id="stat-inactive" class="font-headline-lg text-headline-lg font-bold text-danger mt-xs">0</p>
+</div>
+</div>
+
+<!-- Centers Table -->
+<div class="bg-surface border border-border rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-border">
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold">الاسم</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold">الموبايل</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold">الإيميل</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold">العنوان</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold text-center">الحالة</th>
+<th class="py-3 px-4 font-label-lg text-label-lg text-on-surface-variant font-semibold text-center">أثراء</th>
+</tr>
+</thead>
+<tbody id="centers-rows" class="divide-y divide-border">
+<tr><td colspan="6" class="py-8 text-center text-on-surface-variant font-body-md">جارٍ التحميل...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Modal Overlay -->
+<div id="modal-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-md">
+<div class="bg-surface rounded-xl border border-border shadow-lg w-full max-w-md">
+<div class="p-md border-b border-border flex items-center justify-between">
+<h3 id="modal-title" class="font-headline-sm text-headline-sm font-semibold text-on-surface">إضافة مركز صيانة جديد</h3>
+<button id="modal-close" class="text-outline hover:text-danger">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-md flex flex-col gap-sm">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">اسم المركز <span class="text-danger">*</span></label>
+<input id="form-name" type="text" required class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">رقم الموبايل</label>
+<input id="form-phone" type="text" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">البريد الإلكتروني</label>
+<input id="form-email" type="email" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">العنوان</label>
+<input id="form-address" type="text" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">ملاحظات</label>
+<textarea id="form-notes" rows="2" class="w-full border border-border rounded-lg px-2 py-1 font-body-md text-body-md bg-surface-container-lowest resize-none"></textarea>
+</div>
+</div>
+<div class="p-md border-t border-border flex justify-end gap-sm">
+<button id="modal-cancel" class="px-md py-sm rounded-lg border border-border text-on-surface font-label-lg text-label-lg hover:bg-surface-container-low">إلغاء</button>
+<button id="modal-save" class="px-md py-sm rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container">حفظ</button>
+</div>
+</div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-lg left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-md py-sm rounded-lg font-label-lg text-label-lg shadow-lg z-50 hidden transition-opacity"></div>
+
+<script src="/js/auth.js"></script>
+<script>
+const API = "";
+let centers = [];
+let editingId = null;
+
+function toast(msg) {
+    const el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.remove("hidden");
+    setTimeout(() => el.classList.add("hidden"), 3000);
+}
+
+function updateStats() {
+    document.getElementById("stat-total").textContent = centers.length;
+    document.getElementById("stat-active").textContent = centers.filter(c => c.is_active).length;
+    document.getElementById("stat-inactive").textContent = centers.filter(c => !c.is_active).length;
+}
+
+function renderTable() {
+    const q = document.getElementById("search-input").value.trim().toLowerCase();
+    const filtered = centers.filter(c =>
+        !q || (c.name || "").toLowerCase().includes(q) || (c.phone || "").includes(q)
+    );
+    const tbody = document.getElementById("centers-rows");
+    if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-on-surface-variant font-body-md">ما فيش مراكز صيانة${q ? " مطابقة للبحث" : ""}</td></tr>`;
+        return;
+    }
+    tbody.innerHTML = filtered.map(c => `
+        <tr class="hover:bg-primary/5 transition-colors group">
+            <td class="py-3 px-4">
+                <div class="font-body-md text-body-md text-on-surface font-medium">${esc(c.name)}</div>
+                ${c.notes ? `<div class="font-label-sm text-label-sm text-outline mt-1">${esc(c.notes)}</div>` : ""}
+            </td>
+            <td class="py-3 px-4 font-body-md text-body-md text-on-surface" dir="ltr">${esc(c.phone || "—")}</td>
+            <td class="py-3 px-4 font-body-md text-body-md text-on-surface-variant">${esc(c.email || "—")}</td>
+            <td class="py-3 px-4 font-body-md text-body-md text-on-surface-variant">${esc(c.address || "—")}</td>
+            <td class="py-3 px-4 text-center">
+                <button data-toggle="${c.id}" class="inline-flex items-center gap-xs px-2 py-1 rounded-full font-label-sm text-label-sm font-bold cursor-pointer transition-colors ${c.is_active ? 'bg-success/15 text-success hover:bg-success/25' : 'bg-danger/15 text-danger hover:bg-danger/25'}">
+                    <span class="material-symbols-outlined text-[16px]">${c.is_active ? 'check_circle' : 'cancel'}</span>
+                    ${c.is_active ? 'نشط' : 'معطّل'}
+                </button>
+            </td>
+            <td class="py-3 px-4 text-center">
+                <div class="flex items-center justify-center gap-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button data-edit="${c.id}" class="p-1 rounded text-outline hover:text-primary hover:bg-surface-container-low transition-colors" title="تعديل">
+                        <span class="material-symbols-outlined text-[20px]">edit</span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join("");
+    updateStats();
+}
+
+function esc(s) {
+    const d = document.createElement("div");
+    d.textContent = s ?? "";
+    return d.innerHTML;
+}
+
+async function loadCenters() {
+    try {
+        const res = await fetch(`${API}/api/repairs/centers`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        centers = await res.json();
+        renderTable();
+    } catch (e) {
+        console.error("تعذر تحميل مراكز الصيانة:", e);
+    }
+}
+
+// Modal
+function openModal(title, data) {
+    editingId = data?.id || null;
+    document.getElementById("modal-title").textContent = title;
+    document.getElementById("form-name").value = data?.name || "";
+    document.getElementById("form-phone").value = data?.phone || "";
+    document.getElementById("form-email").value = data?.email || "";
+    document.getElementById("form-address").value = data?.address || "";
+    document.getElementById("form-notes").value = data?.notes || "";
+    const overlay = document.getElementById("modal-overlay");
+    overlay.classList.remove("hidden");
+    overlay.classList.add("flex");
+    document.getElementById("form-name").focus();
+}
+
+function closeModal() {
+    const overlay = document.getElementById("modal-overlay");
+    overlay.classList.add("hidden");
+    overlay.classList.remove("flex");
+    editingId = null;
+}
+
+async function saveCenter() {
+    const name = document.getElementById("form-name").value.trim();
+    if (!name) { toast("اسم المركز مطلوب"); return; }
+    const body = {
+        name,
+        phone: document.getElementById("form-phone").value.trim() || null,
+        email: document.getElementById("form-email").value.trim() || null,
+        address: document.getElementById("form-address").value.trim() || null,
+        notes: document.getElementById("form-notes").value.trim() || null,
+    };
+    try {
+        let res;
+        if (editingId) {
+            res = await fetch(`${API}/api/repairs/centers/${editingId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+        } else {
+            res = await fetch(`${API}/api/repairs/centers`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+        }
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.detail || `HTTP ${res.status}`);
+        }
+        toast(editingId ? "تم تعديل المركز بنجاح" : "تم إضافة المركز بنجاح");
+        closeModal();
+        await loadCenters();
+    } catch (e) {
+        toast(`خطأ: ${e.message}`);
+    }
+}
+
+async function toggleCenter(id) {
+    const c = centers.find(x => x.id === id);
+    if (!c) return;
+    try {
+        const res = await fetch(`${API}/api/repairs/centers/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ is_active: !c.is_active }),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        toast(c.is_active ? "تم تعطيل المركز" : "تم تفعيل المركز");
+        await loadCenters();
+    } catch (e) {
+        toast(`خطأ: ${e.message}`);
+    }
+}
+
+// Events
+document.getElementById("add-center-btn").addEventListener("click", () => openModal("إضافة مركز صيانة جديد"));
+document.getElementById("modal-close").addEventListener("click", closeModal);
+document.getElementById("modal-cancel").addEventListener("click", closeModal);
+document.getElementById("modal-save").addEventListener("click", saveCenter);
+document.getElementById("search-input").addEventListener("input", renderTable);
+
+document.getElementById("centers-rows").addEventListener("click", (e) => {
+    const toggleBtn = e.target.closest("[data-toggle]");
+    if (toggleBtn) { toggleCenter(Number(toggleBtn.dataset.toggle)); return; }
+    const editBtn = e.target.closest("[data-edit]");
+    if (editBtn) {
+        const c = centers.find(x => x.id === Number(editBtn.dataset.edit));
+        if (c) openModal("تعديل مركز الصيانة", c);
+    }
+});
+
+document.getElementById("modal-overlay").addEventListener("click", (e) => {
+    if (e.target === e.currentTarget) closeModal();
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+});
+
+loadCenters();
+</script>
+</body></html>
