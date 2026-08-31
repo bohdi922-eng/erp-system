@@ -348,15 +348,15 @@
 <button id="user-modal-close" class="text-outline hover:text-danger"><span class="material-symbols-outlined">close</span></button>
 </div>
 <div class="p-md flex flex-col gap-sm">
-<div>
+<div class="user-fields-row">
 <label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الاسم الكامل</label>
 <input id="user-form-full-name" type="text" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest"/>
 </div>
-<div>
+<div class="user-fields-row">
 <label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">اسم المستخدم (username)</label>
 <input id="user-form-username" type="text" dir="ltr" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest text-left"/>
 </div>
-<div>
+<div class="user-fields-row">
 <label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">الصلاحية</label>
 <select id="user-form-role" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest">
 <option value="admin">مدير نظام</option>
@@ -368,7 +368,7 @@
 <label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">كلمة المرور <span id="user-form-password-hint" class="text-outline">(اتركه فارغًا للإبقاء على الحالي)</span></label>
 <input id="user-form-password" type="password" dir="ltr" class="w-full border border-border rounded-lg h-10 px-2 font-body-md text-body-md bg-surface-container-lowest text-left"/>
 </div>
-<label class="flex items-center gap-2 mt-1">
+<label class="user-fields-row flex items-center gap-2 mt-1">
 <input id="user-form-active" type="checkbox" checked class="w-4 h-4"/>
 <span class="font-body-sm text-body-sm text-on-surface">نشط</span>
 </label>
@@ -781,7 +781,8 @@ function renderUserRow(u) {
         </td>
         <td class="py-md px-md text-center">
             <div class="flex items-center justify-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                <button data-action="edit-user" data-user-id="${u.id}" class="text-outline hover:text-primary transition-colors" title="تعديل / كلمة مرور جديدة"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+                <button data-action="edit-user" data-user-id="${u.id}" class="text-outline hover:text-primary transition-colors" title="تعديل"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+                <button data-action="change-password" data-user-id="${u.id}" class="text-outline hover:text-warning transition-colors" title="تغيير كلمة المرور"><span class="material-symbols-outlined text-[20px]">key</span></button>
             </div>
         </td>
     </tr>`;
@@ -801,19 +802,37 @@ async function loadUsers() {
     }
 }
 
-function openUserModal(user) {
+let userModalMode = "edit"; // "edit" | "password"
+
+function openUserModal(user, mode) {
     editingUserId = user ? user.id : null;
-    document.getElementById("user-modal-title").textContent = user ? "تعديل مستخدم" : "إضافة مستخدم";
+    userModalMode = mode || "edit";
+    document.getElementById("user-modal-title").textContent =
+        userModalMode === "password" ? "تغيير كلمة المرور" : (user ? "تعديل مستخدم" : "إضافة مستخدم");
     document.getElementById("user-form-full-name").value = user?.full_name || "";
     document.getElementById("user-form-username").value = user?.username || "";
     document.getElementById("user-form-username").disabled = !!user; // username fixed once created
     document.getElementById("user-form-role").value = user?.role || "cashier";
     document.getElementById("user-form-active").checked = user ? user.is_active : true;
     document.getElementById("user-form-password").value = "";
-    document.getElementById("user-form-password-hint").classList.toggle("hidden", !user);
+    document.getElementById("user-form-password").placeholder = userModalMode === "password"
+        ? "كلمة المرور الجديدة" : (user ? "اتركه فارغًا لعدم تغييره" : "كلمة مرور المستخدم الجديد");
+    document.getElementById("user-form-password-hint").classList.toggle("hidden", !(user && userModalMode === "edit"));
+
+    const isPasswordMode = userModalMode === "password";
+    ["user-form-full-name", "user-form-username", "user-form-role", "user-form-active"]
+        .forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.closest(".user-fields-row")?.classList.toggle("hidden", isPasswordMode);
+        });
+    const passwordField = document.getElementById("user-form-password");
+    const passRow = passwordField.closest(".user-fields-row");
+    if (passRow) passRow.classList.remove("hidden");
+
     const overlay = document.getElementById("user-modal-overlay");
     overlay.classList.remove("hidden");
     overlay.classList.add("flex");
+    if (isPasswordMode) passwordField?.focus();
 }
 
 function closeUserModal() {
@@ -829,12 +848,20 @@ async function saveUser() {
     const is_active = document.getElementById("user-form-active").checked;
     const password = document.getElementById("user-form-password").value;
 
-    if (!full_name || !username) { alert("محتاج الاسم واسم المستخدم"); return; }
+    if (userModalMode === "password") {
+        if (!password) { alert("اكتب كلمة المرور الجديدة"); return; }
+        if (password.length < 4) { alert("كلمة المرور لازم تكون 4 أحرف على الأقل"); return; }
+    } else if (!full_name || !username) {
+        alert("محتاج الاسم واسم المستخدم");
+        return;
+    }
 
     try {
         if (editingUserId) {
-            const body = { full_name, role, is_active };
-            if (password) body.password = password;
+            const body = userModalMode === "password"
+                ? { password }
+                : { full_name, role, is_active };
+            if (userModalMode === "edit" && password) body.password = password;
             const res = await fetch(`${API_BASE}/api/settings/users/${editingUserId}`, {
                 method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
             });
@@ -847,6 +874,7 @@ async function saveUser() {
             });
             if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || `HTTP ${res.status}`); }
         }
+        alert(userModalMode === "password" ? "تم تغيير كلمة المرور بنجاح" : "تم الحفظ بنجاح");
         closeUserModal();
         await loadUsers();
     } catch (err) {
@@ -860,10 +888,12 @@ document.getElementById("user-modal-cancel")?.addEventListener("click", closeUse
 document.getElementById("user-modal-save")?.addEventListener("click", saveUser);
 
 document.getElementById("users-rows")?.addEventListener("click", (e) => {
-    const btn = e.target.closest('button[data-action="edit-user"]');
+    const btn = e.target.closest('button[data-action="edit-user"]') || e.target.closest('button[data-action="change-password"]');
     if (!btn) return;
     const user = currentUsers.find(u => u.id === Number(btn.dataset.userId));
-    if (user) openUserModal(user);
+    if (!user) return;
+    if (btn.dataset.action === "change-password") openUserModal(user, "password");
+    else openUserModal(user);
 });
 
 document.getElementById("save-shop-settings-btn")?.addEventListener("click", (e) => {

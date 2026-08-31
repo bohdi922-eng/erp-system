@@ -385,7 +385,7 @@ class="w-16 bg-surface-container-lowest border border-border rounded-lg h-8 px-2
                         <span id="save-invoice-label">حفظ وطباعة الفاتورة</span>
                     </button>
 <div class="flex gap-sm">
-<button class="flex-1 bg-surface-container-lowest border border-border text-on-surface rounded-lg py-sm px-md flex items-center justify-center font-label-lg text-label-lg hover:bg-surface-container-low transition-colors min-h-[48px]">
+<button id="save-draft-btn" class="flex-1 bg-surface-container-lowest border border-border text-on-surface rounded-lg py-sm px-md flex items-center justify-center font-label-lg text-label-lg hover:bg-surface-container-low transition-colors min-h-[48px]">
                             حفظ كمسودة
                         </button>
 <button id="clear-cart-btn" class="flex-1 bg-surface-container-lowest border border-border text-danger rounded-lg py-sm px-md flex items-center justify-center font-label-lg text-label-lg hover:bg-error-container/30 transition-colors min-h-[48px]">
@@ -778,8 +778,72 @@ async function saveInvoice() {
 
 document.getElementById("save-invoice-btn").addEventListener("click", saveInvoice);
 
+// ---- Save as Draft (localStorage) ----------------------------------------
+const DRAFT_KEY = "erp_sales_draft_v1";
+
+function saveDraft() {
+    if (cart.length === 0) { alert("السلة فاضية — مفيش حاجة تتسجل كمسودة"); return; }
+    const draft = {
+        savedAt: new Date().toISOString(),
+        cart,
+        customer: selectedCustomer,
+        taxEnabled,
+        taxRatePct,
+        splitActive,
+        splitAmounts,
+    };
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    alert(`تم حفظ المسودة: ${cart.length} ${cart.length === 1 ? "صنف" : "أصناف"} (بدون أصناف إضافية).`);
+}
+
+function loadDraft(silent) {
+    let draft;
+    try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY)); } catch (e) { draft = null; }
+    if (!draft || !draft.cart || draft.cart.length === 0) return;
+    cart = draft.cart;
+    selectedCustomer = draft.customer || null;
+    taxEnabled = draft.taxEnabled !== undefined ? draft.taxEnabled : true;
+    taxRatePct = draft.taxRatePct !== undefined ? draft.taxRatePct : 14;
+    splitActive = !!draft.splitActive;
+    splitAmounts = draft.splitAmounts || Object.fromEntries(SPLIT_METHODS.map(m => [m.value, 0]));
+    const custInput = document.querySelector('input[placeholder="رقم الهاتف أو الاسم..."]');
+    if (custInput && selectedCustomer) custInput.value = selectedCustomer.name;
+    if (splitActive) {
+        document.getElementById("split-payments-box").classList.remove("hidden");
+        document.getElementById("tender-box").classList.add("hidden");
+        renderSplitRows();
+    }
+    syncTaxUI();
+    renderCart();
+    if (!silent) {
+        alert(`تم استعادة مسودة محفوظة (${new Date(draft.savedAt).toLocaleString("ar-EG")}). اضغط "إلغاء" لحذفها والبدء من جديد.`);
+    }
+}
+
+document.getElementById("save-draft-btn").addEventListener("click", saveDraft);
+
+const clearCartButton = document.getElementById("clear-cart-btn");
+clearCartButton.addEventListener("click", () => {
+    if (localStorage.getItem(DRAFT_KEY)) {
+        if (confirm("هل تريد حذف المسودة المحفوظة والبدء من جديد؟")) {
+            localStorage.removeItem(DRAFT_KEY);
+            cart = [];
+            renderCart();
+        }
+    } else {
+        cart = [];
+        renderCart();
+    }
+});
+
 renderCart();
 syncTaxUI();
+if (!localStorage.getItem("erp_draft_notice_shown")) {
+    loadDraft(false);
+    localStorage.setItem("erp_draft_notice_shown", "1");
+} else {
+    loadDraft(true);
+}
 </script>
 </body></html>
 

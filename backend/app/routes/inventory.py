@@ -114,3 +114,42 @@ def add_stock(body: AddStockBody, db: Session = Depends(get_session)) -> list[di
             )
             created.append({"id": item.id, "uuid": item.uuid, "serial_number": item.serial_number})
         return created
+
+
+class UpdateProductBody(BaseModel):
+    brand: str | None = None
+    model: str | None = None
+    is_serialized: bool | None = None
+    default_price: str | None = None
+
+
+@router.put("/products/{product_id}")
+def update_product(product_id: int, body: UpdateProductBody, db: Session = Depends(get_session)) -> dict:
+    product = db.get(Product, product_id)
+    if product is None:
+        raise BusinessError("Product not found", 404)
+    if body.brand is not None and not body.brand.strip():
+        raise BusinessError("Brand cannot be empty", 400)
+    if body.model is not None and not body.model.strip():
+        raise BusinessError("Model cannot be empty", 400)
+    if body.brand is not None:
+        product.brand = body.brand.strip()
+    if body.model is not None:
+        product.model = body.model.strip()
+    if body.is_serialized is not None:
+        product.is_serialized = body.is_serialized
+    if body.default_price is not None:
+        product.default_price = Decimal(body.default_price)
+    db.commit()
+    db.refresh(product)
+    return {"id": product.id, "brand": product.brand, "model": product.model}
+
+
+@router.delete("/products/{product_id}")
+def delete_product(product_id: int, db: Session = Depends(get_session)) -> dict:
+    product = db.get(Product, product_id)
+    if product is None:
+        raise BusinessError("Product not found", 404)
+    product.is_active = False
+    db.commit()
+    return {"id": product_id, "deleted": True}

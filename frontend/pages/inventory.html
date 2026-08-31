@@ -234,7 +234,7 @@
 <div id="product-modal-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-md">
 <div class="bg-surface rounded-xl border border-border shadow-lg w-full max-w-md">
 <div class="p-md border-b border-border flex items-center justify-between">
-<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">إضافة صنف جديد للمخزون</h3>
+<h3 id="product-modal-title" class="font-headline-sm text-headline-sm font-semibold text-on-surface">إضافة صنف جديد للمخزون</h3>
 <button id="product-modal-close" class="text-outline hover:text-danger"><span class="material-symbols-outlined">close</span></button>
 </div>
 <div class="p-md flex flex-col gap-sm">
@@ -445,14 +445,8 @@
 </table>
 </div>
 <div class="border-t border-border p-sm flex items-center justify-between bg-surface-container-lowest">
-<span class="font-label-sm text-label-sm text-outline">عرض 1-10 من 245 منتج</span>
-<div class="flex gap-1">
-<button class="p-1 text-outline hover:text-primary hover:bg-surface-container-low rounded"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
-<button class="p-1 text-on-primary bg-primary rounded w-7 h-7 flex items-center justify-center font-label-sm text-label-sm">1</button>
-<button class="p-1 text-on-surface-variant hover:bg-surface-container-low rounded w-7 h-7 flex items-center justify-center font-label-sm text-label-sm">2</button>
-<button class="p-1 text-on-surface-variant hover:bg-surface-container-low rounded w-7 h-7 flex items-center justify-center font-label-sm text-label-sm">3</button>
-<button class="p-1 text-outline hover:text-primary hover:bg-surface-container-low rounded"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
-</div>
+<span id="inv-pagination-info" class="font-label-sm text-label-sm text-outline">عرض 0 من 0 منتج</span>
+<div class="flex gap-1" id="inv-pagination"></div>
 </div>
 </div>
 </div>
@@ -485,11 +479,7 @@
 <span class="material-symbols-outlined text-warning mt-0.5">warning</span>
 <div>
 <h4 class="font-label-lg text-label-lg text-on-surface font-semibold mb-1">سيج.مات مؤقتة (Placeholders)</h4>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">يوجد <strong class="text-on-surface font-bold">12</strong> وحدة مسجلة بدون أرقام تسلسلية حقيقية.</p>
-<button class="text-primary font-label-sm text-label-sm font-bold flex items-center gap-1 hover:underline">
-                                    معالجة الآن
-                                    <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-</button>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">يوجد <strong id="placeholder-count" class="text-on-surface font-bold">12</strong> وحدة مسجلة بدون أرقام تسلسلية حقيقية.</p>
 </div>
 </div>
 </div>
@@ -537,11 +527,42 @@ function renderRow(p) {
         </td>
         <td class="py-3 px-4 font-numeric-table text-numeric-table text-on-surface-variant text-left" dir="ltr">-</td>
         <td class="py-3 px-4">
-            <button class="text-outline hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+            <button class="row-menu-btn text-outline hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity" data-product-id="${p.id}" data-name="${escapeHtml(p.brand + " " + p.model)}">
                 <span class="material-symbols-outlined">more_vert</span>
             </button>
         </td>
     </tr>`;
+}
+
+const INV_PAGE_SIZE = 10;
+let invAllProducts = [];
+let invCurrentPage = 1;
+
+function renderPage() {
+    const rowsEl = document.getElementById("inv-rows");
+    const start = (invCurrentPage - 1) * INV_PAGE_SIZE;
+    const page = invAllProducts.slice(start, start + INV_PAGE_SIZE);
+    rowsEl.innerHTML = page.map(renderRow).join("") ||
+        `<tr><td colspan="5" class="p-md text-center text-on-surface-variant">لا توجد منتجات بعد</td></tr>`;
+    const total = invAllProducts.length;
+    document.getElementById("inv-pagination-info").textContent =
+        total ? `عرض ${start + 1}-${Math.min(start + INV_PAGE_SIZE, total)} من ${total} منتج` : "لا توجد منتجات";
+    renderPagination(total);
+}
+
+function renderPagination(total) {
+    const el = document.getElementById("inv-pagination");
+    const pages = Math.max(1, Math.ceil(total / INV_PAGE_SIZE));
+    let html = "";
+    html += `<button data-page="${Math.max(1, invCurrentPage - 1)}" class="p-1 text-outline hover:text-primary hover:bg-surface-container-low rounded"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>`;
+    const startP = Math.max(1, invCurrentPage - 2);
+    const endP = Math.min(pages, startP + 4);
+    for (let i = startP; i <= endP; i++) {
+        const active = i === invCurrentPage;
+        html += `<button data-page="${i}" class="p-1 ${active ? "text-on-primary bg-primary" : "text-on-surface-variant hover:bg-surface-container-low"} rounded w-7 h-7 flex items-center justify-center font-label-sm text-label-sm">${i}</button>`;
+    }
+    html += `<button data-page="${Math.min(pages, invCurrentPage + 1)}" class="p-1 text-outline hover:text-primary hover:bg-surface-container-low rounded"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>`;
+    el.innerHTML = html;
 }
 
 async function loadInventory() {
@@ -549,9 +570,9 @@ async function loadInventory() {
         const res = await fetch(`${API_BASE}/api/inventory/products`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const products = await res.json();
-        const rowsEl = document.getElementById("inv-rows");
-        rowsEl.innerHTML = products.map(renderRow).join("") ||
-            `<tr><td colspan="5" class="p-md text-center text-on-surface-variant">لا توجد منتجات بعد</td></tr>`;
+        invAllProducts = products || [];
+        invCurrentPage = 1;
+        renderPage();
 
         const selectEl = document.getElementById("product-form-select");
         const currentOptions = selectEl.innerHTML;
@@ -585,7 +606,28 @@ function openProductModal() {
     document.getElementById("stock-form-serial").value = "";
     document.getElementById("stock-form-quantity").value = "1";
     document.getElementById("stock-form-cost").value = "0";
+    document.getElementById("product-modal-title").textContent = "إضافة صنف جديد للمخزون";
     toggleProductModalFields();
+    document.getElementById("product-modal-overlay").dataset.mode = "add";
+    const overlay = document.getElementById("product-modal-overlay");
+    overlay.classList.remove("hidden");
+    overlay.classList.add("flex");
+}
+
+function openEditProductModal(p) {
+    const selectEl = document.getElementById("product-form-select");
+    selectEl.innerHTML = `<option value="${p.id}" data-serialized="${p.is_serialized ? "true" : "false"}">${escapeHtml(p.brand)} ${escapeHtml(p.model)}</option>`;
+    selectEl.value = String(p.id);
+    document.getElementById("product-form-brand").value = p.brand;
+    document.getElementById("product-form-model").value = p.model;
+    document.getElementById("product-form-price").value = p.default_price;
+    document.getElementById("product-form-serialized").checked = !!p.is_serialized;
+    document.getElementById("stock-form-serial").value = "";
+    document.getElementById("stock-form-quantity").value = "1";
+    document.getElementById("stock-form-cost").value = "0";
+    document.getElementById("product-modal-title").textContent = "تعديل الصنف";
+    toggleProductModalFields();
+    document.getElementById("product-modal-overlay").dataset.mode = "edit";
     const overlay = document.getElementById("product-modal-overlay");
     overlay.classList.remove("hidden");
     overlay.classList.add("flex");
@@ -598,13 +640,33 @@ function closeProductModal() {
 }
 
 async function saveProductAndStock() {
+    const overlay = document.getElementById("product-modal-overlay");
+    const mode = overlay.dataset.mode || "add";
     const selectEl = document.getElementById("product-form-select");
-    let productId = selectEl.value ? Number(selectEl.value) : null;
-    const isSerialized = productId
-        ? selectEl.options[selectEl.selectedIndex].dataset.serialized === "true"
-        : document.getElementById("product-form-serialized").checked;
+    const productId = selectEl.value ? Number(selectEl.value) : null;
 
     try {
+        if (mode === "edit" && productId) {
+            const res = await fetch(`${API_BASE}/api/inventory/products/${productId}`, {
+                method: "PUT", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    brand: document.getElementById("product-form-brand").value.trim(),
+                    model: document.getElementById("product-form-model").value.trim(),
+                    is_serialized: document.getElementById("product-form-serialized").checked,
+                    default_price: document.getElementById("product-form-price").value || "0",
+                }),
+            });
+            if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || `HTTP ${res.status}`); }
+            closeProductModal();
+            await loadInventory();
+            return;
+        }
+
+        let newId = null;
+        const isSerialized = productId
+            ? selectEl.options[selectEl.selectedIndex].dataset.serialized === "true"
+            : document.getElementById("product-form-serialized").checked;
+
         if (!productId) {
             const brand = document.getElementById("product-form-brand").value.trim();
             const model = document.getElementById("product-form-model").value.trim();
@@ -619,11 +681,11 @@ async function saveProductAndStock() {
             });
             if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || `HTTP ${res.status}`); }
             const product = await res.json();
-            productId = product.id;
+            newId = product.id;
         }
 
         const stockBody = {
-            product_id: productId,
+            product_id: productId || newId,
             purchase_cost: document.getElementById("stock-form-cost").value || "0",
         };
         if (isSerialized) {
@@ -708,6 +770,85 @@ async function lookupSerial() {
 
 document.getElementById("scan-lookup-btn")?.addEventListener("click", lookupSerial);
 document.getElementById("scan-lookup-input")?.addEventListener("keydown", (e) => { if (e.key === "Enter") lookupSerial(); });
+
+// -- Pagination --------------------------------------------------------------
+document.getElementById("inv-pagination")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-page]");
+    if (!btn) return;
+    const pages = Math.max(1, Math.ceil(invAllProducts.length / INV_PAGE_SIZE));
+    let target = Number(btn.dataset.page);
+    if (target < 1) target = 1;
+    if (target > pages) target = pages;
+    if (target === invCurrentPage) return;
+    invCurrentPage = target;
+    renderPage();
+});
+
+// -- Row context menu (edit / delete) ---------------------------------------
+const rowMenu = document.createElement("div");
+rowMenu.id = "row-menu";
+rowMenu.className = "fixed z-50 bg-surface border border-outline-variant rounded-lg shadow-lg py-1 min-w-[160px] hidden";
+rowMenu.innerHTML = `
+    <button data-act="edit" class="w-full text-right px-3 py-2 font-label-lg text-label-lg text-on-surface hover:bg-surface-container-low flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">edit</span> تعديل الصنف
+    </button>
+    <button data-act="delete" class="w-full text-right px-3 py-2 font-label-lg text-label-lg text-danger hover:bg-error-container/20 flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">delete</span> حذف الصنف
+    </button>`;
+document.body.appendChild(rowMenu);
+
+let rowMenuTarget = null;
+function openRowMenu(x, y, pid, name) {
+    rowMenuTarget = { id: pid, name };
+    rowMenu.style.left = (x + window.scrollX) + "px";
+    rowMenu.style.top = (y + window.scrollY) + "px";
+    rowMenu.classList.remove("hidden");
+}
+function closeRowMenu() { rowMenu.classList.add("hidden"); }
+
+document.getElementById("inv-rows")?.addEventListener("click", (e) => {
+    const btn = e.target.closest(".row-menu-btn");
+    if (!btn) { closeRowMenu(); return; }
+    e.stopPropagation();
+    const rect = btn.getBoundingClientRect();
+    openRowMenu(rect.left, rect.bottom, Number(btn.dataset.productId), btn.dataset.name);
+});
+
+document.addEventListener("click", (e) => { if (!rowMenu.contains(e.target)) closeRowMenu(); });
+
+rowMenu?.addEventListener("click", async (e) => {
+    const btn = e.target.closest("button[data-act]");
+    if (!btn || !rowMenuTarget) return;
+    const pid = rowMenuTarget.id;
+    closeRowMenu();
+    if (btn.dataset.act === "edit") {
+        const p = invAllProducts.find(x => x.id === pid);
+        if (p) openEditProductModal(p);
+    } else if (btn.dataset.act === "delete") {
+        if (!confirm(`هل أنت متأكد من حذف "${rowMenuTarget.name}"؟ سيبقى المنتج مخفيًا ولن يظهر في المخزون.`)) return;
+        try {
+            const res = await fetch(`${API_BASE}/api/inventory/products/${pid}`, { method: "DELETE" });
+            if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.detail || `HTTP ${res.status}`); }
+            invAllProducts = invAllProducts.filter(x => x.id !== pid);
+            renderPage();
+        } catch (err) {
+            alert(`تعذر الحذف: ${err.message}`);
+        }
+    }
+});
+
+// -- Placeholder serials count ----------------------------------------------
+async function loadPlaceholderCount() {
+    try {
+        const res = await fetch(`${API_BASE}/api/inventory/items`);
+        if (!res.ok) return;
+        const items = await res.json();
+        const n = (items || []).filter(i => i.is_placeholder_serial).length;
+        const el = document.getElementById("placeholder-count");
+        if (el) el.textContent = n;
+    } catch (e) { /* ignore */ }
+}
+loadPlaceholderCount();
 
 loadInventory();
 </script>

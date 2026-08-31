@@ -385,7 +385,7 @@
 <span class="material-symbols-outlined text-[14px]">trending_up</span>
 <span class="mr-1">+12%</span>
 </div>
-<span class="font-body-sm text-body-sm text-text-secondary underline decoration-dashed cursor-pointer hover:text-primary">عرض الكل</span></div>
+<span onclick="location.href='/pages/reports.html'" class="font-body-sm text-body-sm text-text-secondary underline decoration-dashed cursor-pointer hover:text-primary">عرض الكل</span></div>
 </div>
 <!-- Open Repairs -->
 <div class="bg-surface rounded-xl p-5 border border-outline-variant shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] flex flex-col justify-between hover:border-primary/50 transition-colors relative overflow-hidden group">
@@ -450,7 +450,7 @@
 <h3 class="font-headline-sm text-headline-sm text-on-surface">أحدث النشاطات</h3>
 <p class="font-label-sm text-label-sm text-text-secondary font-sans ltr:text-left rtl:text-right">Recent Activity Feed</p>
 </div>
-<div class="flex gap-1 bg-surface-container-low p-1 rounded-lg"><button class="px-3 py-1 text-label-sm font-bold bg-surface text-primary rounded shadow-sm">الكل</button><button class="px-3 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">المبيعات</button><button class="px-3 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">الإصلاحات</button></div>
+ <div class="flex gap-1 bg-surface-container-low p-1 rounded-lg" data-activity-filter><button data-tab="all" class="px-3 py-1 text-label-sm font-bold bg-surface text-primary rounded shadow-sm">الكل</button><button data-tab="invoice" class="px-3 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">المبيعات</button><button data-tab="repair" class="px-3 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">الإصلاحات</button></div>
 </div>
 <!-- Feed List -->
 <div id="activity-feed" class="flex-1 overflow-y-auto p-2">
@@ -500,7 +500,7 @@
 </div>
 <!-- Repair Status Summary -->
 <div class="bg-surface rounded-xl border border-outline-variant p-5 shadow-sm flex-1 flex flex-col">
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">حالة الإصلاحات</h3><div class="flex bg-surface-container-low p-1 rounded-lg mb-4"><button class="flex-1 py-1 text-label-sm font-bold bg-surface text-primary rounded shadow-sm">الكل</button><button class="flex-1 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">قيد الانتظار</button><button class="flex-1 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">جاري العمل</button></div>
+ <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">حالة الإصلاحات</h3><div class="flex bg-surface-container-low p-1 rounded-lg mb-4" data-repair-filter><button data-tab="all" class="flex-1 py-1 text-label-sm font-bold bg-surface text-primary rounded shadow-sm">الكل</button><button data-tab="received" class="flex-1 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">قيد الانتظار</button><button data-tab="working" class="flex-1 py-1 text-label-sm text-on-surface-variant hover:text-primary transition-colors">جاري العمل</button></div>
 <div class="flex-1 flex flex-col justify-center gap-4" id="repair-status-stats">
 <div id="stat-received">
 <div class="flex justify-between items-end mb-1">
@@ -560,29 +560,6 @@ function escapeHtml(str) {
     return div.innerHTML;
 }
 
-function renderRepairStats(counts) {
-    const total = (counts.received || 0) + (counts.with_technician || 0) + (counts.returned || 0);
-    if (!total) return;
-    const pct = (n) => Math.round((n / total) * 100);
-    const stats = [
-        { id: "stat-received", n: counts.received || 0, pctVal: pct(counts.received || 0), barCls: "bg-surface-variant", pctCls: "text-on-surface" },
-        { id: "stat-working", n: counts.with_technician || 0, pctVal: pct(counts.with_technician || 0), barCls: "bg-warning", pctCls: "text-warning" },
-        { id: "stat-ready", n: counts.returned || 0, pctVal: pct(counts.returned || 0), barCls: "bg-success", pctCls: "text-success" },
-    ];
-    stats.forEach(s => {
-        const el = document.getElementById(s.id);
-        if (!el) return;
-        el.innerHTML = `
-        <div class="flex justify-between items-end mb-1">
-            <span class="font-label-sm text-label-sm text-text-secondary">قيد الانتظار (${s.n})</span>
-            <span class="font-numeric-table text-numeric-table ${s.pctCls}">${s.pctVal}%</span>
-        </div>
-        <div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
-            <div class="${s.barCls} h-full rounded-full" style="width: ${s.pctVal}%"></div>
-        </div>`;
-    });
-}
-
 async function loadDashboardSummary() {
     try {
         const [sumRes, boardRes] = await Promise.all([
@@ -597,44 +574,118 @@ async function loadDashboardSummary() {
         document.getElementById("kpi-low-stock").textContent = data.low_stock_count;
         document.getElementById("kpi-outstanding").textContent = fmt(data.outstanding_total);
 
-        // Recent activity feed (real invoices + repairs)
+        // Recent activity feed (real invoices + repairs), filterable by tabs
         const feed = document.getElementById("activity-feed");
         if (feed) {
             const act = data.activity || [];
-            feed.innerHTML = act.length ? act.map(a => {
-                const def = ACTIVITY_DESC[a.type] || ACTIVITY_DESC.invoice;
-                const when = a.at ? new Date(a.at).toLocaleString("ar-EG", { hour: "2-digit", minute: "2-digit" }) : "";
-                const title = a.type === "invoice"
-                    ? `عملية بيع جديدة #${escapeHtml(a.number)}`
-                    : `تحديث حالة إصلاح #${escapeHtml(a.number)}`;
-                const sub = a.type === "invoice"
-                    ? `${fmt(a.total)} ج.م · ${escapeHtml(a.customer || "عميل")}`
-                    : `${escapeHtml(a.device)} — ${escapeHtml(REPAIR_STATUS_AR[a.status] || a.status)}`;
-                return `
-                <div class="flex gap-4 p-3 hover:bg-surface-container-low rounded-lg transition-colors group cursor-pointer border-b border-outline-variant/30 last:border-0">
-                    <div class="mt-1 w-10 h-10 rounded-full ${def.cls} flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined">${def.icon}</span>
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex justify-between items-start">
-                            <p class="font-label-lg text-label-lg text-on-surface">${title}</p>
-                            <span class="font-label-sm text-label-sm text-text-secondary">${escapeHtml(when)}</span>
+            feed._all = act;
+            feed._tab = "all";
+            feed.render = function () {
+                const list = this._tab === "all"
+                    ? (this._all || [])
+                    : (this._all || []).filter(a => a.type === this._tab);
+                this.innerHTML = list.length ? list.map(a => {
+                    const def = ACTIVITY_DESC[a.type] || ACTIVITY_DESC.invoice;
+                    const when = a.at ? new Date(a.at).toLocaleString("ar-EG", { hour: "2-digit", minute: "2-digit" }) : "";
+                    const title = a.type === "invoice"
+                        ? `عملية بيع جديدة #${escapeHtml(a.number)}`
+                        : `تحديث حالة إصلاح #${escapeHtml(a.number)}`;
+                    const sub = a.type === "invoice"
+                        ? `${fmt(a.total)} ج.م · ${escapeHtml(a.customer || "عميل")}`
+                        : `${escapeHtml(a.device)} — ${escapeHtml(REPAIR_STATUS_AR[a.status] || a.status)}`;
+                    return `
+                    <div class="flex gap-4 p-3 hover:bg-surface-container-low rounded-lg transition-colors group cursor-pointer border-b border-outline-variant/30 last:border-0">
+                        <div class="mt-1 w-10 h-10 rounded-full ${def.cls} flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined">${def.icon}</span>
                         </div>
-                        <p class="font-body-sm text-body-sm text-text-secondary mt-1">${sub}</p>
-                    </div>
-                </div>`;
-            }).join("") : `<p class="text-center text-on-surface-variant text-body-sm p-4">لا يوجد نشاط بعد</p>`;
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <p class="font-label-lg text-label-lg text-on-surface">${title}</p>
+                                <span class="font-label-sm text-label-sm text-text-secondary">${escapeHtml(when)}</span>
+                            </div>
+                            <p class="font-body-sm text-body-sm text-text-secondary mt-1">${sub}</p>
+                        </div>
+                    </div>`;
+                }).join("") : `<p class="text-center text-on-surface-variant text-body-sm p-4">لا يوجد نشاط بعد</p>`;
+            };
+            feed.render();
         }
 
-        // Repair status summary from the real board
+        // Repair status summary from the real board, filterable
         if (boardRes.ok) {
             const board = await boardRes.json();
-            renderRepairStats(board.counts || {});
+            const counts = board.counts || {};
+            const statBox = document.getElementById("repair-status-stats");
+            if (statBox) {
+                statBox._counts = counts;
+                statBox._tab = "all";
+                statBox.render = function () {
+                    const c = this._counts || {};
+                    const tabs = [
+                        { tab: "received", label: "قيد الانتظار", n: c.received || 0, barCls: "bg-surface-variant", pctCls: "text-on-surface" },
+                        { tab: "working", label: "جاري العمل", n: c.with_technician || 0, barCls: "bg-warning", pctCls: "text-warning" },
+                        { tab: "ready", label: "جاهز للتسليم", n: c.returned || 0, barCls: "bg-success", pctCls: "text-success" },
+                    ];
+                    let shown = tabs;
+                    if (this._tab === "received") shown = [tabs[0]];
+                    else if (this._tab === "working") shown = [tabs[1]];
+                    const total = tabs.reduce((s, t) => s + t.n, 0);
+                    this.innerHTML = shown.map(t => {
+                        const pctVal = total ? Math.round((t.n / total) * 100) : 0;
+                        return `
+                        <div>
+                            <div class="flex justify-between items-end mb-1">
+                                <span class="font-label-sm text-label-sm text-text-secondary">${t.label} (${t.n})</span>
+                                <span class="font-numeric-table text-numeric-table ${t.pctCls}">${pctVal}%</span>
+                            </div>
+                            <div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+                                <div class="${t.barCls} h-full rounded-full" style="width: ${pctVal}%"></div>
+                            </div>
+                        </div>`;
+                    }).join("");
+                };
+                statBox.render();
+            }
         }
     } catch (err) {
         console.warn("Dashboard live data unavailable, showing mockup numbers instead:", err);
     }
 }
+
+document.querySelectorAll("[data-activity-filter] [data-tab]").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const container = document.querySelector("[data-activity-filter]");
+        container.querySelectorAll("[data-tab]").forEach(b => {
+            const on = b === btn;
+            b.classList.toggle("bg-surface", on);
+            b.classList.toggle("text-primary", on);
+            b.classList.toggle("shadow-sm", on);
+            b.classList.toggle("font-bold", on);
+            const isDim = !on;
+            b.classList.toggle("text-on-surface-variant", isDim);
+        });
+        const feed = document.getElementById("activity-feed");
+        feed._tab = btn.dataset.tab;
+        feed.render();
+    });
+});
+
+document.querySelectorAll("[data-repair-filter] [data-tab]").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const container = document.querySelector("[data-repair-filter]");
+        container.querySelectorAll("[data-tab]").forEach(b => {
+            const on = b === btn;
+            b.classList.toggle("bg-surface", on);
+            b.classList.toggle("text-primary", on);
+            b.classList.toggle("shadow-sm", on);
+            b.classList.toggle("font-bold", on);
+            b.classList.toggle("text-on-surface-variant", !on);
+        });
+        const box = document.getElementById("repair-status-stats");
+        box._tab = btn.dataset.tab;
+        box.render();
+    });
+});
 
 loadDashboardSummary();
 </script>
