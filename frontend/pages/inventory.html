@@ -284,6 +284,24 @@
 </div>
 </div>
 </div>
+<!-- Process Placeholder Serials Modal -->
+<div id="placeholder-modal-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-md">
+<div class="bg-surface rounded-xl border border-border shadow-lg w-full max-w-2xl flex flex-col max-h-[90vh]">
+<div class="p-md border-b border-border flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">املأ الأرقام التسلسلية الحقيقية</h3>
+<button id="placeholder-modal-close" class="text-outline hover:text-danger"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="p-md overflow-y-auto flex-1">
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">أدخل الرقم التسلسلي الحقيقي (أو امسح الباركود) لكل وحدة، أو اترك الحقل فارغًا ليتخطاها.</p>
+<div id="placeholder-rows" class="space-y-sm"></div>
+</div>
+<div class="p-md border-t border-border flex justify-end gap-sm">
+<span id="placeholder-save-msg" class="flex-1 font-label-sm text-label-sm text-success"></span>
+<button id="placeholder-modal-cancel" class="px-md py-sm rounded-lg border border-border text-on-surface font-label-lg text-label-lg hover:bg-surface-container-low">إلغاء</button>
+<button id="placeholder-modal-save" class="px-md py-sm rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container">حفظ الكل</button>
+</div>
+</div>
+</div>
 <!-- TopAppBar Component -->
 <header class="bg-background/80 backdrop-blur-md border-b border-outline-variant docked full-width top-0 sticky z-40 flex justify-between items-center w-full px-margin-desktop h-16 rtl">
 <!-- Mobile Menu Toggle (Visible only on mobile) -->
@@ -478,8 +496,12 @@
 <div class="flex items-start gap-sm">
 <span class="material-symbols-outlined text-warning mt-0.5">warning</span>
 <div>
-<h4 class="font-label-lg text-label-lg text-on-surface font-semibold mb-1">سيج.مات مؤقتة (Placeholders)</h4>
+<h4 class="font-label-lg text-label-lg text-on-surface font-semibold mb-1">أرقام تسلسلية مؤقتة (Placeholders)</h4>
 <p class="font-body-sm text-body-sm text-on-surface-variant mb-2">يوجد <strong id="placeholder-count" class="text-on-surface font-bold">12</strong> وحدة مسجلة بدون أرقام تسلسلية حقيقية.</p>
+<button id="process-placeholders-btn" class="text-primary font-label-sm text-label-sm font-bold flex items-center gap-1 hover:underline">
+امسح أو أدخل الرقم التسلسلي الحقيقي
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+</button>
 </div>
 </div>
 </div>
@@ -849,6 +871,77 @@ async function loadPlaceholderCount() {
     } catch (e) { /* ignore */ }
 }
 loadPlaceholderCount();
+
+// -- Process placeholder serials ---------------------------------------------
+async function loadPlaceholderItems() {
+    try {
+        const res = await fetch(`${API_BASE}/api/inventory/items`);
+        if (!res.ok) return [];
+        const items = await res.json();
+        return (items || []).filter(i => i.is_placeholder_serial);
+    } catch (e) { return []; }
+}
+
+function openPlaceholderModal() {
+    const overlay = document.getElementById("placeholder-modal-overlay");
+    const rowsEl = document.getElementById("placeholder-rows");
+    rowsEl.innerHTML = `<p class="text-center text-on-surface-variant text-body-sm p-4">جارٍ التحميل...</p>`;
+    overlay.classList.remove("hidden");
+    overlay.classList.add("flex");
+    loadPlaceholderItems().then(items => {
+        document.getElementById("placeholder-save-msg").textContent = "";
+        if (!items.length) {
+            rowsEl.innerHTML = `<p class="text-center text-on-surface-variant text-body-sm p-4">لا توجد وحدات مؤقتة — كل الأرقام التسلسلية حقيقية ✓</p>`;
+            return;
+        }
+        rowsEl.innerHTML = items.map(it => `
+            <div class="flex items-center gap-sm border border-border rounded-lg p-sm">
+                <div class="flex-1 min-w-0">
+                    <div class="font-body-md text-body-md text-on-surface font-medium truncate">${escapeHtml(it.product_name || "منتج")}</div>
+                    <div class="font-label-sm text-label-sm text-outline font-numeric-table" dir="ltr">${escapeHtml(it.serial_number || it.uuid)}</div>
+                </div>
+                <input data-item-id="${it.id}" type="text" dir="ltr" placeholder="الرقم التسلسلي الحقيقي..."
+                       class="w-56 bg-surface-container-lowest border border-border rounded-lg h-10 px-3 text-left font-numeric-table text-numeric-table text-on-surface focus:border-primary focus:ring-1 focus:ring-primary"/>
+            </div>`).join("");
+    });
+}
+
+function closePlaceholderModal() {
+    const overlay = document.getElementById("placeholder-modal-overlay");
+    overlay.classList.add("hidden");
+    overlay.classList.remove("flex");
+}
+
+document.getElementById("process-placeholders-btn")?.addEventListener("click", openPlaceholderModal);
+document.getElementById("placeholder-modal-close")?.addEventListener("click", closePlaceholderModal);
+document.getElementById("placeholder-modal-cancel")?.addEventListener("click", closePlaceholderModal);
+document.getElementById("placeholder-modal-save")?.addEventListener("click", async () => {
+    const inputs = [...document.querySelectorAll("#placeholder-rows input[data-item-id]")];
+    const updates = inputs
+        .map(inp => ({ id: Number(inp.dataset.itemId), serial: inp.value.trim() }))
+        .filter(u => u.serial);
+    if (!updates.length) { closePlaceholderModal(); return; }
+    const msg = document.getElementById("placeholder-save-msg");
+    const btn = document.getElementById("placeholder-modal-save");
+    btn.disabled = true;
+    msg.textContent = "جارٍ الحفظ...";
+    let done = 0, failed = 0;
+    for (const u of updates) {
+        try {
+            const res = await fetch(`${API_BASE}/api/inventory/items/${u.id}/serial`, {
+                method: "PUT", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ serial_number: u.serial }),
+            });
+            if (res.ok) done++; else failed++;
+        } catch (e) { failed++; }
+    }
+    btn.disabled = false;
+    msg.textContent = `تم تحديث ${done} وحدة${failed ? `، فشل ${failed}` : ""}`;
+    loadPlaceholderCount();
+    if (failed === 0) {
+        setTimeout(closePlaceholderModal, 1200);
+    }
+});
 
 loadInventory();
 </script>

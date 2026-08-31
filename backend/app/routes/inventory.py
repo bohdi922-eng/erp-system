@@ -153,3 +153,21 @@ def delete_product(product_id: int, db: Session = Depends(get_session)) -> dict:
     product.is_active = False
     db.commit()
     return {"id": product_id, "deleted": True}
+
+
+class SetItemSerialBody(BaseModel):
+    serial_number: str
+
+
+@router.put("/items/{item_id}/serial")
+def set_item_serial(item_id: int, body: SetItemSerialBody, db: Session = Depends(get_session)) -> dict:
+    item = db.get(Item, item_id)
+    if item is None:
+        raise BusinessError("Item not found", 404)
+    serial = body.serial_number.strip()
+    if not serial:
+        raise BusinessError("Serial number cannot be empty", 400)
+    item.serial_number = serial
+    db.commit()
+    db.refresh(item)
+    return {"id": item.id, "uuid": item.uuid, "serial_number": item.serial_number}
