@@ -251,6 +251,7 @@ class InvoiceLine(Base):
     line_total: Mapped[Decimal] = mapped_column(Numeric(12, 2), default=Decimal("0.00"))
 
     invoice: Mapped["Invoice"] = relationship(back_populates="lines")
+    item: Mapped["Item | None"] = relationship()
 
 
 class Payment(Base):

@@ -1,73 +1,53 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html dir="rtl" lang="ar"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ERP System - المبيعات (فاتورة جديدة)</title>
+<title>ERP System - عرض سعر جديد</title>
 <script src="/vendor/tailwind.js"></script>
 <script src="/js/auth.js"></script>
-<!-- FIX: was loading Material Symbols twice and pulling in "Be Vietnam Pro"
-     (no Arabic glyph support) as the primary typeface. Now loads Cairo
-     once, matching the mobile concepts and the design brief. -->
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
         theme: {
           extend: {
             "colors": {
-                    "secondary-fixed-dim": "#81d4dc",
                     "surface-container-low": "#f1f4f8",
-                    "inverse-primary": "#a8c8ff",
-                    "tertiary-fixed": "#d6e3ff",
-                    "on-primary-container": "#b5cfff",
-                    "on-error-container": "#93000a",
-                    "surface-tint": "#135eaf",
-                    "on-tertiary-fixed-variant": "#1a4681",
-                    "background": "#f7fafe",
                     "surface-container-lowest": "#ffffff",
-                    "on-surface": "#181c1f",
-                    "error-container": "#ffdad6",
-                    "on-primary-fixed": "#001b3c",
-                    "surface-container-highest": "#e0e3e7",
-                    "on-tertiary": "#ffffff",
-                    "on-tertiary-fixed": "#001b3d",
-                    "surface-bright": "#f7fafe",
-                    "tertiary-fixed-dim": "#a9c7ff",
                     "surface-container": "#ebeef2",
-                    "surface-variant": "#e0e3e7",
-                    "inverse-on-surface": "#eef1f5",
-                    "on-background": "#181c1f",
-                    "text-secondary": "#888888",
-                    "inverse-surface": "#2d3134",
-                    "secondary-fixed": "#9df0f8",
-                    "text-primary": "#333333",
-                    "secondary-container": "#9df0f8",
-                    "on-surface-variant": "#424751",
-                    "primary-container": "#0057a8",
-                    "on-secondary-fixed-variant": "#004f55",
-                    "surface": "#ffffff",
                     "surface-container-high": "#e5e8ec",
-                    "danger": "#dc3545",
-                    "tertiary-container": "#2f5893",
-                    "on-secondary": "#ffffff",
-                    "outline": "#727783",
-                    "warning": "#f59e0b",
-                    "on-error": "#ffffff",
-                    "on-secondary-fixed": "#002022",
-                    "tertiary": "#10407a",
-                    "primary": "#00407e",
-                    "success": "#00b894",
-                    "on-tertiary-container": "#b6cfff",
-                    "on-secondary-container": "#026f77",
+                    "surface-container-highest": "#e0e3e7",
+                    "surface-variant": "#e0e3e7",
+                    "surface-bright": "#f7fafe",
                     "surface-dim": "#d7dade",
-                    "primary-fixed": "#d5e3ff",
-                    "secondary": "#006970",
+                    "background": "#f7fafe",
+                    "on-surface": "#181c1f",
+                    "on-surface-variant": "#424751",
+                    "on-background": "#181c1f",
+                    "outline": "#727783",
+                    "outline-variant": "#c2c6d3",
                     "border": "#e0e0e0",
+                    "primary": "#00407e",
+                    "primary-container": "#0057a8",
                     "on-primary": "#ffffff",
-                    "error": "#ba1a1a",
-                    "info": "#0057a8",
-                    "on-primary-fixed-variant": "#00468a",
+                    "on-primary-container": "#b5cfff",
+                    "primary-fixed": "#d5e3ff",
                     "primary-fixed-dim": "#a8c8ff",
-                    "outline-variant": "#c2c6d3"
+                    "on-primary-fixed": "#001b3c",
+                    "on-primary-fixed-variant": "#00468a",
+                    "secondary": "#006970",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#10407a",
+                    "on-tertiary": "#ffffff",
+                    "warning": "#f59e0b",
+                    "success": "#00b894",
+                    "danger": "#dc3545",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "info": "#0057a8",
+                    "text-primary": "#333333",
+                    "text-secondary": "#888888"
             },
             "borderRadius": {
                     "DEFAULT": "0.125rem",
@@ -130,26 +110,21 @@
 <body class="bg-background text-on-surface font-body-md overflow-hidden flex flex-row rtl min-h-screen h-screen">
 <!-- SideNavBar -->
 <nav class="hidden md:flex flex-col h-screen rtl overflow-y-auto w-sidebar-width bg-surface border-l border-outline-variant flex-shrink-0">
-<!-- Header -->
 <div class="p-lg flex items-center gap-md border-b border-outline-variant/30">
 <div class="w-10 h-10 rounded-lg bg-primary-container/10 flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">widgets</span>
 </div>
 <div>
-<!-- FIX: rebranded away from "هنت ERP" / Hunt ERP per the product decision
-     to use a generic name going forward. -->
 <h1 class="text-headline-md font-headline-md font-bold text-primary m-0 p-0 leading-none">نظام ERP</h1>
 <p class="font-label-sm text-label-sm text-on-surface-variant mt-xs">إدارة الأجهزة</p>
 </div>
 </div>
-<!-- CTA -->
 <div class="p-md">
-<button class="w-full bg-primary text-on-primary rounded-lg py-sm px-md flex items-center justify-center gap-sm font-label-lg text-label-lg hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-sm min-h-[48px]">
-<span class="material-symbols-outlined" style="font-size: 20px;">add_circle</span>
+<button onclick="location.href='/pages/sales_new_invoice.html'" class="w-full bg-primary text-on-primary rounded-lg py-sm px-md flex items-center justify-center gap-sm font-label-lg text-label-lg hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-sm min-h-[48px]">
+<span class="material-symbols-outlined" style="font-size: 20px;">point_of_sale</span>
                 عملية بيع جديدة
             </button>
 </div>
-<!-- Navigation Links -->
 <ul class="flex-1 px-sm py-sm space-y-xs overflow-y-auto">
 <li>
 <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors group text-on-surface-variant hover:text-primary" href="/pages/dashboard.html">
@@ -158,15 +133,15 @@
 </a>
 </li>
 <li>
-<a class="flex items-center gap-md px-md py-sm rounded-lg text-primary font-bold border-r-4 border-primary bg-primary/5 transition-colors opacity-80 duration-150" href="/pages/sales_new_invoice.html">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">point_of_sale</span>
-<span class="font-label-lg text-label-lg">المبيعات</span>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-primary font-bold border-r-4 border-primary bg-primary/5 transition-colors opacity-80 duration-150" href="/pages/sales_quote.html">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">request_quote</span>
+<span class="font-label-lg text-label-lg">عروض الأسعار</span>
 </a>
 </li>
 <li>
-<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors group hover:text-primary" href="/pages/sales_quote.html">
-<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">request_quote</span>
-<span class="font-label-lg text-label-lg">عروض الأسعار</span>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors group hover:text-primary" href="/pages/sales_new_invoice.html">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">point_of_sale</span>
+<span class="font-label-lg text-label-lg">المبيعات</span>
 </a>
 </li>
 <li>
@@ -202,7 +177,6 @@
 </a>
 </li>
 </ul>
-<!-- Footer Links -->
 <div class="mt-auto border-t border-outline-variant/30 p-sm space-y-xs">
 <a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors group hover:text-primary" href="/pages/settings.html">
 <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">account_circle</span>
@@ -214,17 +188,15 @@
 </a>
 </div>
 </nav>
-<!-- Main Content Area -->
 <main class="flex-1 flex flex-col h-screen overflow-hidden">
-<!-- TopAppBar -->
 <header class="flex justify-between items-center w-full px-margin-desktop h-16 bg-background/80 backdrop-blur-md sticky top-0 z-40 border-b border-outline-variant flex-shrink-0">
 <button class="md:hidden text-on-surface-variant hover:text-primary p-2 rounded-full hover:bg-surface-container-low transition-colors mr-[-8px]">
 <span class="material-symbols-outlined">menu</span>
 </button>
 <div class="flex items-center gap-sm">
-<h2 class="font-headline-sm text-headline-sm font-semibold text-on-surface hidden md:block">فاتورة جديدة</h2>
+<h2 class="font-headline-sm text-headline-sm font-semibold text-on-surface hidden md:block">عرض سعر جديد</h2>
 <span class="material-symbols-outlined text-outline text-[16px] hidden md:block">chevron_left</span>
-<span class="font-label-lg text-label-lg text-outline hidden md:block">#INV-2023-0892</span>
+<span class="font-label-lg text-label-lg text-outline hidden md:block">#QOT-____</span>
 </div>
 <div class="flex items-center gap-lg">
 <div class="hidden lg:flex relative items-center">
@@ -246,9 +218,7 @@
 </div>
 </div>
 </header>
-<!-- POS Canvas -->
 <div class="flex-1 overflow-hidden p-md lg:p-lg flex flex-col lg:flex-row gap-lg">
-<!-- Left Side: Invoice Details & Items -->
 <div class="w-full lg:w-2/3 flex flex-col h-full gap-md">
 <div class="bg-surface rounded-xl border border-border p-md flex flex-col md:flex-row gap-md shadow-sm flex-shrink-0">
 <div class="flex-1">
@@ -267,7 +237,6 @@
 </div>
 </div>
 </div>
-<!-- Items Table -->
 <div class="bg-surface rounded-xl border border-border flex-1 flex flex-col overflow-hidden shadow-sm">
 <div class="overflow-x-auto flex-1">
 <table class="w-full text-right border-collapse">
@@ -290,10 +259,9 @@
 </div>
 </div>
 </div>
-<!-- Right Side: Checkout & Payment -->
 <div class="w-full lg:w-1/3 bg-surface rounded-xl border border-border shadow-sm flex flex-col h-full lg:h-auto lg:sticky lg:top-0">
 <div class="p-md border-b border-border bg-surface-container-lowest rounded-t-xl">
-<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface mb-xs">ملخص الفاتورة</h3>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface mb-xs">ملخص عرض السعر</h3>
 <p id="cart-count-label" class="font-label-sm text-label-sm text-on-surface-variant">0 أصناف محددة</p>
 </div>
 <div class="p-md flex-1 overflow-y-auto">
@@ -325,78 +293,23 @@ class="w-16 bg-surface-container-lowest border border-border rounded-lg h-8 px-2
 <span class="font-display-lg text-headline-lg font-bold text-primary tracking-tight"><span id="sum-total">0.00</span> <span class="text-body-md font-normal text-on-surface-variant">ج.م</span></span>
 </div>
 </div>
+<div class="mb-lg rounded-lg border border-warning/30 bg-warning/5 p-sm">
+<p class="font-label-sm text-label-sm text-warning">عرض سعر فقط — لا يتم حجز المخزون ولا تسجيل دفعة الآن. عند قبول العرض، يمكنك تحويله إلى فاتورة من صفحة التقارير.</p>
+</div>
 <div class="mb-lg">
-<label class="block font-label-lg text-label-lg text-on-surface-variant font-semibold mb-sm">طريقة الدفع</label>
-<div class="grid grid-cols-2 gap-sm">
-<label class="cursor-pointer">
-<input checked="" class="peer sr-only" name="payment_method" type="radio" value="cash"/>
-<div class="border border-border rounded-lg p-sm text-center peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all hover:bg-surface-container-low flex flex-col items-center justify-center gap-xs h-20">
-<span class="material-symbols-outlined" style="font-size: 28px;">payments</span>
-<span class="font-label-sm text-label-sm font-medium">نقدي</span>
-</div>
-</label>
-<label class="cursor-pointer">
-<input class="peer sr-only" name="payment_method" type="radio" value="card"/>
-<div class="border border-border rounded-lg p-sm text-center peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all hover:bg-surface-container-low flex flex-col items-center justify-center gap-xs h-20">
-<span class="material-symbols-outlined" style="font-size: 28px;">credit_card</span>
-<span class="font-label-sm text-label-sm font-medium">بطاقة ائتمان</span>
-</div>
-</label>
-<label class="cursor-pointer">
-<input class="peer sr-only" name="payment_method" type="radio" value="wallet"/>
-<div class="border border-border rounded-lg p-sm text-center peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all hover:bg-surface-container-low flex flex-col items-center justify-center gap-xs h-20">
-<span class="material-symbols-outlined" style="font-size: 28px;">account_balance_wallet</span>
-<span class="font-label-sm text-label-sm font-medium">محفظة</span>
-</div>
-</label>
-<label class="cursor-pointer">
-<input class="peer sr-only" name="payment_method" type="radio" value="instapay"/>
-<div class="border border-border rounded-lg p-sm text-center peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all hover:bg-surface-container-low flex flex-col items-center justify-center gap-xs h-20">
-<span class="material-symbols-outlined" style="font-size: 28px;">currency_exchange</span>
-<span class="font-label-sm text-label-sm font-medium">InstaPay</span>
-</div>
-</label>
-</div>
-<div class="mt-sm text-left">
-<button id="toggle-split-btn" type="button" class="text-primary font-label-sm text-label-sm hover:underline">تقسيم الدفع؟</button>
-</div>
-<div id="split-payments-box" class="hidden mt-sm rounded-lg border border-primary/30 bg-primary/5 p-sm space-y-xs">
-<div class="flex items-center justify-between mb-xs">
-<span class="font-label-lg text-label-lg font-semibold text-on-surface">تقسيم الدفع</span>
-<span class="font-numeric-table text-numeric-table text-on-surface-variant">الموزّع: <span id="split-allocated">0.00</span> ج.م</span>
-</div>
-<div id="split-rows" class="space-y-xs"></div>
-<div class="flex items-center justify-between mt-sm pt-sm border-t border-primary/20">
-<span class="font-label-sm text-on-surface-variant">المتبقي:</span>
-<span id="split-remain" class="font-numeric-table text-numeric-table text-danger font-medium">0.00 ج.م</span>
-</div>
-<button id="split-refill-btn" type="button" class="mt-xs w-full text-primary font-label-sm text-label-sm hover:underline">توزيع الباقي على طريقة الدفع المختارة</button>
-</div>
-</div>
-<div id="tender-box" class="mb-md">
-<label class="block font-label-sm text-label-sm text-on-surface-variant mb-xs">المبلغ المستلم</label>
-<div class="relative">
-<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-label-sm">ج.م</span>
-<input id="amount-tendered" class="w-full bg-surface-container-lowest border border-border rounded-lg h-12 pl-10 pr-4 focus:ring-2 focus:ring-primary focus:border-primary font-numeric-table text-headline-sm text-on-surface transition-all text-left" style="direction: ltr;" type="text" value="0.00"/>
-</div>
-<div class="flex justify-between items-center mt-xs px-1">
-<span class="font-label-sm text-on-surface-variant">الباقي:</span>
-<span id="sum-change" class="font-numeric-table text-numeric-table text-danger font-medium">0.00 ج.م</span>
-</div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-xs">ملاحظات</label>
+<textarea id="quote-notes" class="w-full bg-surface-container-lowest border border-border rounded-lg h-20 p-sm focus:ring-2 focus:ring-primary focus:border-primary font-body-sm text-body-sm text-on-surface transition-all resize-none" placeholder="شروط العرض، مدة الصلاحية، تفاصيل إضافية..."></textarea>
 </div>
 </div>
 <div class="p-md border-t border-border bg-surface-container-lowest rounded-b-xl flex flex-col gap-sm">
-<button id="save-invoice-btn" class="w-full bg-primary text-on-primary rounded-lg py-sm px-md flex items-center justify-center gap-sm font-headline-sm text-headline-sm hover:bg-primary-container transition-colors shadow-sm min-h-[56px]">
-<span class="material-symbols-outlined">print</span>
-                        <span id="save-invoice-label">حفظ وطباعة الفاتورة</span>
-                    </button>
+<button id="save-quote-btn" class="w-full bg-warning text-on-primary rounded-lg py-sm px-md flex items-center justify-center gap-sm font-headline-sm text-headline-sm hover:bg-primary transition-colors shadow-sm min-h-[56px]">
+<span class="material-symbols-outlined">request_quote</span>
+                    <span id="save-quote-label">حفظ عرض السعر</span>
+                </button>
 <div class="flex gap-sm">
-<button id="save-draft-btn" class="flex-1 bg-surface-container-lowest border border-border text-on-surface rounded-lg py-sm px-md flex items-center justify-center font-label-lg text-label-lg hover:bg-surface-container-low transition-colors min-h-[48px]">
-                            حفظ كمسودة
-                        </button>
 <button id="clear-cart-btn" class="flex-1 bg-surface-container-lowest border border-border text-danger rounded-lg py-sm px-md flex items-center justify-center font-label-lg text-label-lg hover:bg-error-container/30 transition-colors min-h-[48px]">
-                            إلغاء
-                        </button>
+                    إلغاء
+                </button>
 </div>
 </div>
 </div>
@@ -404,18 +317,7 @@ class="w-16 bg-surface-container-lowest border border-border rounded-lg h-8 px-2
 </main>
 
 <script>
-// FIX (live wiring, full rewrite): this used to be two hardcoded rows with
-// a Save button that posted those same two fixed serials no matter what
-// was on screen. Now it's a real cart: scan a barcode/serial -> it's
-// looked up live and added; quantities and totals are computed in JS;
-// Save posts whatever is actually in the cart.
-//
-// Requires the backend running locally:
-//   uvicorn app.main:app --reload --port 8000
-const API_BASE = "";  // same-origin now — FastAPI serves this page too
-
-// VAT is optional and its ratio is set per invoice: a checkbox turns it on
-// and a % box sets the rate (used as frac = pct/100 for the backend).
+const API_BASE = "";
 let taxEnabled = true;
 let taxRatePct = 14;
 function currentTaxRate() {
@@ -424,25 +326,12 @@ function currentTaxRate() {
     return Math.max(0, pct) / 100;
 }
 
-let cart = [];          // [{ uuid, description, sku, quantity, unit_price }]
+let cart = [];
 let selectedCustomer = null;
-
-// Split payment: the single-method radios stay the main flow; clicking
-// "تقسيم الدفع؟" opens the split panel so a payment can be spread over
-// several methods (e.g. part cash + part InstaPay).
-const SPLIT_METHODS = [
-    { value: "cash", label: "نقدي" },
-    { value: "instapay", label: "InstaPay" },
-    { value: "card", label: "بطاقة ائتمان" },
-    { value: "wallet", label: "محفظة" },
-];
-let splitActive = false;
-let splitAmounts = Object.fromEntries(SPLIT_METHODS.map(m => [m.value, 0]));
 
 function fmt(n) {
     return Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
-
 function escapeHtml(str) {
     const div = document.createElement("div");
     div.textContent = str ?? "";
@@ -484,22 +373,11 @@ function renderCart() {
             </td>
         </tr>`).join("");
     }
-
     const { subtotal, tax, total } = computeTotals();
     document.getElementById("cart-count-label").textContent = `${cart.length} ${cart.length === 1 ? "صنف محدد" : "أصناف محددة"}`;
     document.getElementById("sum-subtotal").textContent = `${fmt(subtotal)} ج.م`;
     document.getElementById("sum-tax").textContent = `${fmt(tax)} ج.م`;
     document.getElementById("sum-total").textContent = fmt(total);
-    updateChange();
-}
-
-function updateChange() {
-    const { total } = computeTotals();
-    const tendered = parseFloat(document.getElementById("amount-tendered").value.replace(/,/g, "")) || 0;
-    const changeEl = document.getElementById("sum-change");
-    const diff = tendered - total;
-    changeEl.textContent = `${fmt(Math.abs(diff))} ج.م`;
-    changeEl.className = "font-numeric-table text-numeric-table font-medium " + (diff < 0 ? "text-danger" : "text-success");
 }
 
 document.getElementById("cart-rows").addEventListener("click", (e) => {
@@ -513,102 +391,21 @@ document.getElementById("cart-rows").addEventListener("click", (e) => {
     renderCart();
 });
 
-document.getElementById("amount-tendered").addEventListener("input", updateChange);
-
-// ---- VAT toggle + ratio ----
 function syncTaxUI() {
     const rateInput = document.getElementById("tax-rate");
     rateInput.disabled = !taxEnabled;
     rateInput.classList.toggle("opacity-50", !taxEnabled);
     rateInput.classList.toggle("pointer-events-none", !taxEnabled);
-    rateInput.classList.toggle("bg-surface-container", !taxEnabled);
     document.getElementById("tax-label").textContent = taxEnabled ? "ضريبة القيمة المضافة" : "بدون ضريبة";
     renderCart();
 }
-
-document.getElementById("tax-enabled").addEventListener("change", (e) => {
-    taxEnabled = e.target.checked;
-    syncTaxUI();
-});
-document.getElementById("tax-rate").addEventListener("input", () => {
-    taxRatePct = document.getElementById("tax-rate").value;
-    renderCart();
-});
-
-// ---- Split payment ----
-function currentSplitTotal() {
-    return SPLIT_METHODS.reduce((s, m) => s + (parseFloat(splitAmounts[m.value]) || 0), 0);
-}
-
-function renderSplitRows() {
-    const rowsEl = document.getElementById("split-rows");
-    rowsEl.innerHTML = SPLIT_METHODS.map(m => `
-        <div class="flex items-center justify-between gap-sm">
-            <span class="font-label-sm text-label-sm text-on-surface font-medium flex-1">${m.label}</span>
-            <div class="relative w-32">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-label-sm">ج.م</span>
-                <input data-method="${m.value}" type="text" dir="ltr"
-                       class="w-full bg-surface-container-lowest border border-border rounded-lg h-10 pl-10 pr-3 focus:ring-2 focus:ring-primary focus:border-primary font-numeric-table text-numeric-table text-on-surface transition-all text-left"
-                       value="${fmt(splitAmounts[m.value])}"/>
-            </div>
-        </div>`).join("");
-    rowsEl.querySelectorAll("input[data-method]").forEach(inp => {
-        inp.addEventListener("input", () => {
-            splitAmounts[inp.dataset.method] = parseFloat(inp.value.replace(/,/g, "")) || 0;
-            updateSplitTotals();
-        });
-    });
-    updateSplitTotals();
-}
-
-function updateSplitTotals() {
-    const { total } = computeTotals();
-    const allocated = currentSplitTotal();
-    document.getElementById("split-allocated").textContent = fmt(allocated);
-    const remainEl = document.getElementById("split-remain");
-    const remain = total - allocated;
-    remainEl.textContent = `${fmt(Math.abs(remain))} ج.م`;
-    remainEl.className = "font-numeric-table text-numeric-table font-medium " + (remain < 0.005 ? "text-success" : "text-danger");
-}
-
-function openSplit() {
-    splitActive = true;
-    const main = document.querySelector('input[name="payment_method"]:checked')?.value || "cash";
-    splitAmounts = Object.fromEntries(SPLIT_METHODS.map(m => [m.value, 0]));
-    splitAmounts[main] = computeTotals().total;
-    document.getElementById("split-payments-box").classList.remove("hidden");
-    document.getElementById("tender-box").classList.add("hidden");
-    renderSplitRows();
-}
-
-function closeSplit() {
-    splitActive = false;
-    document.getElementById("split-payments-box").classList.add("hidden");
-    document.getElementById("tender-box").classList.remove("hidden");
-    updateChange();
-}
-
-document.getElementById("toggle-split-btn").addEventListener("click", () => {
-    if (splitActive) closeSplit();
-    else openSplit();
-});
-
-document.getElementById("split-refill-btn").addEventListener("click", () => {
-    splitAmounts[document.querySelector('input[name="payment_method"]:checked')?.value || "cash"]
-        = Math.max(0, computeTotals().total - currentSplitTotal());
-    renderSplitRows();
-});
-
-document.getElementById("clear-cart-btn").addEventListener("click", () => {
-    cart = [];
-    renderCart();
-});
+document.getElementById("tax-enabled").addEventListener("change", (e) => { taxEnabled = e.target.checked; syncTaxUI(); });
+document.getElementById("tax-rate").addEventListener("input", () => { taxRatePct = document.getElementById("tax-rate").value; renderCart(); });
 
 function addItemToCart(item) {
     const existing = cart.find(l => l.uuid === item.uuid);
-    if (existing) {
-        existing.quantity += 1;
-    } else {
+    if (existing) { existing.quantity += 1; }
+    else {
         cart.push({
             uuid: item.uuid,
             description: item.product_name || "صنف",
@@ -629,23 +426,15 @@ async function lookupAndAdd(code) {
             res = await fetch(`${API_BASE}/api/sales/items/lookup?uuid=${encodeURIComponent(code.trim())}`);
             item = await res.json();
         }
-        if (!item) {
-            alert(`مفيش صنف بالكود ده: ${code}`);
-            return;
-        }
-        if (item.status !== "in_stock") {
-            alert(`الصنف ده مش متاح للبيع حاليًا (الحالة: ${item.status})`);
-            return;
-        }
+        if (!item) { alert(`مفيش صنف بالكود ده: ${code}`); return; }
+        if (item.status !== "in_stock") { alert(`الصنف ده مش متاح حاليًا (الحالة: ${item.status})`); return; }
         addItemToCart(item);
     } catch (err) {
-        console.warn("تعذر البحث عن الصنف (تأكد إن السيرفر شغال):", err);
+        console.warn(err);
         alert("تعذر الاتصال بالسيرفر — تأكد إن التطبيق شغال");
     }
 }
 
-// Live search-by-name dropdown, alongside the exact serial/uuid Enter-key
-// flow above. Debounced so it doesn't fire an API call per keystroke.
 let searchDebounceTimer = null;
 async function searchProductsByName(q) {
     const resultsEl = document.getElementById("product-search-results");
@@ -654,55 +443,45 @@ async function searchProductsByName(q) {
         const res = await fetch(`${API_BASE}/api/inventory/items?q=${encodeURIComponent(q)}&status=in_stock`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const items = await res.json();
-        if (items.length === 0) {
-            resultsEl.innerHTML = `<div class="p-sm text-body-sm text-on-surface-variant">لا توجد نتائج</div>`;
-        } else {
-            resultsEl.innerHTML = items.slice(0, 8).map(it => `
+        resultsEl.innerHTML = items.length === 0
+            ? `<div class="p-sm text-body-sm text-on-surface-variant">لا توجد نتائج</div>`
+            : items.slice(0, 8).map(it => `
                 <button type="button" data-uuid="${it.uuid}" class="w-full text-right p-sm hover:bg-primary/5 flex flex-col border-b border-border/50 last:border-0">
                     <span class="font-body-md text-body-md text-on-surface">${it.product_name || "صنف"}</span>
                     <span class="font-label-sm text-label-sm text-outline">${it.serial_number ? "SN: " + it.serial_number : it.uuid}</span>
                 </button>`).join("");
-        }
         resultsEl.classList.remove("hidden");
-    } catch (err) {
-        console.warn("تعذر البحث عن منتجات:", err);
-    }
+    } catch (err) { console.warn(err); }
 }
 
 const barcodeInput = document.getElementById("barcode-input");
 const searchResultsEl = document.getElementById("product-search-results");
-if (barcodeInput) {
-    barcodeInput.addEventListener("keydown", async (e) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            await lookupAndAdd(barcodeInput.value);
-            barcodeInput.value = "";
-            searchResultsEl.classList.add("hidden");
-        }
-    });
-    barcodeInput.addEventListener("input", () => {
-        clearTimeout(searchDebounceTimer);
-        searchDebounceTimer = setTimeout(() => searchProductsByName(barcodeInput.value), 250);
-    });
-    document.addEventListener("click", (e) => {
-        if (!searchResultsEl.contains(e.target) && e.target !== barcodeInput) {
-            searchResultsEl.classList.add("hidden");
-        }
-    });
-    searchResultsEl?.addEventListener("click", async (e) => {
-        const btn = e.target.closest("button[data-uuid]");
-        if (!btn) return;
-        try {
-            const res = await fetch(`${API_BASE}/api/sales/items/lookup?uuid=${encodeURIComponent(btn.dataset.uuid)}`);
-            const item = await res.json();
-            if (item) addItemToCart(item);
-        } catch (err) {
-            console.warn("تعذر إضافة الصنف:", err);
-        }
+barcodeInput.addEventListener("keydown", async (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        await lookupAndAdd(barcodeInput.value);
         barcodeInput.value = "";
         searchResultsEl.classList.add("hidden");
-    });
-}
+    }
+});
+barcodeInput.addEventListener("input", () => {
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(() => searchProductsByName(barcodeInput.value), 250);
+});
+document.addEventListener("click", (e) => {
+    if (!searchResultsEl.contains(e.target) && e.target !== barcodeInput) searchResultsEl.classList.add("hidden");
+});
+searchResultsEl.addEventListener("click", async (e) => {
+    const btn = e.target.closest("button[data-uuid]");
+    if (!btn) return;
+    try {
+        const res = await fetch(`${API_BASE}/api/sales/items/lookup?uuid=${encodeURIComponent(btn.dataset.uuid)}`);
+        const item = await res.json();
+        if (item) addItemToCart(item);
+    } catch (err) { console.warn(err); }
+    barcodeInput.value = "";
+    searchResultsEl.classList.add("hidden");
+});
 
 const customerInput = document.querySelector('input[placeholder="رقم الهاتف أو الاسم..."]');
 if (customerInput) {
@@ -713,143 +492,53 @@ if (customerInput) {
             const res = await fetch(`${API_BASE}/api/customers?q=${encodeURIComponent(q)}`);
             const results = await res.json();
             selectedCustomer = results[0] || null;
-            if (selectedCustomer) {
-                customerInput.value = selectedCustomer.name;
-            }
-        } catch (err) {
-            console.warn("تعذر البحث عن العميل:", err);
-        }
+            if (selectedCustomer) customerInput.value = selectedCustomer.name;
+        } catch (err) { console.warn(err); }
     });
 }
 
-async function saveInvoice() {
-    const btn = document.getElementById("save-invoice-btn");
-    const label = document.getElementById("save-invoice-label");
+document.getElementById("clear-cart-btn").addEventListener("click", () => { cart = []; renderCart(); });
+
+async function saveQuote() {
+    const btn = document.getElementById("save-quote-btn");
+    const label = document.getElementById("save-quote-label");
     if (cart.length === 0) { alert("السلة فاضية — امسح صنف الأول"); return; }
     if (!selectedCustomer) { alert("محتاج تختار عميل الأول (اكتب رقم الهاتف أو الاسم واخرج من الحقل)"); return; }
 
-    const method = document.querySelector('input[name="payment_method"]:checked')?.value || "cash";
-    const { total } = computeTotals();
     const originalLabel = label.textContent;
-
-    let payments;
-    if (splitActive) {
-        const parts = SPLIT_METHODS
-            .map(m => ({ amount: parseFloat(splitAmounts[m.value]) || 0, method: m.value }))
-            .filter(p => p.amount > 0.004);
-        const sum = parts.reduce((s, p) => s + p.amount, 0);
-        if (parts.length === 0) {
-            alert("حدد مبالغ الدفع");
-            return;
-        }
-        if (Math.abs(sum - total) > 0.01) {
-            alert(`مجموع الدفعات (${fmt(sum)}) لا يساوي إجمالي الفاتورة (${fmt(total)})`);
-            return;
-        }
-        payments = parts.map(p => ({ amount: p.amount.toFixed(2), method: p.method }));
-    } else {
-        payments = [{ amount: total.toFixed(2), method }];
-    }
-
     btn.disabled = true;
     label.textContent = "جارٍ الحفظ...";
 
     try {
-        const invRes = await fetch(`${API_BASE}/api/sales/invoices`, {
+        const res = await fetch(`${API_BASE}/api/sales/quotes`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 customer_id: selectedCustomer.id,
                 lines: cart.map(l => ({ item_uuid: l.uuid, quantity: l.quantity, unit_price: String(l.unit_price) })),
-                payments,
+                notes: document.getElementById("quote-notes").value,
                 tax_rate: currentTaxRate().toFixed(4),
             }),
         });
-        if (!invRes.ok) {
-            const errBody = await invRes.json().catch(() => ({}));
-            throw new Error(errBody.detail || `HTTP ${invRes.status}`);
+        if (!res.ok) {
+            const errBody = await res.json().catch(() => ({}));
+            throw new Error(errBody.detail || `HTTP ${res.status}`);
         }
-        const invoice = await invRes.json();
-        alert(`تم حفظ الفاتورة بنجاح: ${invoice.number} — الإجمالي ${invoice.total} ج.م`);
+        const quote = await res.json();
+        alert(`تم حفظ عرض السعر بنجاح: ${quote.number} — الإجمالي ${quote.total} ج.م`);
         cart = [];
         renderCart();
     } catch (err) {
-        alert(`تعذر حفظ الفاتورة: ${err.message}`);
+        alert(`تعذر حفظ عرض السعر: ${err.message}`);
         console.error(err);
     } finally {
         btn.disabled = false;
         label.textContent = originalLabel;
     }
 }
-
-document.getElementById("save-invoice-btn").addEventListener("click", saveInvoice);
-
-// ---- Save as Draft (localStorage) ----------------------------------------
-const DRAFT_KEY = "erp_sales_draft_v1";
-
-function saveDraft() {
-    if (cart.length === 0) { alert("السلة فاضية — مفيش حاجة تتسجل كمسودة"); return; }
-    const draft = {
-        savedAt: new Date().toISOString(),
-        cart,
-        customer: selectedCustomer,
-        taxEnabled,
-        taxRatePct,
-        splitActive,
-        splitAmounts,
-    };
-    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-    alert(`تم حفظ المسودة: ${cart.length} ${cart.length === 1 ? "صنف" : "أصناف"} (بدون أصناف إضافية).`);
-}
-
-function loadDraft(silent) {
-    let draft;
-    try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY)); } catch (e) { draft = null; }
-    if (!draft || !draft.cart || draft.cart.length === 0) return;
-    cart = draft.cart;
-    selectedCustomer = draft.customer || null;
-    taxEnabled = draft.taxEnabled !== undefined ? draft.taxEnabled : true;
-    taxRatePct = draft.taxRatePct !== undefined ? draft.taxRatePct : 14;
-    splitActive = !!draft.splitActive;
-    splitAmounts = draft.splitAmounts || Object.fromEntries(SPLIT_METHODS.map(m => [m.value, 0]));
-    const custInput = document.querySelector('input[placeholder="رقم الهاتف أو الاسم..."]');
-    if (custInput && selectedCustomer) custInput.value = selectedCustomer.name;
-    if (splitActive) {
-        document.getElementById("split-payments-box").classList.remove("hidden");
-        document.getElementById("tender-box").classList.add("hidden");
-        renderSplitRows();
-    }
-    syncTaxUI();
-    renderCart();
-    if (!silent) {
-        alert(`تم استعادة مسودة محفوظة (${new Date(draft.savedAt).toLocaleString("ar-EG")}). اضغط "إلغاء" لحذفها والبدء من جديد.`);
-    }
-}
-
-document.getElementById("save-draft-btn").addEventListener("click", saveDraft);
-
-const clearCartButton = document.getElementById("clear-cart-btn");
-clearCartButton.addEventListener("click", () => {
-    if (localStorage.getItem(DRAFT_KEY)) {
-        if (confirm("هل تريد حذف المسودة المحفوظة والبدء من جديد؟")) {
-            localStorage.removeItem(DRAFT_KEY);
-            cart = [];
-            renderCart();
-        }
-    } else {
-        cart = [];
-        renderCart();
-    }
-});
+document.getElementById("save-quote-btn").addEventListener("click", saveQuote);
 
 renderCart();
 syncTaxUI();
-if (!localStorage.getItem("erp_draft_notice_shown")) {
-    loadDraft(false);
-    localStorage.setItem("erp_draft_notice_shown", "1");
-} else {
-    loadDraft(true);
-}
 </script>
 </body></html>
-

@@ -112,6 +112,12 @@ def create_invoice(
     # autocommit=False and commit everything themselves in one go. Default
     # stays True so every other existing caller keeps working unchanged.
     autocommit: bool = True,
+    # Quotes ("عرض سعر"): when as_quote=True the invoice is saved as a
+    # DRAFT only — lines are recorded and totals computed, but stock is NOT
+    # reserved, no payments are recorded, and status stays "draft". Later,
+    # convert_quote() upgrades it to a real invoice (reserves stock and
+    # computes paid status).
+    as_quote: bool = False,
 ) -> Invoice:
     """Create a sales invoice with lines (items or services), optional payments."""
     customer = db.get(Customer, customer_id)
@@ -119,7 +125,11 @@ def create_invoice(
         raise BusinessError("Customer not found", 404)
 
     invoice = Invoice(
-        number=next_number(db, DocType.INVOICE, settings.invoice_prefix),
+        number=next_number(
+            db,
+            DocType.QUOTE if as_quote else DocType.INVOICE,
+            settings.quote_prefix if as_quote else settings.invoice_prefix,
+        ),
         customer_id=customer_id,
         invoice_date=date.today(),
         status=InvoiceStatus.DRAFT,
@@ -185,6 +195,18 @@ def create_invoice(
     invoice.paid_amount = Decimal("0.00")
     invoice.status = InvoiceStatus.ISSUED
 
+    # For quotes we stop here: keep status DRAFT, record no payments, and
+    # do NOT reserve any stock (the physical units stay available until the
+    # quote is accepted and converted to a real invoice).
+    if as_quote:
+        invoice.status = InvoiceStatus.DRAFT
+        if autocommit:
+            db.commit()
+            db.refresh(invoice)
+        else:
+            db.flush()
+        return invoice
+
     # Process payments if provided
     if payments:
         for pay in payments:
@@ -223,6 +245,118 @@ def create_invoice(
                 ref_id=invoice.id,
                 user_id=line.invoice.user_id,
                 notes=f"Invoice {invoice.number}: sold to {line.invoice.customer.name if line.invoice.customer else 'customer'}",
+            ))
+
+    if autocommit:
+        db.commit()
+        db.refresh(invoice)
+    else:
+        db.flush()
+    return invoice
+
+
+def create_quote(
+    db: Session,
+    *,
+    customer_id: int,
+    lines: list[dict],
+    notes: str | None = None,
+    user_id: int | None = None,
+    tax_rate: float | None = None,
+    autocommit: bool = True,
+) -> Invoice:
+    """Create a price quotation ("عرض سعر"). Saved as a DRAFT invoice that
+    does NOT reserve stock and collects no payment. Use convert_quote() to
+    turn an accepted quote into a real (issued/paid) invoice."""
+    return create_invoice(
+        db,
+        customer_id=customer_id,
+        lines=lines,
+        notes=notes,
+        payments=None,
+        user_id=user_id,
+        tax_rate=tax_rate,
+        autocommit=autocommit,
+        as_quote=True,
+    )
+
+
+def convert_quote(
+    db: Session,
+    invoice_id: int,
+    *,
+    payments: list[dict] | None = None,
+    user_id: int | None = None,
+    tax_rate: float | None = None,
+    autocommit: bool = True,
+) -> Invoice:
+    """Turn an accepted quote (DRAFT invoice) into a real invoice: reserves
+    the stock, records optional payments, and computes the paid status."""
+    invoice = db.get(Invoice, invoice_id)
+    if invoice is None:
+        raise BusinessError("Invoice not found", 404)
+    if invoice.status != InvoiceStatus.DRAFT:
+        raise BusinessError(
+            f"Only a draft quote can be converted (current: {invoice.status})", 409
+        )
+
+    # Re-check that reserved stock is still available (it wasn't held at
+    # quote time), then reserve it now.
+    for line in invoice.lines:
+        if line.item_id:
+            item = db.get(Item, line.item_id)
+            if item is None or item.status != ItemStatus.IN_STOCK:
+                raise BusinessError(
+                    f"Unit {line.item_id} is no longer in stock — quote cannot be converted", 409
+                )
+
+    if tax_rate is not None:
+        tax_rate_dec = Decimal(str(tax_rate))
+        if tax_rate_dec < 0 or tax_rate_dec > 1:
+            raise BusinessError("Tax rate must be between 0 and 1", 400)
+        tax_rate_dec = tax_rate_dec.quantize(Decimal("0.0001"))
+        invoice.tax_rate = tax_rate_dec
+        invoice.tax_amount = (invoice.subtotal * tax_rate_dec).quantize(Decimal("0.01"))
+        invoice.total = invoice.subtotal + invoice.tax_amount
+
+    invoice.paid_amount = Decimal("0.00")
+    invoice.status = InvoiceStatus.ISSUED
+
+    if payments:
+        for pay in payments:
+            amount = Decimal(str(pay.get("amount", 0)))
+            if amount <= 0:
+                continue
+            payment = Payment(
+                number=next_number(db, DocType.PAYMENT, settings.payment_prefix),
+                invoice_id=invoice.id,
+                customer_id=invoice.customer_id,
+                amount=amount,
+                paid_at=datetime.now(),
+                method=PaymentMethod(pay.get("method", "cash")) if pay.get("method") else PaymentMethod.CASH,
+                reference=pay.get("reference"),
+                notes=pay.get("notes"),
+                user_id=user_id,
+            )
+            db.add(payment)
+            invoice.paid_amount += amount
+
+    if invoice.paid_amount >= invoice.total:
+        invoice.status = InvoiceStatus.PAID
+    elif invoice.paid_amount > 0:
+        invoice.status = InvoiceStatus.PARTIAL
+
+    for line in invoice.lines:
+        if line.item_id:
+            item = db.get(Item, line.item_id)
+            item.status = ItemStatus.SOLD
+            db.add(StockMovement(
+                item_id=item.id,
+                movement_type=MovementType.SALE,
+                ref_type="invoice",
+                ref_id=invoice.id,
+                user_id=user_id,
+                notes=f"Invoice {invoice.number}: sold to {invoice.customer.name if invoice.customer else 'customer'}",
             ))
 
     if autocommit:

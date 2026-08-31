@@ -13,6 +13,7 @@ class Settings:
 
     # Document number prefixes
     invoice_prefix: str = "INV"
+    quote_prefix: str = "QOT"
     payment_prefix: str = "REC"
     return_prefix: str = "CN"
     repair_prefix: str = "REP"

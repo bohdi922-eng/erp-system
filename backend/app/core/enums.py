@@ -6,6 +6,7 @@ import enum
 
 class DocType(str, enum.Enum):
     INVOICE = "invoice"
+    QUOTE = "quote"
     PAYMENT = "payment"
     SALES_RETURN = "sales_return"
     REPAIR = "repair"

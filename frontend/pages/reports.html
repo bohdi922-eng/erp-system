@@ -154,6 +154,10 @@
 <span class="material-symbols-outlined">point_of_sale</span>
 <span class="font-label-lg text-label-lg">المبيعات</span>
 </a>
+<a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/sales_quote.html">
+<span class="material-symbols-outlined">request_quote</span>
+<span class="font-label-lg text-label-lg">عروض الأسعار</span>
+</a>
 <a class="flex items-center gap-md px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors" href="/pages/inventory.html">
 <span class="material-symbols-outlined">inventory_2</span>
 <span class="font-label-lg text-label-lg">المخزون</span>
@@ -272,6 +276,29 @@
 </table>
 </div>
 </div>
+<!-- Quotes (عروض الأسعار) -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-md py-sm border-b border-outline-variant bg-surface-container-lowest flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">عروض الأسعار</h3>
+<a href="/pages/sales_quote.html" class="text-primary font-label-sm text-label-sm hover:underline">إنشاء عرض سعر جديد</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">رقم العرض</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">العميل</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">الأصناف</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">الإجمالي</th>
+<th class="py-sm px-md font-label-lg text-label-lg text-on-surface-variant">إجراء</th>
+</tr>
+</thead>
+<tbody id="rpt-quote-rows" class="font-body-md text-body-md divide-y divide-surface-variant">
+<tr><td colspan="5" class="py-md px-md text-center text-on-surface-variant">جارٍ التحميل...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
 <!-- Low stock -->
 <div class="bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden">
 <div class="px-md py-sm border-b border-outline-variant bg-surface-container-lowest flex justify-between items-center">
@@ -377,6 +404,54 @@ function renderInvoices(rows) {
     }).join("");
 }
 
+function renderQuotes(rows) {
+    const el = document.getElementById("rpt-quote-rows");
+    if (!rows || !rows.length) {
+        el.innerHTML = `<tr><td colspan="5" class="py-md px-md text-center text-on-surface-variant">لا توجد عروض أسعار — أنشئ واحداً من زر "إنشاء عرض سعر جديد"</td></tr>`;
+        return;
+    }
+    el.innerHTML = rows.map(q => `
+        <tr class="hover:bg-primary/5 transition-colors">
+            <td class="py-md px-md font-numeric-table text-warning font-semibold" dir="ltr">${escapeHtml(q.number)}</td>
+            <td class="py-md px-md">${escapeHtml(q.customer || "—")}</td>
+            <td class="py-md px-md font-numeric-table text-on-surface-variant">${q.line_count} صنف</td>
+            <td class="py-md px-md font-numeric-table font-semibold text-on-surface">${fmt(q.total)}</td>
+            <td class="py-md px-md">
+                <button data-convert-quote="${q.id}" class="inline-flex items-center gap-xs text-primary hover:underline font-label-sm text-label-sm">تحويل لفاتورة</button>
+            </td>
+        </tr>`).join("");
+}
+
+async function convertQuote(quoteId, btn) {
+    if (!confirm("تحويل هذا العرض إلى فاتورة فعلية؟ سيتم حجز المخزون وتسجيلها.")) return;
+    const original = btn.innerHTML;
+    btn.disabled = true;
+    btn.textContent = "جارٍ التحويل...";
+    try {
+        const res = await fetch(`/api/sales/invoices/${quoteId}/convert`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: "{}",
+        });
+        if (!res.ok) {
+            const errBody = await res.json().catch(() => ({}));
+            throw new Error(errBody.detail || `HTTP ${res.status}`);
+        }
+        const inv = await res.json();
+        alert(`تم تحويل العرض إلى فاتورة ${inv.number} — الإجمالي ${inv.total} ج.م (الحالة: ${inv.status})`);
+        refreshAll();
+    } catch (err) {
+        alert(`تعذر التحويل: ${err.message}`);
+        btn.disabled = false;
+        btn.innerHTML = original;
+    }
+}
+
+document.getElementById("rpt-quote-rows").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-convert-quote]");
+    if (btn) convertQuote(btn.dataset.convertQuote, btn);
+});
+
 function renderLowStock(products) {
     const el = document.getElementById("rpt-lowstock-rows");
     const low = products.filter(p => Number(p.in_stock_count || 0) <= 3);
@@ -410,16 +485,18 @@ async function refreshAll() {
     const invSpinner = document.getElementById("rpt-invoice-count");
     invSpinner.textContent = "جارٍ التحديث...";
     try {
-        const [products, invoices, aging, board] = await Promise.all([
+        const [products, invoices, aging, board, quotes] = await Promise.all([
             fetchJson("/api/inventory/products"),
             fetchJson("/api/sales/invoices"),
             fetchJson("/api/customers/reports/aging"),
             fetchJson("/api/repairs/board"),
+            fetchJson("/api/sales/quotes"),
         ]);
         cachedProducts = products; cachedInvoices = invoices; cachedAging = aging; cachedBoard = board;
 
         renderAging(aging);
         renderInvoices(invoices);
+        renderQuotes(quotes);
         renderLowStock(products);
         renderRepairStatus((board.counts || {}));
 
