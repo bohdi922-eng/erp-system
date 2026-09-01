@@ -66,6 +66,11 @@
   // valid), go straight to the dashboard instead of asking again.
   if (window.ERPAuth.isLoginPage()) {
     fetch("/api/auth/me").then((r) => { if (r.ok) location.href = "/pages/dashboard.html"; });
+  } else {
+    // FIX (security): the guard was defined but never actually called, so
+    // every page opened freely with no login required. Enforce it now: if
+    // the server has no live cookie for this browser, bounce to login.
+    window.ERPAuth.ensure();
   }
 
   // Global logout: any element with [data-logout] (the sidebar "تسجيل الخروج"
