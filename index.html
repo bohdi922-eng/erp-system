@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ERP System — نظام إدارة المحلات</title>
+<meta name="description" content="نظام ERP عربي متكامل لإدارة المحلات — مبيعات ومخزون وعملاء وصيانة، بيشتغل على جهازك بدون إنترنت. حمّله وتثبيته أوتوماتيك.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #04182f;
+    --ink-deep: #020f20;
+    --brand: #00407e;
+    --brand-bright: #4a9bdf;
+    --paper: #f4f7fb;
+    --print: #f2a63b;
+    --rule: rgba(148, 181, 214, .22);
+    --muted: #93a9c2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Cairo", "Segoe UI", Tahoma, sans-serif;
+    background: var(--ink-deep);
+    color: #e6eef7;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+  .field {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(900px 620px at 78% -8%, rgba(0, 64, 126, .85), transparent 70%),
+      radial-gradient(700px 520px at 8% 4%, rgba(242, 166, 59, .1), transparent 72%),
+      linear-gradient(175deg, #04182f 0%, #020f20 100%);
+  }
+  .field::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(148, 181, 214, .07) 1px, transparent 1px);
+    background-size: 100% 34px;
+  }
+  .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mark { display: flex; align-items: center; gap: 12px; }
+  .mark svg { width: 34px; height: 34px; flex: none; }
+  .mark b { font-size: 15px; font-weight: 800; color: #fff; }
+  .mark span { display: block; font-size: 11px; font-weight: 400; color: var(--muted); }
+  .topbar a {
+    font-size: 13.5px;
+    color: var(--ink);
+    background: var(--print);
+    text-decoration: none;
+    padding: 9px 22px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .topbar a:hover { background: #ffbe5c; }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.12fr .88fr;
+    gap: 60px;
+    align-items: center;
+    padding: 78px 0 66px;
+  }
+  h1 {
+    font-size: clamp(34px, 5.4vw, 60px);
+    font-weight: 800;
+    line-height: 1.16;
+    letter-spacing: -.5px;
+    color: #fff;
+  }
+  .kicker {
+    margin-top: 14px;
+    font-size: clamp(19px, 2.6vw, 27px);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--brand-bright);
+  }
+  .lede {
+    margin-top: 20px;
+    font-size: clamp(15.5px, 2vw, 18px);
+    color: #b9cde2;
+    max-width: 46ch;
+  }
+  .rule-orn { margin: 30px 0 26px; width: 84px; height: 3px; background: var(--print); }
+  .get {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    text-decoration: none;
+    background: var(--print);
+    color: var(--ink);
+    padding: 20px 46px;
+    border-radius: 4px;
+    box-shadow: 0 14px 0 -6px rgba(0, 0, 0, .45);
+    transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
+  }
+  .get:hover { background: #ffbe5c; transform: translateY(-2px); box-shadow: 0 18px 0 -6px rgba(0, 0, 0, .5); }
+  .get strong { font-size: 21px; font-weight: 800; }
+  .get small { font-size: 12.5px; font-weight: 600; opacity: .72; }
+  .meta {
+    margin-top: 22px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .meta b { color: #cfe0f1; font-weight: 500; }
+
+  .slip { max-width: 380px; }
+  .ticket {
+    direction: ltr;
+    background: var(--paper);
+    color: #16232f;
+    padding: 26px 24px 22px;
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 24px 54px rgba(0, 0, 0, .5);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    transform-origin: top center;
+    animation: print .9s cubic-bezier(.16, .84, .3, 1) .25s both;
+  }
+  @keyframes print {
+    from { transform: translateY(-28px) scaleY(.92); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+  .slot {
+    height: 13px;
+    background: var(--ink-deep);
+    border-radius: 0 0 3px 3px;
+    box-shadow: inset 0 4px 9px rgba(0, 0, 0, .7);
+  }
+  .ticket h2 {
+    font-family: "Cairo", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  .ticket .addr { text-align: center; font-size: 11.5px; color: #5a6b7c; }
+  .ticket hr { border: 0; border-top: 1px dashed #9fb2c4; margin: 14px 0; }
+  .trow { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; }
+  .trow span:first-child { font-family: "Cairo", sans-serif; font-weight: 600; }
+  .ttotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .ttotal span:first-child { font-family: "Cairo", sans-serif; font-weight: 800; font-size: 14px; }
+  .tfoot { font-size: 11px; color: #6b7c8c; text-align: center; }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .fact { padding: 26px 22px 24px; border-inline-start: 1px solid var(--rule); }
+  .fact:last-child { border-inline-start: 0; }
+  .fact b { display: block; font-size: 19px; font-weight: 800; color: #fff; }
+  .fact span { font-size: 13.5px; color: var(--muted); }
+
+  .index { padding: 72px 0 20px; }
+  .index h3 {
+    font-size: clamp(24px, 3.4vw, 34px);
+    font-weight: 800;
+    color: #fff;
+    max-width: 22ch;
+  }
+  .index > p { margin-top: 10px; color: var(--muted); max-width: 52ch; }
+  .rows { margin-top: 34px; }
+  .row {
+    display: grid;
+    grid-template-columns: 168px 1fr;
+    gap: 18px;
+    align-items: baseline;
+    padding: 17px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .row:last-child { border-bottom: 1px solid var(--rule); }
+  .row b { font-size: 17px; font-weight: 800; color: var(--print); }
+  .row p { color: #b9cde2; font-size: 15px; }
+
+  .closer {
+    margin-top: 74px;
+    padding: 56px 0 20px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+  }
+  .closer h4 { font-size: clamp(22px, 3vw, 30px); font-weight: 800; color: #fff; }
+  .closer > p { margin: 12px auto 0; color: var(--muted); max-width: 50ch; }
+  .closer .get { margin-top: 28px; }
+  .lic {
+    margin: 24px auto 0;
+    font-size: 13.5px;
+    color: #9fb4cb;
+    max-width: 56ch;
+  }
+  .lic b { color: #cfe0f1; }
+  footer {
+    margin-top: 48px;
+    padding: 22px 0 34px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 12.5px;
+    color: #6d8399;
+  }
+  footer a { color: #6d8399; text-decoration: none; border-bottom: 1px solid rgba(109, 131, 153, .4); }
+  footer a:hover { color: #a9c0d6; }
+
+  a:focus-visible { outline: 3px solid var(--print); outline-offset: 3px; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 42px; padding: 56px 0 48px; }
+    .row { grid-template-columns: 1fr; gap: 4px; }
+    .fact { border-inline-start: 0; border-top: 1px solid var(--rule); }
+    .fact:first-child { border-top: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .ticket { animation: none; }
+    .get { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="field"></div>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="mark">
+      <svg viewBox="0 0 48 48" role="img" aria-label="ERP System">
+        <rect x="3" y="6" width="42" height="36" rx="3" fill="#00407e"/>
+        <path d="M3 14h42" stroke="#f2a63b" stroke-width="2.5"/>
+        <rect x="9" y="20" width="16" height="3" rx="1.5" fill="#f4f7fb"/>
+        <rect x="9" y="27" width="11" height="3" rx="1.5" fill="#9ec3e6"/>
+        <rect x="9" y="34" width="24" height="3" rx="1.5" fill="#3d8ed6"/>
+        <rect x="30" y="20" width="9" height="17" rx="2" fill="#f2a63b"/>
+      </svg>
+      <div><b>ERP SYSTEM</b><span>إدارة محلات ومشاريع تجارية</span></div>
+    </div>
+    <a href="https://github.com/bohdi922-eng/erp-system/releases/download/ERP-Setup/ERP_System_Setup.exe">تحميل مباشر</a>
+  </div>
+
+  <section class="hero">
+    <div>
+      <h1>محلك كله في برنامج واحد</h1>
+      <p class="kicker">وكل جهاز بيتصل بيه يشوف شغله</p>
+      <p class="lede">مبيعات ومخزون وعملاء وصيانة وحضور موظفين، كلها على جهازك. البرنامج بيتثبت لوحده، وبيشتغل من غير إنترنت.</p>
+      <div class="rule-orn"></div>
+      <a class="get" href="https://github.com/bohdi922-eng/erp-system/releases/download/ERP-Setup/ERP_System_Setup.exe">
+        <strong>حمّل النظام وابدأ</strong>
+        <small>دبل كليك على الملف، والباقي يتعمل لوحده</small>
+      </a>
+      <p class="meta">حجم الملف <b>135 ميجا</b> — نسخة ويندوز — يشتغل أوفلاين</p>
+    </div>
+
+    <div class="slip">
+      <div class="ticket" aria-label="فاتورة توضيحية من برنامج نقاط البيع">
+        <h2>فاتورة بيع</h2>
+        <div class="addr">محلك — نقطة بيع 1</div>
+        <hr>
+        <div class="trow"><span>شاشة عرض</span><span>1 × 1,850</span></div>
+        <div class="trow"><span>بطارية</span><span>2 × 420</span></div>
+        <div class="trow"><span>كابل شحن</span><span>3 × 95</span></div>
+        <hr>
+        <div class="ttotal"><span>الإجمالي</span><span>2,975</span></div>
+        <hr>
+        <div class="trow"><span>طريقة الدفع</span><span>كاش</span></div>
+        <div class="trow"><span>الحالة</span><span>تم التسليم</span></div>
+        <div class="tfoot">شكرًا لتعاملكم معنا</div>
+      </div>
+      <div class="slot" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="facts">
+    <div class="fact"><b>30 يوم</b><span>تجربة مجانية بتبدأ لوحدها</span></div>
+    <div class="fact"><b>بدون إنترنت</b><span>كل حاجة شغالة أوفلاين على جهازك</span></div>
+    <div class="fact"><b>تحديث أوتوماتيك</b><span>النظام بيحدّث نفسه من غير ما تعمل حاجة</span></div>
+    <div class="fact"><b>أي جهاز</b><span>فريقك يفتحه من موبايله أو جهازه</span></div>
+  </section>
+
+  <section class="index">
+    <h3>وظايف البرنامج</h3>
+    <p>كل قسم شغّال على نفس البيانات — يعني فاتورة بتتعمل بتخصم من المخزون فورًا، والعميل بيشوف كشف حسابه آخر لحظة.</p>
+    <div class="rows">
+      <div class="row"><b>المبيعات</b><p>نقاط بيع وفواتير وتقسيط وطباعة، مع حساب ربح لكل عملية.</p></div>
+      <div class="row"><b>المخزون</b><p>أصناف وكميات وأسعار شرائية، مع تنبيه قبل ما ينفد الصنف.</p></div>
+      <div class="row"><b>العملاء</b><p>كشوف حساب ومحصلات ومتأخرات، وكل تعامل عميل في مكان واحد.</p></div>
+      <div class="row"><b>الصيانة</b><p>لوحة شغل للريسبيشن: استلام، قطع غيار، تسليم، ومواعيد.</p></div>
+      <div class="row"><b>الحضور</b><p>تسجيل دخول وانصراف بمواقع، وربط مباشر بجروب واتساب لفريقك.</p></div>
+    </div>
+  </section>
+
+  <section class="closer">
+    <h4>جاهز تبدأ؟</h4>
+    <p>حمّل الملف مرة واحدة، وكمّل عملك عليه على طول. لو حبيت أكتر من جهاز، اربطه في وضع السيرفر.</p>
+    <a class="get" href="https://github.com/bohdi922-eng/erp-system/releases/download/ERP-Setup/ERP_System_Setup.exe">
+      <strong>حمّل ERP System</strong>
+      <small>135 ميجا — ويندوز — تثبيت أوتوماتيك</small>
+    </a>
+    <p class="lic">بعد أول تشغيل بيبدأ <b>30 يوم تجربة</b> تلقائيًا. لو حبيت تفعّل النظام، افتح صفحة الترخيص في البرنامج وابعتلنا بصمة الجهاز — هنبعتلك رخصة التفعيل في وقت قياسي.</p>
+  </section>
+
+  <footer>
+    <span>© 2026 ERP System — برنامج إدارة محلات تجارية</span>
+    <a href="https://github.com/bohdi922-eng/erp-system/releases/download/ERP-Setup/ERP_System_Setup.exe" dir="ltr">releases/download/ERP-Setup</a>
+  </footer>
+
+</div>
+</body>
+</html>
