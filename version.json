@@ -1,1 +1,1 @@
-{"version": 12, "notes": "نظام الإلغاءات (Revocation): تعطيل/حذف ترخيص من الـ License Manager يوصل للجهاز تلقائيًا عند أول اتصال بالنت + بانر إلغاء في صفحة الترخيص + حماية .revoked.json أثناء التحديثات"}
+{"version": 13, "notes": "staff-only WhatsApp: messages only to employees + the manager account + the two shop groups; customer repair notifications off; users can set a WhatsApp number; moderator role"}
